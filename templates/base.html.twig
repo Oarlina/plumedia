@@ -15,14 +15,14 @@
     <body>
         <header>
             <nav>
-                <a href="/..">Plumédia</a>
+                <a href="/.." class="logo"><img src="img/plumedia.png" alt="Plumedia logo" class="sous_logo"></a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
-                        <a href="">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
-                        <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                        <a href="" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
+                        <a href="{{ path('app_logout') }}" class="bouton">Me déconnecter</a>
                     {% else %}
-                        <a href="{{ path('app_register') }}">S'inscrire</a>
-                        <a href="{{ path('app_login')}}">Se connecter</a>
+                        <a href="{{ path('app_register') }}" class="bouton">S'inscrire</a>
+                        <a href="{{ path('app_login')}}" class="bouton">Se connecter</a>
                     {% endif %}
             </nav>
         </header>
