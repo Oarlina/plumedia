@@ -64,7 +64,7 @@ body {
     }
     /* gère la page de connexion */
     .loginContainer{
-        margin: auto;
+        margin: 10% auto;
         width: 80%;
         height: fit-content;
         display: flex;
