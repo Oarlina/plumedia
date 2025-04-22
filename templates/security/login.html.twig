@@ -3,37 +3,41 @@
 {% block title %}Me connecter{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% if error %}
+<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            Vous etes déjà connecté(e) en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
-        </div>
-    {% endif %}
+{# {% if app.user %}
+<div class="mb-3">
+    Vous etes déjà connecté(e) en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
+</div>
+{% endif %} #}
+<div class="loginContainer">
+    <div class="left">
+        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+        <form method="post">
 
-    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-    <label for="inputEmail">Pseudo : </label>
-    <input type="pseudo" value="pseudo" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
-    <label for="inputPassword">Mot de passe : </label>
-    <input type="password" value="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+            <label for="inputEmail"></label>
+            <input type="pseudo" value="Pseudo" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
+            <label for="inputPassword"></label>
+            <input type="password" value="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+        
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
+        </form>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-    <p><a href="">Mot de passe oublié?</a></p>
-    <p>Pas encore de compte ? <a href="{{ path('app_register') }}">M'inscrire</a></p>
-</form>
+    <div class="right">
+        <h3>Bienvenue ! </h3>
+        <p><a href="" class="linkBtn">Mot de passe oublié?</a></p>
+        <p>Pas encore de compte ? </p>
+        <p><a href="{{path('app_register')}}" class="bouton">M'inscrire</a></p>
+    </div>
+</div>
 {% endblock %}

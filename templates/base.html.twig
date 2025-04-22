@@ -15,7 +15,10 @@
     <body>
         <header>
             <nav>
-                <a href="/.." class="logo"><img src="img/plumedia.png" alt="Plumedia logo" class="sous_logo"></a>
+                <a href="/.." class="logo"> <img src="img/plumedia.png" alt="Plumedia logo" class="logo"></a>
+                <a href="" class="linkBtn">Catégories</a>
+                <a href="" class="linkBtn">Calendrier</a>
+                <a href="" class="linkBtn">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
                         <a href="" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
