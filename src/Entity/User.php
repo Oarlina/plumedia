@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -38,6 +40,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100, unique: true)]
     private ?string $pseudo = null;
+
+    /**
+     * @var Collection<int, Story>
+     */
+    #[ORM\OneToMany(targetEntity: Story::class, mappedBy: 'person')]
+    private Collection $stories;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?self $users = null;
+
+    public function __construct()
+    {
+        $this->stories = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +152,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Story>
+     */
+    public function getStories(): Collection
+    {
+        return $this->stories;
+    }
+
+    public function addStory(Story $story): static
+    {
+        if (!$this->stories->contains($story)) {
+            $this->stories->add($story);
+            $story->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStory(Story $story): static
+    {
+        if ($this->stories->removeElement($story)) {
+            // set the owning side to null (unless already changed)
+            if ($story->getPerson() === $this) {
+                $story->setPerson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUsers(): ?self
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?self $users): static
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    public function addUser(self $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(self $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getUsers() === $this) {
+                $user->setUsers(null);
+            }
+        }
 
         return $this;
     }
