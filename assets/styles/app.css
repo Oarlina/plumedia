@@ -11,6 +11,17 @@
 
 body {
     width: 100%;
+    /* pour les couleurs de textes */
+    .textPurple{
+        color: var(--myPurple);
+    }
+    .textPink{
+        color: var(--myPink);
+    }
+    .textGrey{
+        color: var(--myGrey);
+    }
+
     header{
         width: 100%;
         nav{
@@ -78,6 +89,29 @@ body {
         .left{
             background-color: var(--myPink);
             border-radius:  15% 0 0 15%;
+        }
+    }
+    /* ceci est pour la pagfe d'acceuil */
+    #home{
+        h1{
+            margin: 10px auto;
+            width: 20%;
+            text-align: center;
+            font-size: xx-large;
+        }
+        h3{
+            margin: 10px auto;
+            width: 20%;
+            text-align: center;
+        }
+        button{
+            background-color: var(--myPurple);
+            border-radius:12%;
+            a{
+                margin: 10px 15px;
+                color: black;
+                text-decoration: none;
+            }
         }
     }
 
