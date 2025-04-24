@@ -41,9 +41,23 @@ class Story
     #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'story', orphanRemoval: true)]
     private Collection $chapters;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likeStory')]
+    private Collection $usersLike;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followStory')]
+    private Collection $usersFollow;
+
     public function __construct()
     {
         $this->chapters = new ArrayCollection();
+        $this->usersLike = new ArrayCollection();
+        $this->usersFollow = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +162,60 @@ class Story
             if ($chapter->getStory() === $this) {
                 $chapter->setStory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersLike(): Collection
+    {
+        return $this->usersLike;
+    }
+
+    public function addUsersLike(User $usersLike): static
+    {
+        if (!$this->usersLike->contains($usersLike)) {
+            $this->usersLike->add($usersLike);
+            $usersLike->addLikeStory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersLike(User $usersLike): static
+    {
+        if ($this->usersLike->removeElement($usersLike)) {
+            $usersLike->removeLikeStory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersFollow(): Collection
+    {
+        return $this->usersFollow;
+    }
+
+    public function addUsersFollow(User $usersFollow): static
+    {
+        if (!$this->usersFollow->contains($usersFollow)) {
+            $this->usersFollow->add($usersFollow);
+            $usersFollow->addFollowStory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersFollow(User $usersFollow): static
+    {
+        if ($this->usersFollow->removeElement($usersFollow)) {
+            $usersFollow->removeFollowStory($this);
         }
 
         return $this;

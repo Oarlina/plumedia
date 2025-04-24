@@ -45,9 +45,23 @@ class Chapter
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'chapter')]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likeChapter')]
+    private Collection $usersLike;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'haveRead')]
+    private Collection $userHaveRead;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->usersLike = new ArrayCollection();
+        $this->userHaveRead = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +178,60 @@ class Chapter
             if ($comment->getChapter() === $this) {
                 $comment->setChapter(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersLike(): Collection
+    {
+        return $this->usersLike;
+    }
+
+    public function addUsersLike(User $usersLike): static
+    {
+        if (!$this->usersLike->contains($usersLike)) {
+            $this->usersLike->add($usersLike);
+            $usersLike->addLikeChapter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersLike(User $usersLike): static
+    {
+        if ($this->usersLike->removeElement($usersLike)) {
+            $usersLike->removeLikeChapter($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserHaveRead(): Collection
+    {
+        return $this->userHaveRead;
+    }
+
+    public function addUserHaveRead(User $userHaveRead): static
+    {
+        if (!$this->userHaveRead->contains($userHaveRead)) {
+            $this->userHaveRead->add($userHaveRead);
+            $userHaveRead->addHaveRead($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserHaveRead(User $userHaveRead): static
+    {
+        if ($this->userHaveRead->removeElement($userHaveRead)) {
+            $userHaveRead->removeHaveRead($this);
         }
 
         return $this;

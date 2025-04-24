@@ -42,19 +42,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $pseudo = null;
 
     /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'isFollow')]
+    private Collection $follow;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follow')]
+    private Collection $isFollow;
+
+    /**
      * @var Collection<int, Story>
      */
-    #[ORM\OneToMany(targetEntity: Story::class, mappedBy: 'person')]
-    private Collection $stories;
+    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersLike')]
+    #[ORM\JoinTable(name: 'likestory')] // cette ligne permet de renommer le nom de la table 
+    private Collection $likedStories;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?self $users = null;
+    /**
+     * @var Collection<int, Story>
+     */
+    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersFollow')]
+    #[ORM\JoinTable(name: 'followstory')] // cette ligne permet de renommer le nom de la table 
+    private Collection $followedStories;
+
+    /**
+     * @var Collection<int, Chapter>
+     */
+    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'usersLike')]
+    #[ORM\JoinTable(name: 'likechapter')]// cette ligne permet de renommer le nom de la table 
+    private Collection $likedChapters;
+
+    /**
+     * @var Collection<int, Chapter>
+     */
+    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'userHaveRead')]
+    #[ORM\JoinTable(name: 'haveread')]// cette ligne permet de renommer le nom de la table 
+    private Collection $readChapters;
 
     public function __construct()
     {
         $this->stories = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->follow = new ArrayCollection();
+        $this->isFollow = new ArrayCollection();
+        $this->likeStory = new ArrayCollection();
+        $this->followStory = new ArrayCollection();
+        $this->likeChapter = new ArrayCollection();
+        $this->haveRead = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +252,153 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $user->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFollow(): Collection
+    {
+        return $this->follow;
+    }
+
+    public function addFollow(self $follow): static
+    {
+        if (!$this->follow->contains($follow)) {
+            $this->follow->add($follow);
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(self $follow): static
+    {
+        $this->follow->removeElement($follow);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getIsFollow(): Collection
+    {
+        return $this->isFollow;
+    }
+
+    public function addIsFollow(self $isFollow): static
+    {
+        if (!$this->isFollow->contains($isFollow)) {
+            $this->isFollow->add($isFollow);
+            $isFollow->addFollow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIsFollow(self $isFollow): static
+    {
+        if ($this->isFollow->removeElement($isFollow)) {
+            $isFollow->removeFollow($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Story>
+     */
+    public function getLikeStory(): Collection
+    {
+        return $this->likeStory;
+    }
+
+    public function addLikeStory(Story $likeStory): static
+    {
+        if (!$this->likeStory->contains($likeStory)) {
+            $this->likeStory->add($likeStory);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeStory(Story $likeStory): static
+    {
+        $this->likeStory->removeElement($likeStory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Story>
+     */
+    public function getFollowStory(): Collection
+    {
+        return $this->followStory;
+    }
+
+    public function addFollowStory(Story $followStory): static
+    {
+        if (!$this->followStory->contains($followStory)) {
+            $this->followStory->add($followStory);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowStory(Story $followStory): static
+    {
+        $this->followStory->removeElement($followStory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chapter>
+     */
+    public function getLikeChapter(): Collection
+    {
+        return $this->likeChapter;
+    }
+
+    public function addLikeChapter(Chapter $likeChapter): static
+    {
+        if (!$this->likeChapter->contains($likeChapter)) {
+            $this->likeChapter->add($likeChapter);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeChapter(Chapter $likeChapter): static
+    {
+        $this->likeChapter->removeElement($likeChapter);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chapter>
+     */
+    public function getHaveRead(): Collection
+    {
+        return $this->haveRead;
+    }
+
+    public function addHaveRead(Chapter $haveRead): static
+    {
+        if (!$this->haveRead->contains($haveRead)) {
+            $this->haveRead->add($haveRead);
+        }
+
+        return $this;
+    }
+
+    public function removeHaveRead(Chapter $haveRead): static
+    {
+        $this->haveRead->removeElement($haveRead);
 
         return $this;
     }
