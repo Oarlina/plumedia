@@ -25,26 +25,26 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword */
+            // je donne directement le role user a l'utilisateur
+            $user->setRoles(['ROLE_USER']);
+
+            // je récupère le mot de passe, le hash et le renvoie dans user
             $plainPassword = $form->get('plainPassword')->getData();
-
-            // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-            $user->setRoles(['RoleUser']);
-            // je recupere l'image
+
+            // je recupere l'image du formulaire
             $picture = $form->get('avatar')->getData();
-
-            // je vais faire la gestion de l'avatar
+            // ensuite je realise la méthode save dans le service PictureService puis met le nom du document dans avatar de l'utilisateur
             $picture = $pictureService->save($picture, 'User');
-
             $user->setAvatar($picture);
 
+            // j'enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
 
-            return $security->login($user, UserAuthentificatorAuthenticator::class, 'app_main');
+            return $security->login($user, UserAuthentificatorAuthenticator::class, 'main');
         }
 
         return $this->render('registration/register.html.twig', [

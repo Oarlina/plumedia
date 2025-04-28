@@ -10,5 +10,8 @@
     <button><a href="">Lire maintenant </a></button>
     <p>Comment utiliser et se repérer dans le site?</p>
 </section>
+{% if app.user %}
+    <img src="uploads/user/{{app.user.avatar}}" alt="avatar de {{app.user.pseudo}}" width="500">
+{% endif %}
 
 {% endblock %}

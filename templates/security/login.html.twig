@@ -18,9 +18,9 @@
         <form method="post">
 
             <label for="inputEmail"></label>
-            <input type="pseudo" value="Pseudo" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
+            <input type="pseudo" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
             <label for="inputPassword"></label>
-            <input type="password" value="Mot de passe" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            <input type="password"  name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
         
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
         

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,7 +23,15 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
-            ->add('avatar', FileType::class)
+            ->add('avatar', FileType::class, ['constraints' => [
+                new File(['maxSize' => '1024k',
+                            'mimeTypes' => [
+                                            'image/jpg',
+                                            'image/jpeg',
+                                            'image/svg',
+                                            'image/png',
+                                            'image/webp'],
+                            'mimeTypesMessage' => 'Le document doit être en JPG, PNG, JPEG, SVG, WEBP',])]])
             ->add('agreeTerms', CheckboxType::class, [
                             'mapped' => false,
                             'constraints' => [

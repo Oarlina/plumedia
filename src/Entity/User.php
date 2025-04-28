@@ -83,33 +83,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->stories = new ArrayCollection();
-        $this->users = new ArrayCollection();
         $this->follow = new ArrayCollection();
         $this->isFollow = new ArrayCollection();
-        $this->likeStory = new ArrayCollection();
-        $this->followStory = new ArrayCollection();
-        $this->likeChapter = new ArrayCollection();
-        $this->haveRead = new ArrayCollection();
+        $this->likedStories = new ArrayCollection();
+        $this->followedStories = new ArrayCollection();
+        $this->likedChapters = new ArrayCollection();
+        $this->readChapters = new ArrayCollection();
     }
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getEmail(): ?string
     {
         return $this->email;
     }
-
     public function setEmail(string $email): static
     {
         $this->email = $email;
 
         return $this;
     }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -119,7 +113,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->pseudo;
     }
-
     /**
      * @see UserInterface
      *
@@ -133,7 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
     /**
      * @param list<string> $roles
      */
@@ -143,7 +135,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -151,14 +142,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-
     public function setPassword(string $password): static
     {
         $this->password = $password;
 
         return $this;
     }
-
     /**
      * @see UserInterface
      */
@@ -167,31 +156,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
     }
-
     public function setAvatar(?string $avatar): static
     {
         $this->avatar = $avatar;
 
         return $this;
     }
-
     public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
-
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
 
         return $this;
     }
-
     /**
      * @return Collection<int, Story>
      */
@@ -199,7 +183,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->stories;
     }
-
     public function addStory(Story $story): static
     {
         if (!$this->stories->contains($story)) {
@@ -209,7 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeStory(Story $story): static
     {
         if ($this->stories->removeElement($story)) {
@@ -221,19 +203,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function getUsers(): ?self
     {
         return $this->users;
     }
-
     public function setUsers(?self $users): static
     {
         $this->users = $users;
 
         return $this;
     }
-
     public function addUser(self $user): static
     {
         if (!$this->users->contains($user)) {
@@ -243,7 +222,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeUser(self $user): static
     {
         if ($this->users->removeElement($user)) {
@@ -255,7 +233,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     /**
      * @return Collection<int, self>
      */
@@ -263,7 +240,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->follow;
     }
-
     public function addFollow(self $follow): static
     {
         if (!$this->follow->contains($follow)) {
@@ -272,14 +248,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeFollow(self $follow): static
     {
         $this->follow->removeElement($follow);
 
         return $this;
     }
-
     /**
      * @return Collection<int, self>
      */
@@ -287,7 +261,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->isFollow;
     }
-
     public function addIsFollow(self $isFollow): static
     {
         if (!$this->isFollow->contains($isFollow)) {
@@ -297,7 +270,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeIsFollow(self $isFollow): static
     {
         if ($this->isFollow->removeElement($isFollow)) {
@@ -306,7 +278,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     /**
      * @return Collection<int, Story>
      */
@@ -314,7 +285,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->likeStory;
     }
-
     public function addLikeStory(Story $likeStory): static
     {
         if (!$this->likeStory->contains($likeStory)) {
@@ -323,14 +293,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeLikeStory(Story $likeStory): static
     {
         $this->likeStory->removeElement($likeStory);
 
         return $this;
     }
-
     /**
      * @return Collection<int, Story>
      */
@@ -338,7 +306,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->followStory;
     }
-
     public function addFollowStory(Story $followStory): static
     {
         if (!$this->followStory->contains($followStory)) {
@@ -347,14 +314,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeFollowStory(Story $followStory): static
     {
         $this->followStory->removeElement($followStory);
 
         return $this;
     }
-
     /**
      * @return Collection<int, Chapter>
      */
@@ -362,7 +327,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->likeChapter;
     }
-
     public function addLikeChapter(Chapter $likeChapter): static
     {
         if (!$this->likeChapter->contains($likeChapter)) {
@@ -371,14 +335,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeLikeChapter(Chapter $likeChapter): static
     {
         $this->likeChapter->removeElement($likeChapter);
 
         return $this;
     }
-
     /**
      * @return Collection<int, Chapter>
      */
@@ -386,7 +348,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->haveRead;
     }
-
     public function addHaveRead(Chapter $haveRead): static
     {
         if (!$this->haveRead->contains($haveRead)) {
@@ -395,7 +356,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeHaveRead(Chapter $haveRead): static
     {
         $this->haveRead->removeElement($haveRead);
