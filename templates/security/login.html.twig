@@ -30,12 +30,11 @@
                 </label>
             </div>
             <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
-            <button><a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=606042423534-34cggvsudjiic8hp8c0d4k32f1ucvemk.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code&scope=email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.metadata.readonly&access_type=online
-">Se connecter avec google</a></button>
+            <button><a href="https://accounts.google.com/o/oauth2/v2/auth? scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly%20https%3A//www.googleapis.com/auth/calendar.readonly&scope=email&access_type=offline&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8000/login&client_id=606042423534-34cggvsudjiic8hp8c0d4k32f1ucvemk.apps.googleusercontent.com">Se connecter avec google</a></button>
+            {# {{app.user.pseudo}} #}
         </form>
     </div>
-    {# https://developers.google.com/identity/protocols/oauth2/scopes#google-sign-in #}
-
+    </p>
     <div class="right">
         <h3>Bienvenue ! </h3>
         <p><a href="" class="linkBtn">Mot de passe oublié?</a></p>
