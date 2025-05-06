@@ -16,12 +16,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\UserAuthentificatorAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
-            
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800
@@ -31,6 +29,9 @@ security:
                 #always_remember_me: true
 
             # activate different ways to authenticate
+            custom_authenticators:
+                    - App\Security\UserAuthentificatorAuthenticator
+                    - App\Security\GoogleAuthenticator
             # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html

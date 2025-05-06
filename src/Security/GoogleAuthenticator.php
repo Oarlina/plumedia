@@ -1,4 +1,5 @@
 <?php
+namespace App\Security;
 
 use App\Entity\User; // your user entity
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,9 +14,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
-use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
-class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationEntrypointInterface
+class GoogleAuthenticator extends OAuth2Authenticator
 {
     private $clientRegistry;
     private $entityManager;
@@ -36,9 +36,8 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
 
     public function authenticate(Request $request): Passport
     {
-        $client = $this->clientRegistry->getClient('google_main');
+        $client = $this->clientRegistry->getClient('google');
         $accessToken = $this->fetchAccessToken($client);
-
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
                 /** @var GoogleUser $googleUser */
@@ -46,19 +45,17 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
 
                 $email = $googleUser->getEmail();
 
-                // 1) have they logged in with Google before? Easy!
-                $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['googleId' => $googleUser->getId()]);
-
-                if ($existingUser) {
-                    return $existingUser;
-                }
 
                 // 2) do we have a matching user by email?
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
                 // 3) Maybe you just want to "register" them by creating
                 // a User object
-                // $user->setGoogleId($googleUser->getId());
+                // $user->setId($googleUser->getId());
+                $user->setEmail($googleUser->getEmail());
+                $user->setRoles(['ROLE_USER']);
+                $user->setPseudo($googleUser->getName());
+
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
@@ -66,7 +63,52 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
             })
         );
     }
+ public function getCredentials(Request $request)
+    {
+        // this method is only called if supports() returns true
 
+        // For Symfony lower than 3.4 the supports method need to be called manually here:
+        // if (!$this->supports($request)) {
+        //     return null;
+        // }
+
+        return $this->fetchAccessToken($this->getGoogleClient());
+    }
+
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        /** @var GoogleUser $googleUser */
+        $googleUser = $this->getGoogleClient()
+            ->fetchUserFromToken($credentials);
+
+        $email = $googleUser->getEmail();
+
+        // 1) have they logged in with Google before? Easy!
+        $existingUser = $this->em->getRepository(User::class)
+            ->findOneBy(['googleId' => $googleUser->getId()]);
+        if ($existingUser) {
+            return $existingUser;
+        }
+
+        // 2) do we have a matching user by email?
+        $user = $this->em->getRepository(User::class)
+            ->findOneBy(['email' => $email]);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+    /**
+     * @return GoogleClient
+     */
+    private function getGoogleClient()
+    {
+        return $this->clientRegistry
+            // "google" is the key used in config/packages/knpu_oauth2_client.yaml
+            ->getClient('google');
+    }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "app_home" to some route in your app
