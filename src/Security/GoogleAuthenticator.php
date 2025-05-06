@@ -40,75 +40,29 @@ class GoogleAuthenticator extends OAuth2Authenticator
         $accessToken = $this->fetchAccessToken($client);
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
-                /** @var GoogleUser $googleUser */
+                // la fonction sert a envoyer une requete pour prouver ton identité et ensuite recupérer les infos
                 $googleUser = $client->fetchUserFromToken($accessToken);
-
+                // je récupère l'email du compte google
                 $email = $googleUser->getEmail();
 
-
-                // 2) do we have a matching user by email?
+                // je regarde si le mail est déja dans la BDD
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-                // 3) Maybe you just want to "register" them by creating
-                // a User object
-                // $user->setId($googleUser->getId());
-                $user->setEmail($googleUser->getEmail());
-                $user->setRoles(['ROLE_USER']);
-                $user->setPseudo($googleUser->getName());
+                // si le mail n'est pas deja dans la base de données alors je le rajoute
+                if (! $user){
+                    $user = new User();
+                    $user->setPseudo("user_".uniqid()); // j'e lui met un uniqid() pour eviter d'avoir deux mail qui ont le meme nom alors que cela peut etre deux personne differente
+                    $user->setEmail($googleUser->getEmail());
+                    $user->setRoles(['ROLE_USER']);
 
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
-
+                    $this->entityManager->persist($user);
+                    $this->entityManager->flush();
+                }
                 return $user;
             })
         );
     }
- public function getCredentials(Request $request)
-    {
-        // this method is only called if supports() returns true
 
-        // For Symfony lower than 3.4 the supports method need to be called manually here:
-        // if (!$this->supports($request)) {
-        //     return null;
-        // }
-
-        return $this->fetchAccessToken($this->getGoogleClient());
-    }
-
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
-        /** @var GoogleUser $googleUser */
-        $googleUser = $this->getGoogleClient()
-            ->fetchUserFromToken($credentials);
-
-        $email = $googleUser->getEmail();
-
-        // 1) have they logged in with Google before? Easy!
-        $existingUser = $this->em->getRepository(User::class)
-            ->findOneBy(['googleId' => $googleUser->getId()]);
-        if ($existingUser) {
-            return $existingUser;
-        }
-
-        // 2) do we have a matching user by email?
-        $user = $this->em->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
-
-        $this->em->persist($user);
-        $this->em->flush();
-
-        return $user;
-    }
-
-    /**
-     * @return GoogleClient
-     */
-    private function getGoogleClient()
-    {
-        return $this->clientRegistry
-            // "google" is the key used in config/packages/knpu_oauth2_client.yaml
-            ->getClient('google');
-    }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // change "app_home" to some route in your app

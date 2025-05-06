@@ -21,7 +21,7 @@
                 <a href="" class="linkBtn">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
-                        <a href="" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
+                        <a href="{{path('app_profil')}}" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
                         <a href="{{ path('app_logout') }}" class="bouton">Me déconnecter</a>
                     {% else %}
                         <a href="{{ path('app_register') }}" class="bouton">S'inscrire</a>
