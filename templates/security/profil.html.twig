@@ -6,13 +6,15 @@
 
 {% block body %}
     <section id="profil">
-        <div >
+        {% if app.user.avatar %}
+            <img src="img/uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
+            <img src="img/uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+        {% else %}
             <img src="img/avatar_base.png" alt="image avatar" id="bigAvatar">
-            <img src="img/avatar_base.png" alt="image avatar" id="littleAvatar">
-            
-        </div>
+            <img src="img/avatar_base.png" alt="image avatar" id="littleAvatar"> 
+        {% endif %}
         <nav>
-            <a href="">Mes informations</a>
+            <a href="{{path('app_profil')}}"><b>Mes informations</b></a>
             <a href="">|</a>
             <a href="">Mes abonnements</a>
             <a href="">|</a>
@@ -20,12 +22,68 @@
             <a href="">|</a>
             <a href="">Mes histoires</a>
         </nav>
-        <section class="leftContainer">
-            <a href="#hehe">lien hehe</a>
-        </section>
-        <div id="hehe">
-            <p>yup</p>
-            <a href="">ccccc</a>
-        </div>
+        <main>
+            <section class="leftContainer">
+                <a href="#infos">Editer mes informations</a> <br>
+                <a href="#lessFifteen">J'ai plus de 15 ans</a><br>
+                <a href="#modifierMdp">Modifier mon mot de passe</a>
+            </section>
+            
+            <section class="rightContainer">
+                <div id="infos">
+                    <h3>Mes informations</h3>
+                    <hr>
+                    <form action="" method="post">
+                        <label for="">Pseudo :</label>
+                        <input type="text" value="{{app.user.pseudo}}"> <br>
+
+                        <label for="">Email (facultatif):</label>
+                        <input type="email" value="{{app.user.email}}"> <br>
+
+                        <label for="">Avatar :</label>
+                        <input type="file" value="ffffff">
+                        <p class="details">2Mo maximum. Dimension minimales : 300 X 300px. Format jpg ou png.</p> <br>
+
+                        <input type="button" class="submit" value="Enregistrer">
+                    </form>
+                </div>
+                <div id="lessFifteen">
+                    <h3>J'ai moins de 15 ans </h3>
+                    <hr>
+                    <p>
+                        Conformément aux dispositions de l'article 8 du règlement européen 2016/679 et à la loi informatiue etr libertés, seuls les mineurs âgés de 15 ans ou plus peuvent consentir au traitmeent de leur données personnelles.
+                    </p>
+                    <p>
+                        Si l'utilisateur est un mineur de moins de 15 ans, l'accord d'un représentant légal sera requis afin que les données à caractère personnelles puissent être collectées et traitées.
+                    </p>
+                    <p>
+                        Si vous avez moins de 15 ans, récupérez ce formulaire, faites-le remplir par votre représentant légal, scannez-le et téléversez-le dans le champ ci-dessous. 
+                    </p>
+                    <form action="">
+                        <input type="file">
+                        <p class="details">
+                            Si vous avez moins de 15 ans et que vous ne téléverez pas d'autrorisation de votre représentant légales, Plumédia ne saura être tenu responsble en cas de problème.
+                        </p>
+                        <input type="button" class="submit" value="Envoyer">
+                    </form>
+                </div>
+                <div id="modifierMdp">
+                    <h3>Modifier mon mot de passe</h3>
+                    <hr>
+                    <form action="" method="post">
+                        <label for="">Ancien mot de passe : </label>
+                        <input type="password"> <br>
+
+                        <label for="">Nouveau mot de passe : </label>
+                        <input type="password"> <br>
+
+                        <label for="">Confirmer le nouveau mot de passe : </label>
+                        <input type="password"><br>
+
+                        <input type="button" class="submit" value="Enregistrer">
+                    </form>
+                </div>
+            </section>
+        </main>
     </section>
 {% endblock %}

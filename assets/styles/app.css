@@ -142,11 +142,49 @@ body {
                 display: flex;
                 justify-content: space-around;
             }
-            .leftContainer{
-                height: 200vh;
-            }
-            #hehe{
-                height: 50vh;
+            main{
+                display: flex;
+                flex-direction: row;
+                .leftContainer{
+                    /* height: 200vh; */
+                    width: 15%;
+                    text-align: center;
+                    a{
+                        line-height: 35px;
+                    }
+                }
+                .rightContainer{
+                    width: 70%;
+                    margin: 0 auto;
+                    #infos, #lessFifteen, #modifierMdp{
+                        background-color: rgb(244, 242, 242);
+                        border-radius: 15px;
+                        margin: 10px 0;
+                        padding: 10px;
+                        h3{
+                            margin-left: 70px ;
+                        }
+                        input{
+                            border-radius: 10px;
+                            margin: 10px;
+                            padding: 5px 10px;
+                            border: none;
+                        }
+                        .submit{
+                            background-color: var(--myPurple);
+                            margin: 0 45% 10px 45%;
+                        }
+                        .details{
+                            font-size: smaller;
+                            margin-left: 20px ;
+                        }
+                    }
+                    #lessFifteen{
+                        p{
+                            margin: 15px 30px;
+                        }
+                    }
+                }
             }
         }
     /* } */

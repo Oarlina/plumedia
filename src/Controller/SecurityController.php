@@ -21,6 +21,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+    // c'est la page d'information du profil
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(): Response{
         $user = $this->getUser();
