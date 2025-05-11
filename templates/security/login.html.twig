@@ -7,11 +7,6 @@
 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-{# {% if app.user %}
-<div class="mb-3">
-    Vous etes déjà connecté(e) en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
-</div>
-{% endif %} #}
 <div class="loginContainer">
     <div class="left">
         <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
@@ -31,7 +26,6 @@
             </div>
             <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
             <button><a href="/connect/google">Se connecter avec google</a></button>
-            {# {{app.user.pseudo}} #}
         </form>
     </div>
     </p>

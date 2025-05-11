@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block body %}
+    {# pour la gestion d'erreur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <section id="profil">
         {% if app.user.avatar %}
-            <img src="img/uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
-            <img src="img/uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
         {% else %}
             <img src="img/avatar_base.png" alt="image avatar" id="bigAvatar">
             <img src="img/avatar_base.png" alt="image avatar" id="littleAvatar"> 
@@ -33,18 +42,19 @@
                 <div id="infos">
                     <h3>Mes informations</h3>
                     <hr>
-                    <form action="" method="post">
+                    <form action="{{path('changeMailAvatar')}}" method="post" enctype="multipart/form-data">
                         <label for="">Pseudo :</label>
-                        <input type="text" value="{{app.user.pseudo}}"> <br>
+                        <input type="text" name="pseudo" value="{{app.user.pseudo}}"> <br>
 
                         <label for="">Email (facultatif):</label>
-                        <input type="email" value="{{app.user.email}}"> <br>
+                        <input type="email" name="email" value="{{app.user.email}}"> <br>
 
                         <label for="">Avatar :</label>
-                        <input type="file" value="ffffff">
-                        <p class="details">2Mo maximum. Dimension minimales : 300 X 300px. Format jpg ou png.</p> <br>
+                        <input type="file" name="avatar" value="">
+                        <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> <br>
 
-                        <input type="button" class="submit" value="Enregistrer">
+                        {# <input type="button" class="submit" value="Enregistrer"> #}
+                        <button  class="submit" >Enregistrer</button>
                     </form>
                 </div>
                 <div id="lessFifteen">
