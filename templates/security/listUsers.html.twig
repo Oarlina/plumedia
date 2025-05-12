@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Profil
+{% endblock %}
+
+{% block body %}
+<table>
+    <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th colspan="2">Roles</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>User</th>
+                <th>Admin</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{user.pseudo}}</td>
+                    {% for role in user.roles %}
+                        {% if user.roles |length ==1 %}
+                            {% if role == "ROLE_USER" %}
+                                <td>X</td>
+                                <td></td>
+                            {% elseif role == "ROLE_ADMIN" %}
+                                <td>X</td>
+                            {% endif %}
+                        {% else %}
+                            {% if role == "ROLE_USER" %}
+                                <td>X</td>
+                            {% elseif role == "ROLE_ADMIN" %}
+                                <td>X</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{% if user.id !=1 %}
+                        <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}">Changer le role Admin</a>
+                    {% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

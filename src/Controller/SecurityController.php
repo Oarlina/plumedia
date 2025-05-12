@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -40,7 +41,7 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST', 'FILE'])]
+    #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
     public function changeMailAvatar (Request $request, UserRepository $userRepository,Filesystem $filesystem, EntityManagerInterface $entityManager): Response{
         $error = "non"; // pour la gestion de message si il y a une erreur
         // je recupere l'email, le pseudo et l'avatar du formulaire
@@ -89,4 +90,68 @@ class SecurityController extends AbstractController
         }
         return $this->redirectToRoute('app_profil');
     }
+
+    #[Route(path:'/changePassword', name:'changePassword', methods:['POST'])]
+    public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response {
+        $user = $this->getUser();
+
+        // je recupere les mot de passes du formulaire
+        $oldPassword = $request->request->get('oldPassword');
+        $newPassword = $request->request->get('newPassword');
+        $confirmPassword = $request->request->get('confirmPassword');
+        
+        // je vérifié que l'ancien mot de passe n'a pas la meme empreinte numerique de celui dans la BDD (pour retourner une erreur)
+        // isPasswordValid il hashe et verifie que l'empreinte numerique est la meme que celui dans la bdd du user connecter
+        if (! ($userPasswordHasher->isPasswordValid($user, $oldPassword)))
+        {
+            $this->addFlash('error', 'Problème lors du changement de mot de passe.');
+            return $this->redirectToRoute('app_profil');
+        }
+        // si le nouveau mot de passe est different du confirmer alors on renvoie un probleme
+        if ($newPassword != $confirmPassword){
+            $this->addFlash('error', 'Problème lors du changement de mot de passe.');
+            return $this->redirectToRoute('app_profil');
+        }
+        // sinon on hash le mot de passe et le met dans la BDD
+        $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
+        // dd($user);
+        // je met a jour la BDD et retourne sur la page d'utilisateur
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $this->addFlash('success', 'Mot de passe modifié');
+        return $this->redirectToRoute('app_profil');
+    }
+
+    #[Route(path:'/users', name:'app_users')]
+    public function listUsers (UserRepository $userRepository): Response{
+        $users = $userRepository->findBy([], ["pseudo" => "ASC"]);
+
+        return $this->render ("security/listUsers.html.twig", ["users" => $users]);
+    }
+
+    #[Route(path:"/users/{user}/{role}", name:'change_role_user')]
+    public function changeRoleAdmin ($user, $role, UserRepository $userRepository, EntityManagerInterface $entityManager) :Response {
+        // je recupere l'utilisateur, ces roles et creer un booleen qui verifiera si le role existe deja
+        $user = $userRepository->findOneBy(["id" => $user]);
+        $roles = $user->getRoles();
+        $isIn=false;
+        // je parcours le tableau et verifie si le role est dedans, si oui alors je le supprime est mais le bool en true
+        for($i=0; $i< (count($roles)); $i++){
+            if ($roles[$i] == $role){
+                unset($roles[$i]);
+                $isIn=true;
+            }
+        }
+        // si l'utilisateur n'avait pas le role alors on lui ajoute
+        if ($isIn == false){
+            $roles []= $role;
+        }
+        
+        // je set les roles a l'utilisateur, met a jour la BDD et retourne sur la page des utilisateurs
+        $user->setRoles($roles);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_users');
+    }
+
 }

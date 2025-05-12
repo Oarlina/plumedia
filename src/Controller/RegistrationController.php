@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+// use DatetimeImmuable;
+use DatetimeImmutable;
 use App\Service\PictureService;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +29,8 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // je donne directement le role user a l'utilisateur
             $user->setRoles(['ROLE_USER']);
+            $user->setCreateAccount(new DatetimeImmutable());
+            // dd($user->getCreateAccount());
 
             // je récupère le mot de passe, le hash et le renvoie dans user
             $plainPassword = $form->get('plainPassword')->getData();
@@ -34,9 +38,10 @@ class RegistrationController extends AbstractController
 
             // je recupere l'image du formulaire
             $picture = $form->get('avatar')->getData();
-            // ensuite je realise la méthode save dans le service PictureService puis met le nom du document dans avatar de l'utilisateur
-            $picture = $pictureService->save($picture, 'User');
-            $user->setAvatar($picture);
+            // ensuite je lui donne un nom unique, l'ajoute dans le dossier uploads/user puis met le nom du document dans avatar de l'utilisateur
+            $newFile = 'user-'.uniqid().'.'.$picture->guessExtension();
+            $picture->move('uploads/user/', $newFile);
+            $user->setAvatar($newFile);
 
             // j'enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);

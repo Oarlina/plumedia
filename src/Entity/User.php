@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -81,6 +83,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'haveread')]// cette ligne permet de renommer le nom de la table 
     private Collection $readChapters;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createAccount = null;
     public function __construct()
     {
         $this->follow = new ArrayCollection();
@@ -89,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->followedStories = new ArrayCollection();
         $this->likedChapters = new ArrayCollection();
         $this->readChapters = new ArrayCollection();
+        $this->createAccount = new \DateTimeImmutable();
     }
     public function getId(): ?int
     {
@@ -359,6 +364,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeHaveRead(Chapter $haveRead): static
     {
         $this->haveRead->removeElement($haveRead);
+
+        return $this;
+    }
+
+    public function getCreateAccount(): ?\DateTimeInterface
+    {
+        return $this->createAccount;
+    }
+
+    public function setCreateAccount(\DateTimeInterface $createAccount): static
+    {
+        $this->createAccount = $createAccount;
 
         return $this;
     }

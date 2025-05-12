@@ -8,7 +8,7 @@
     {# pour la gestion d'erreur #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="alert alert-success">
+            <div class="alert alert-{{label}}">
                 {{ message }}
             </div>
         {% endfor %}
@@ -19,8 +19,8 @@
             <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
             <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
         {% else %}
-            <img src="img/avatar_base.png" alt="image avatar" id="bigAvatar">
-            <img src="img/avatar_base.png" alt="image avatar" id="littleAvatar"> 
+            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar">
+            <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
         {% endif %}
         <nav>
             <a href="{{path('app_profil')}}"><b>Mes informations</b></a>
@@ -36,12 +36,19 @@
                 <a href="#infos">Editer mes informations</a> <br>
                 <a href="#lessFifteen">J'ai plus de 15 ans</a><br>
                 <a href="#modifierMdp">Modifier mon mot de passe</a>
+                <a href="">Supprimer mon compte(pas encore)</a> <br>
+                {% for rol in app.user.roles %}
+                    {% if rol == "ROLE_ADMIN" %}
+                        <a href="{{path('app_users')}}">Liste des utilisateurs</a>
+                    {% endif %}
+                {% endfor %}
             </section>
             
             <section class="rightContainer">
                 <div id="infos">
                     <h3>Mes informations</h3>
                     <hr>
+                    <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>
                     <form action="{{path('changeMailAvatar')}}" method="post" enctype="multipart/form-data">
                         <label for="">Pseudo :</label>
                         <input type="text" name="pseudo" value="{{app.user.pseudo}}"> <br>
@@ -80,17 +87,17 @@
                 <div id="modifierMdp">
                     <h3>Modifier mon mot de passe</h3>
                     <hr>
-                    <form action="" method="post">
+                    <form action="{{path('changePassword')}}" method="post">
                         <label for="">Ancien mot de passe : </label>
-                        <input type="password"> <br>
+                        <input type="password" name="oldPassword"> <br>
 
                         <label for="">Nouveau mot de passe : </label>
-                        <input type="password"> <br>
+                        <input type="password" name="newPassword"> <br>
 
                         <label for="">Confirmer le nouveau mot de passe : </label>
-                        <input type="password"><br>
+                        <input type="password" name="confirmPassword"><br>
 
-                        <input type="button" class="submit" value="Enregistrer">
+                        <button  class="submit" >Enregistrer </button>
                     </form>
                 </div>
             </section>
