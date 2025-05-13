@@ -1,3 +1,13 @@
+services:
+    # our custom login rate limiter
+    app.login_rate_limiter:
+        class: Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter
+        arguments:
+            # globalFactory is the limiter for IP
+            $globalFactory: '@limiter.ip_login'
+            # localFactory is the limiter for username+IP
+            $localFactory: '@limiter.username_ip_login'
+            $secret: '%kernel.secret%'
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -8,7 +18,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: pseudo
+                property: email 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,6 +26,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            # si on vide la cache le throttling est annulé
+            login_throttling: #je peux faire trois tentative puis je dois attendre une heure
+                max_attempts : 3
+                interval: '1 hour'
             logout:
                 path: app_logout
                 # where to redirect after logout
