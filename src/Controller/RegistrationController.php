@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Security\UserAuthentificatorAuthenticator;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -20,13 +21,17 @@ class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, 
-    EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    EntityManagerInterface $entityManager, PictureService $pictureService, 
+    HttpClientInterface $client): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$form->isValid()) {
+                dd($form->getErrors(true, false));
+            } 
             // je donne directement le role user a l'utilisateur
             $user->setRoles(['ROLE_USER']);
             $user->setCreateAccount(new DatetimeImmutable());

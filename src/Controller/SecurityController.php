@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -26,14 +27,6 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
-
-    // c'est la page d'information du profil
-    #[Route(path:'/mon_compte', name:'app_profil')]
-    public function profil(): Response{
-        $user = $this->getUser();
-        return $this->render('security/profil.html.twig', ['user' => $user]);
-    }
-
     // pour que l'utilisateur se deconnecte
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
@@ -153,5 +146,47 @@ class SecurityController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('app_users');
     }
+
+    // c'est la page d'information du profil
+    #[Route(path:'/compte/{id}', name:'app_profile')]
+    #[Route(path:'/mon_compte', name:'app_profil')]
+    public function profil(User $user = null, UserRepository $userRepository): Response{
+        if(!$user){
+            $user = $this->getUser();
+        }
+        return $this->render('security/profil.html.twig', ['user' => $user]);
+    }
+    
+    // c'est la page d'abonnement du profil
+    #[Route(path:'/mes_abonnements', name:'app_subscriptionProfil')]
+    public function subscriptionProfil(): Response{
+        $user = $this->getUser();
+        return $this->render('security/subscriptionProfil.html.twig', ['user' => $user]);
+    }
+    
+    // c'est la page des histoires du profil
+    #[Route(path:'/mes_histoires', name:'app_storyProfil')]
+    public function storyProfil(): Response{
+        $user = $this->getUser();
+        return $this->render('security/storyProfil.html.twig', ['user' => $user]);
+    }
+    // c'est la page de la blibliothèque du profil
+    #[Route(path:'/ma_blibliothèque', name:'app_libraryProfil')]
+    public function libraryProfil(): Response{
+        $user = $this->getUser();
+        return $this->render('security/libraryProfil.html.twig', ['user' => $user]);
+    }
+
+    #[Route(path:'/follow/{pseudo}', name:'follow')]
+    public function follow($pseudo, UserRepository $userRepository, EntityManagerInterface $entityManager): Response{
+        $user = $this->getUser();
+        $user2 = $userRepository->findOneBy(["pseudo" => $pseudo]);
+        $user->addFollow($user2);
+        dd($user2);
+    }
+
+
+
+
 
 }

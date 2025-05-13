@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mes histoires
+{% endblock %}
+
+{% block body %}
+    {# pour la gestion d'erreur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <section id="profil">
+        {% if app.user.avatar %}
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+        {% else %}
+            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar">
+            <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+        {% endif %}
+        <nav>
+            <a href="{{path('app_profil')}}">Mes informations</a>
+            <a href="">|</a>
+            <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
+            <a href="">|</a>
+            <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+            <a href="">|</a>
+            <a href="{{path('app_storyProfil')}}"><b>Mes histoires</b></a>
+        </nav>
+        <main>
+            
+        </main>
+    </section>
+
+{% endblock %}

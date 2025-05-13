@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mes abonnements
+{% endblock %}
+
+{% block body %}
+    {# pour la gestion d'erreur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <section id="profil">
+        {% if app.user.avatar %}
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+        {% else %}
+            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar">
+            <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+        {% endif %}
+        <nav>
+            <a href="{{path('app_profil')}}">Mes informations</a>
+            <a href="">|</a>
+            <a href="{{path('app_subscriptionProfil')}}"><b>Mes abonnements</b></a>
+            <a href="">|</a>
+            <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+            <a href="">|</a>
+            <a href="{{path('app_storyProfil')}}">Mes histoires</a>
+        </nav>
+        <main>
+            
+            <div class="follow" style="width:50%">
+                <h3>Vous suivez :</h3>
+                {% for folo in user.Follow %}
+                    <p><a href="{{path('app_profile', {'id':folo.id})}}">{{folo.pseudo}}</a></p>
+                {% endfor %}
+            </div>
+            <div class="isFollow" style="width:50%">
+                <h3>Vos abonnés :</h3>
+                {% for folo in user.isFollow %}
+                    <p><a href="">{{folo.pseudo}}</a></p>
+                {% endfor %}
+            </div>
+        </main>
+    </section>
+
+{% endblock %}

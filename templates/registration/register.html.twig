@@ -4,6 +4,14 @@
 
 {% block body %}
 <section class="registerContainer">
+    {# pour la gestion d'erreur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     {{ form_errors(registrationForm) }}
     <div class="left">
             <h1>Inscription</h1>
@@ -11,8 +19,7 @@
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
                 {{ form_row(registrationForm.agreeTerms) }}
-                <button type="submit" class="btn">S'inscrire</button>
-            {{ form_end(registrationForm) }}
+                {{ form_end(registrationForm) }}
             <button><a href="/connect/google">S'inscrire avec google</a></button>
         </div>
         <div class="right">
@@ -22,5 +29,5 @@
         </div>
 
     </section>
-
+    {# {{ recaptcha3_get_script() }} ce script est INDISPENSABLE pour V3 #}
 {% endblock %}
