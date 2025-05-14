@@ -32,17 +32,16 @@
             <a href="{{path('app_storyProfil')}}">Mes histoires</a>
         </nav>
         <main>
-            
             <div class="follow" style="width:50%">
                 <h3>Vous suivez :</h3>
-                {% for folo in user.Follow %}
+                {% for folo in user.follow %}
                     <p><a href="{{path('app_profile', {'id':folo.id})}}">{{folo.pseudo}}</a></p>
                 {% endfor %}
             </div>
             <div class="isFollow" style="width:50%">
                 <h3>Vos abonnés :</h3>
                 {% for folo in user.isFollow %}
-                    <p><a href="">{{folo.pseudo}}</a></p>
+                    <p><a href="{{path('app_profile', {'id':folo.id})}}">{{folo.pseudo}}</a></p>
                 {% endfor %}
             </div>
         </main>
