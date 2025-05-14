@@ -24,6 +24,7 @@
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
+            <p><a href="{{ path('app_forgot_password_request')}}" class="linkBtn">Mot de passe oublié?</a></p>
             <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
             <button><a href="/connect/google">Se connecter avec google</a></button>
         </form>
@@ -31,7 +32,7 @@
     </p>
     <div class="right">
         <h3>Bienvenue ! </h3>
-        <p><a href="" class="linkBtn">Mot de passe oublié?</a></p>
+        
         <p>Pas encore de compte ? </p>
         <p><a href="{{path('app_register')}}" class="bouton">M'inscrire</a></p>
     </div>
