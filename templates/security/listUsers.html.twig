@@ -9,13 +9,16 @@
     <thead>
             <tr>
                 <th>Pseudo</th>
-                <th colspan="2">Roles</th>
+                <th colspan="4">Roles</th>
                 <th></th>
             </tr>
             <tr>
                 <th></th>
                 <th>User</th>
+                <th>Moderateur</th>
                 <th>Admin</th>
+                <th>Auteur</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -23,25 +26,32 @@
             {% for user in users %}
                 <tr>
                     <td>{{user.pseudo}}</td>
-                    {% for role in user.roles %}
-                        {% if user.roles |length ==1 %}
-                            {% if role == "ROLE_USER" %}
-                                <td>X</td>
-                                <td></td>
-                            {% elseif role == "ROLE_ADMIN" %}
-                                <td>X</td>
-                            {% endif %}
-                        {% else %}
-                            {% if role == "ROLE_USER" %}
-                                <td>X</td>
-                            {% elseif role == "ROLE_ADMIN" %}
-                                <td>X</td>
-                            {% endif %}
+                    <td>
+                        {% if 'ROLE_USER' in user.roles %}
+                            X
                         {% endif %}
-                    {% endfor %}
+                    </td>
+                    <td>
+                        {% if 'ROLE_MODERATOR' in user.roles %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            X
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if 'ROLE_AUTHOR' in user.roles %}
+                            X
+                        {% endif %}
+                    </td>
                     <td>{% if user.id !=1 %}
                         <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}">Changer le role Admin</a>
-                    {% endif %}</td>
+                    {% endif %}</td> 
+                    <td>{% if user.id !=1 %}
+                        <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_AUTHOR'}) }}">Changer le role Autheur</a>
+                    {% endif %}</td> 
                 </tr>
             {% endfor %}
         </tbody>
