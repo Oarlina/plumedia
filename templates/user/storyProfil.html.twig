@@ -32,7 +32,10 @@
             <a href="{{path('app_storyProfil')}}"><b>Mes histoires</b></a>
         </nav>
         <main>
-            
+            {# si le role autheur n'est pas dans les roles alors j'affiche  #}
+            {% if app.user and 'ROLE_AUTHOR' not in app.user.roles %}
+                <a href="{{path('form_become_author', {'user' : app.user.id})}}">Devenir écrivain</a>
+            {% endif %}
         </main>
     </section>
 

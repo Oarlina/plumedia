@@ -12,7 +12,7 @@ trait ChangeOnlyTrait{
         // on donne des actions spécifique au trait ChangeReadOnlyTrait
         $actions
             // on supprime les actions d'ajout de suppression
-            ->disable(Action::NEW, Action::DELETE)
+            ->disable(Action::NEW)
             // et on ajoute l'accès à la page de liste et ces détails
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
 

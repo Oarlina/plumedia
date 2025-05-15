@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use Symfony\Component\Validator\Constraints\Image;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -29,12 +30,12 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
+            IdField::new('id')->onlyOnIndex(),
             TextField::new('pseudo'),
             EmailField::new('email')->hideOnIndex(),
-            BooleanField::new('isVerified'),
-            BooleanField::new('password'),
-            ImageField::new('avatar')->setBasePath('uploads/user'),
+            BooleanField::new('isVerified')->onlyOnIndex(),
+            BooleanField::new('password')->onlyOnIndex(),
+            ImageField::new('avatar')->setBasePath('uploads/user')->setUploadDir('public/uploads/user')->setUploadedFileNamePattern('user_[slug].[extension]')->setRequired(false),
             ArrayField::new('roles')->hideOnIndex(),
             DateTimeField::new('createAccount')->hideOnIndex()
         ];

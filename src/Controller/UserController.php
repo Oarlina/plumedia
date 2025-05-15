@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use App\Controller\UserController;
+use App\Form\UserBecomeAuthorType;
 use App\Repository\UserRepository;
+use Symfony\Component\Mailer\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,4 +77,24 @@ final class UserController extends AbstractController
         return $this->redirectToRoute('app_profile', ['id' => $user2->getId()]);
         
     }
+    
+    #[Route(path:'/devenir_autheur/{user}', name:'form_become_author')]
+    public function becomeAuthor(User $user, Request $request, MailerInterface $mailer): Response {
+        $form = $this->createForm(UserBecomeAuthorType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // dd($form->get('email')->getData());
+            $email = (new Email())
+                ->from($form->get('email')->getData())
+                ->to('mailer@plumedia.com')
+                ->subject($form->get('objet')->getData())
+                ->text($form->get('text')->getData());
+
+            $mailer->send($email);
+            return $this->redirectToRoute('app_profil');
+        }
+        return $this->render('security/newAuthor.html.twig', ['form' => $form]);
+    }
+
 }

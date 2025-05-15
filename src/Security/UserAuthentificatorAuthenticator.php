@@ -47,7 +47,7 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        // me renvoie sur la méthode app_home qui renvoie sur la page d'acceuil 
+        // me renvoie sur la méthode app_home qui renvoie sur la page d'accueil 
         return new RedirectResponse( $this->urlGenerator->generate('app_home'));
     }
 

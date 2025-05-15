@@ -4,6 +4,7 @@ namespace App\Controller\Security;
 
 
 use App\Entity\User;
+use App\Form\UserBecomeAuthorType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,6 +18,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
+    public function __construct(
+    ) {
+    }
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -148,6 +152,6 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_users');
     }
 
-
+    
 
 }
