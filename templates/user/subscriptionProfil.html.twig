@@ -32,17 +32,22 @@
             <a href="{{path('app_storyProfil')}}">Mes histoires</a>
         </nav>
         <main>
-            <div class="follow" style="width:50%">
-                <h3>Vous suivez :</h3>
-                {% for folo in user.follow %}
-                    <p><a href="{{path('app_profile', {'id':folo.id})}}">{{folo.pseudo}}</a></p>
-                {% endfor %}
+            <div class="follows">
+                <div class="follow">
+                    <h3>Vous suivez ({{user.follow | length}}):</h3>
+                    {% for folo in user.follow %}
+                        <p><a href="{{path('app_profile', {'id':folo.id})}}"><img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}</a></p>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="isFollow" style="width:50%">
-                <h3>Vos abonnés :</h3>
-                {% for folo in user.isFollow %}
-                    <p><a href="{{path('app_profile', {'id':folo.id})}}">{{folo.pseudo}}</a></p>
-                {% endfor %}
+
+            <div class="follows">
+                <div class="follow">
+                    <h3>Vos abonnés ({{user.isFollow | length}}):</h3>
+                    {% for folo in user.isFollow %}
+                        <p><a href="{{path('app_profile', {'id':folo.id})}}"><img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}</a></p>
+                    {% endfor %}
+                </div>
             </div>
         </main>
     </section>

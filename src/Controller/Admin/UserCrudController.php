@@ -15,7 +15,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class UserCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
+
+    // use Trait\ReadOnlyTrait;
+    use Trait\ChangeOnlyTrait;
 
     #[Route('Admin/User', name:'admin_user')]
     public static function getEntityFqcn(): string
@@ -37,5 +39,6 @@ class UserCrudController extends AbstractCrudController
             DateTimeField::new('createAccount')->hideOnIndex()
         ];
     }
-    
+
+
 }

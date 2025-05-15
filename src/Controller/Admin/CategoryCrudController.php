@@ -10,7 +10,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CategoryCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
+    use Trait\AddDeleteOnlyTrait;
+
     #[Route('Admin/Category', name:'admin_category')]
     public static function getEntityFqcn(): string
     {

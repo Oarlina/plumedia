@@ -54,6 +54,7 @@ class GoogleAuthenticator extends OAuth2Authenticator
                     $user->setPseudo("user_".uniqid()); // j'e lui met un uniqid() pour eviter d'avoir deux mail qui ont le meme nom alors que cela peut etre deux personne differente
                     $user->setEmail($googleUser->getEmail());
                     $user->setRoles(['ROLE_USER']);
+                    $user->setIsVerified(1);
 
                     $this->entityManager->persist($user);
                     $this->entityManager->flush();
