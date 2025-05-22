@@ -9,28 +9,21 @@
     <thead>
             <tr>
                 <th>Pseudo</th>
-                <th colspan="4">Roles</th>
-                <th></th>
+                <th colspan="3">Roles</th>
+                <th>Admin</th>
+                <th>Autheur</th>
             </tr>
             <tr>
                 <th></th>
-                <th>User</th>
                 <th>Moderateur</th>
                 <th>Admin</th>
                 <th>Auteur</th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 <tr>
                     <td>{{user.pseudo}}</td>
-                    <td>
-                        {% if 'ROLE_USER' in user.roles %}
-                            X
-                        {% endif %}
-                    </td>
                     <td>
                         {% if 'ROLE_MODERATOR' in user.roles %}
                             X
@@ -46,12 +39,16 @@
                             X
                         {% endif %}
                     </td>
-                    <td>{% if user.id !=1 %}
-                        <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}">Changer le role Admin</a>
-                    {% endif %}</td> 
-                    <td>{% if user.id !=1 %}
-                        <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_AUTHOR'}) }}">Changer le role Autheur</a>
-                    {% endif %}</td> 
+                    <td>
+                        {% if user.id !=1 %}
+                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}">Changer le role</a>
+                        {% endif %}
+                    </td> 
+                    <td>
+                        {% if user.id !=1 %}
+                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_AUTHOR'}) }}">Changer le role</a>
+                        {% endif %}
+                    </td> 
                 </tr>
             {% endfor %}
         </tbody>

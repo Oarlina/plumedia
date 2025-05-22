@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Suppression de mon compte
+{% endblock %}
+
+{% block body %}
+    {# pour la gestion d'erreur #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{label}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    
+    <section id="profil">
+        {% if user.avatar %}
+            <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar">
+            <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+        {% else %}
+            <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar">
+            <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+        {% endif %}
+        {# nav du haut #}
+        {% if app.user and user.id == app.user.id %}
+            <nav>
+                <a href="{{path('app_profil')}}"><b>Mes informations</b></a>
+                <a href="">|</a>
+                <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
+                <a href="">|</a>
+                <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+                <a href="">|</a>
+                <a href="{{path('app_storyProfil')}}">Mes histoires</a>
+            </nav>
+        {% endif %}
+        {# ce que les autres utilisateur verront #}
+        {% if app.user == null or user.id != app.user.id  %}
+            <div id="infosOut">
+                <h2> {{user.pseudo}} </h2>
+                {# gestion de si l'utilisateur connecter suit la personne ou non #}
+                {% set estSuivi = false %}
+                {% if app.user %}
+                    {% for u in user.isFollow %}
+                        {% if estSuivi == false and u.id == app.user.id %}
+                            {% set estSuivi = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if estSuivi %}
+                    <p><a href="{{ path('unFollow', {'pseudo': user.pseudo}) }}"><i class="fa-solid fa-heart"></i>Ne plus suivre</a></p>
+                {% else %}
+                    <p><a href="{{ path('follow', {'pseudo': user.pseudo}) }}"><i class="fa-regular fa-heart"></i>Suivre</a></p>
+
+                {% endif %}
+            </div>
+        {% endif %}
+        {# le reste de la page #}
+        {% if app.user and user.id == app.user.id %}
+            <main>
+                <section class="leftContainer">
+                    <a href="#infos">Editer mes informations</a> <br>
+                    <a href="#lessFifteen">J'ai plus de 15 ans</a><br>
+                    <a href="#modifierMdp">Modifier mon mot de passe</a>
+                    <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
+
+                    {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
+                        <a href="{{path('app_users')}}">Liste des utilisateurs</a> <br>
+                        <a href="{{path('admin')}}">Panneau admin</a>
+                    {% endif %}
+                </section>
+                
+                <section class="rightContainer">
+                    <h1>Suppression de compte en cours</h1>
+
+                    <p>Votre compte sera <b>désactivé immédiatement</b>, mais vos données seront conservés pendant 30 jours.  </p>
+                    <p>Durant cette période, vous pourrez <b>réactiver votre compte</b> en vous reconnectant. </p>
+
+                    <h4>Si vous ne le réactivez pas :</h4>
+                    <ol>
+                        <li>Vos informations seront supprimés définitivement.</li>
+                        <li>Vous ne pourrez plus accédez à vos informations et vos contenus.</li>
+                        <li>Toute vos données personnelles seront <b>anonymisées</b> de manière iréversible.</li>
+                    </ol>
+                    <p>Nous respectons votre vie privée. Si vous avez des questions n'hésitez pas à nous contactez.</p>
+                    <a href="{{path('delete_account', {'user': user.id, 'bool': 1})}}" style="background-color:red"class="bouton">Supprimer mon compte</a>
+                </section>
+            </main>
+        {% endif %}
+    </section>
+
+{% endblock %}

@@ -63,13 +63,12 @@
                     <a href="#infos">Editer mes informations</a> <br>
                     <a href="#lessFifteen">J'ai plus de 15 ans</a><br>
                     <a href="#modifierMdp">Modifier mon mot de passe</a>
-                    <a href="">Supprimer mon compte(pas encore)</a> <br>
-                    {% for rol in user.roles %}
-                        {% if rol == "ROLE_ADMIN" and user.id ==1 %} {# je m'assure que seul le premier admin peut aller sur la page #}
-                            <a href="{{path('app_users')}}">Liste des utilisateurs</a>
-                            <a href="{{path('admin')}}">Panneau admin</a>
-                        {% endif %}
-                    {% endfor %}
+                    <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
+
+                    {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
+                        <a href="{{path('app_users')}}">Liste des utilisateurs</a> <br>
+                        <a href="{{path('admin')}}">Panneau admin</a>
+                    {% endif %}
                 </section>
                 
                 <section class="rightContainer">

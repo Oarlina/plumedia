@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, unique:true)]
     private ?string $email = null;
 
     /**
@@ -88,6 +88,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createAccount = null;
+    
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable:true)]
+    private ?\DateTimeInterface $deleteAccount = null;
+
     public function __construct()
     {
         $this->follow = new ArrayCollection();
@@ -390,6 +394,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreateAccount(\DateTimeInterface $createAccount): static
     {
         $this->createAccount = $createAccount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of deleteAccount
+     */ 
+    public function getDeleteAccount()
+    {
+        return $this->deleteAccount;
+    }
+
+    /**
+     * Set the value of deleteAccount
+     *
+     * @return  self
+     */ 
+    public function setDeleteAccount($deleteAccount)
+    {
+        $this->deleteAccount = $deleteAccount;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Controller\Security;
 
 
+use DateTime;
 use App\Entity\User;
 use App\Form\UserBecomeAuthorType;
 use App\Repository\UserRepository;
@@ -18,18 +19,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
-    public function __construct(
-    ) {
+    public function __construct() {
     }
+
+
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-
+        
         // pour afficher l'erreur si l'utilisateur a fait une erreur dans la connexion
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     // pour que l'utilisateur se deconnecte
@@ -39,8 +41,26 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    // pour la suppression d'un compte
+    #[Route(path:'/delete_account/{user}/{bool}', name:"delete_account")]
+    public function delete(User $user, $bool = null, EntityManagerInterface $entityManager): Response {
+        // si bool n'est pas égale à 1 alors l'utilisateur confirme la suppression du comte sinon je le renvoie sur la page de suppression du compte
+        if ($bool == 1 ){
+            // je met la date du jour, si l'utilisateur veut supprimer son compte
+            $date = new DateTime();
+            $user->setDeleteAccount($date);
+            // je met à jour la BDD
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // je déconnecte l'utilisateur
+            return $this->redirectToRoute('app_logout');
+        }
+        return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
+    }
+
+    // pour que l'utilisateur puisse changer ces informations
     #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
-    public function changeMailAvatar (Request $request, UserRepository $userRepository,Filesystem $filesystem, EntityManagerInterface $entityManager): Response{
+    public function changeMailAvatar (Request $request, UserRepository $userRepository, Filesystem $filesystem, EntityManagerInterface $entityManager): Response{
         $error = "non"; // pour la gestion de message si il y a une erreur
         // je recupere l'email, le pseudo et l'avatar du formulaire
         // je n'est pas a verifier les types car ils sont forcer dans l'entité User
@@ -89,6 +109,7 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_profil');
     }
 
+    // pour que l'utilisateur puisse changer son mot de passe
     #[Route(path:'/changePassword', name:'changePassword', methods:['POST'])]
     public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response {
         $user = $this->getUser();
@@ -120,6 +141,7 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_profil');
     }
 
+    // pour que le premier admin puissent voir les utilisateurs
     #[Route(path:'/users', name:'app_users')]
     public function listUsers (UserRepository $userRepository): Response{
         $users = $userRepository->findBy([], ["pseudo" => "ASC"]);
@@ -127,6 +149,7 @@ class SecurityController extends AbstractController
         return $this->render ("security/listUsers.html.twig", ["users" => $users]);
     }
 
+    // pour que le premier admin puisse voir et changer les roles
     #[Route(path:"/users/{user}/{role}", name:'change_role_user')]
     public function changeRoleAdmin ($user, $role, UserRepository $userRepository, EntityManagerInterface $entityManager) :Response {
         // je recupere l'utilisateur, ces roles et creer un booleen qui verifiera si le role existe deja

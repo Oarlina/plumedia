@@ -2,6 +2,9 @@
 
 namespace App\Security;
 
+use DateTime;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,18 +25,35 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private UserRepository $userRepository, private EntityManagerInterface $entityManager)
     {
     }
 
     public function authenticate(Request $request): Passport
     {
-        $pseudo = $request->getPayload()->getString('pseudo');
+        $email = $request->getPayload()->getString('email');
 
-        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $pseudo);
+        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+        // je recupere la date de demande de suppression du compte et verifie si elle existe
+        $user = $this->userRepository->findOneBy(['email' => $email]);
 
+        if($user->getDeleteAccount()){
+            // si elle existe, alors je regarde le nombre de jours qui sont passé depuis la demande
+            $now = new DateTime();
+            $diff = (int)($user->getDeleteAccount()->diff($now)->days);
+
+            // si cela fait plus de 30 jours j'anonimise le compte et refuse la connexion 
+            if ($diff > 30){
+                $user->setEmail('anonymous_'.uniqid().'@gmail.com');
+                $user->setPseudo('anonymous_'.uniqid());
+            }
+            $user->setDeleteAccount(null);
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
         return new Passport(
-            new UserBadge($pseudo),
+            new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('password')),
             [
                 new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
@@ -41,6 +61,7 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
+    // 2025-04-20 07:43:45
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
