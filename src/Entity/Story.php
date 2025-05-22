@@ -53,11 +53,18 @@ class Story
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followStory')]
     private Collection $usersFollow;
 
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'Stories')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->chapters = new ArrayCollection();
         $this->usersLike = new ArrayCollection();
         $this->usersFollow = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,6 +223,33 @@ class Story
     {
         if ($this->usersFollow->removeElement($usersFollow)) {
             $usersFollow->removeFollowStory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addStory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeStory($this);
         }
 
         return $this;

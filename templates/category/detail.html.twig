@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block body %}
+        <h1>{{category.name}}</h1>
+    <a href="{{path('app_category')}}"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
+        <main>
+            {% if category.stories |length <1 %}
+                <p>Aucune histoire dans cette catégorie</p>
+            {% else %}
+                {% for story in category.stories %}
+                    <p>{{story.name}}</p>
+                {% endfor %}
+            {% endif %}
+        </main>
+{% endblock %}

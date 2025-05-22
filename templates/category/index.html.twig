@@ -10,7 +10,9 @@
             <div class="left">
             <a href="">Tous</a>
             {% for category in categories %}
-                <a href="">{{category.name}} </a>
+                {% if category.name != "FAQ" %}
+                <a href="{{path('category', {'id': category.id})}}">{{category.name}} </a>
+                {% endif %}
             {% endfor %}
         </div>
         <div class="right">

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -15,6 +17,17 @@ class Category
 
     #[ORM\Column(length: 100, unique: true)]
     private ?string $name = null;
+
+    /**
+     * @var Collection<int, Story>
+     */
+    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'categories')]
+    private Collection $Stories;
+
+    public function __construct()
+    {
+        $this->Stories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +42,30 @@ class Category
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Story>
+     */
+    public function getStories(): Collection
+    {
+        return $this->Stories;
+    }
+
+    public function addStory(Story $story): static
+    {
+        if (!$this->Stories->contains($story)) {
+            $this->Stories->add($story);
+        }
+
+        return $this;
+    }
+
+    public function removeStory(Story $story): static
+    {
+        $this->Stories->removeElement($story);
 
         return $this;
     }

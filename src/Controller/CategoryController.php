@@ -17,18 +17,20 @@ final class CategoryController extends AbstractController
     ) {
     }
     #[Route('/category', name: 'app_category')]
-    #[Route('/category/{id}', name: 'app_category')]
-    public function index(Category $id = null): Response
+    public function index(): Response
     {
         $categories = $this->categoryRepository->findAll();
-        if ($id){
-            return $this->render('category/index.html.twig', [
-                'categories' => $categories,
-                'category' => $category
-            ]);
-        }
         return $this->render('category/index.html.twig', [
             'categories' => $categories
+        ]);
+    }
+
+    #[Route('/category/{id}', name: 'category')]
+    public function detail(Category $id): Response
+    {
+        
+        return $this->render('category/detail.html.twig', [
+            'category' => $id
         ]);
     }
 }
