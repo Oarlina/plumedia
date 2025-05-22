@@ -18,7 +18,7 @@
                 {# je met le / devant pour forcer l'image à être récupérer à la racine car sinon il cherche juste dansle doosier avant #}
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logo"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logo"></a>
-                <a href="" class="linkBtn">Catégories</a>
+                <a href="{{path('app_category')}}" class="linkBtn">Catégories</a>
                 <a href="" class="linkBtn">Calendrier</a>
                 <a href="" class="linkBtn">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
@@ -31,8 +31,6 @@
                     {% endif %}
             </nav>
         </header>
-        {# <section class="wrapper"> #}
             {% block body %}{% endblock %}
-        {# </section> #}
     </body>
 </html>

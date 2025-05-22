@@ -32,7 +32,11 @@
             <a href="{{path('app_storyProfil')}}">Mes histoires</a>
         </nav>
         <main>
-            
+            {% if app.user.followedStories | length >1 %}
+                
+            {% else %}
+                <p>Vous ne suivez aucune histoires !!</p>
+            {% endif %}
         </main>
     </section>
 

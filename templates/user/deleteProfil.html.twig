@@ -34,28 +34,7 @@
                 <a href="{{path('app_storyProfil')}}">Mes histoires</a>
             </nav>
         {% endif %}
-        {# ce que les autres utilisateur verront #}
-        {% if app.user == null or user.id != app.user.id  %}
-            <div id="infosOut">
-                <h2> {{user.pseudo}} </h2>
-                {# gestion de si l'utilisateur connecter suit la personne ou non #}
-                {% set estSuivi = false %}
-                {% if app.user %}
-                    {% for u in user.isFollow %}
-                        {% if estSuivi == false and u.id == app.user.id %}
-                            {% set estSuivi = true %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-
-                {% if estSuivi %}
-                    <p><a href="{{ path('unFollow', {'pseudo': user.pseudo}) }}"><i class="fa-solid fa-heart"></i>Ne plus suivre</a></p>
-                {% else %}
-                    <p><a href="{{ path('follow', {'pseudo': user.pseudo}) }}"><i class="fa-regular fa-heart"></i>Suivre</a></p>
-
-                {% endif %}
-            </div>
-        {% endif %}
+        
         {# le reste de la page #}
         {% if app.user and user.id == app.user.id %}
             <main>

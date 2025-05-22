@@ -211,5 +211,29 @@ body {
                 }
             }
         }
-    /* } */
+
+        #categories{
+            width: 100%;
+            h1{
+                text-align: center;
+                margin: 15px 0 ;
+            }
+            main{
+                display: flex;
+                flex-direction: row;
+
+                .left{
+                    width: 20%;
+                    background-color: var(--myGrey);
+                    display: flex;
+                    flex-direction: column;
+                    a{
+                        margin: 3px auto;
+                    }
+                }
+                .right{
+                    width: 80%;
+                }
+            }
+        }
 }

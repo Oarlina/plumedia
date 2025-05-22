@@ -417,4 +417,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * Get the value of followedStories
+     */ 
+    public function getFollowedStories()
+    {
+        return $this->followedStories;
+    }
+
+    /**
+     * Set the value of followedStories
+     *
+     * @return  self
+     */ 
+    public function setFollowedStories($followedStories)
+    {
+        $this->followedStories = $followedStories;
+
+        return $this;
+    }
 }

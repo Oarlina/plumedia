@@ -37,6 +37,8 @@
         {# ce que les autres utilisateur verront #}
         {% if app.user == null or user.id != app.user.id  %}
             <div id="infosOut">
+                {# pour pouvoir revenir en arriere  #}
+                <a href="{{path('app_subscriptionProfil')}}"><i class="fa-solid fa-arrow-left"></i> Mes abonnements</a>
                 <h2> {{user.pseudo}} </h2>
                 {# gestion de si l'utilisateur connecter suit la personne ou non #}
                 {% set estSuivi = false %}
