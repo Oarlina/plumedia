@@ -7,6 +7,7 @@ use Symfony\Component\Mime\Email;
 use App\Controller\UserController;
 use App\Form\UserBecomeAuthorType;
 use App\Repository\UserRepository;
+use App\Repository\StoryRepository;
 use Symfony\Component\Mailer\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ final class UserController extends AbstractController
 {
     public function __construct(
         private UserRepository $userRepository,
+        private StoryRepository $storyRepository,
         private EntityManagerInterface $entityManager
     ) {
     }
@@ -43,7 +45,8 @@ final class UserController extends AbstractController
     #[Route(path:'/mes_histoires', name:'app_storyProfil')]
     public function storyProfil(): Response{
         $user = $this->getUser();
-        return $this->render('user/storyProfil.html.twig', ['user' => $user]);
+        $stories = $this->storyRepository->findBy(['person' => $user->getId()]);
+        return $this->render('user/storyProfil.html.twig', ['user' => $user, 'stories' => $stories]);
     }
     // c'est la page de la blibliothèque du profil
     #[Route(path:'/ma_blibliothèque', name:'app_libraryProfil')]
@@ -96,5 +99,7 @@ final class UserController extends AbstractController
         }
         return $this->render('security/newAuthor.html.twig', ['form' => $form]);
     }
+
+    
 
 }

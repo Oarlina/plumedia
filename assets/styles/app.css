@@ -15,6 +15,9 @@ body {
     .textPurple{
         color: var(--myPurple);
     }
+    .backgroundPurple{
+        background-color: var(--myPurple);
+    }
     .textPink{
         color: var(--myPink);
     }
@@ -50,7 +53,7 @@ body {
         color: black;
         width: fit-content;
         padding: 5px 10px;
-        background-color: white;
+        /* background-color: white; */
         border-radius: 10px;
         box-shadow: 0 8px 8px var(--myPurple);
     }
@@ -209,7 +212,32 @@ body {
                         }
                     }
                 }
+
+                .stories{
+                    width: 80%;
+                    margin: 0 auto;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    .story{
+                        width: 200px;
+                        height: 400px;
+                        text-align: center;
+                        margin: 15px;
+                        img{
+                            height: 75%;
+                            border-radius: 5%;
+                        }
+                        p{
+                            margin: 0 auto;
+                        }
+                        
+                    }
+                }
             }
+
+
         }
 
         #categories{
