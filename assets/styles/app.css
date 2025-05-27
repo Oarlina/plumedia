@@ -235,6 +235,7 @@ body {
                         
                     }
                 }
+
             }
 
 
@@ -262,6 +263,41 @@ body {
                 .right{
                     width: 80%;
                 }
+            }
+        }
+
+        #detailStory{
+            h1{
+                margin: 10px 5px;
+            }
+            main{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                text-align: justify;
+                
+                img{
+                    margin: 30px 5px 0 5px;
+                    width: 24%;
+                    height: fit-content;
+                    border-radius: 5px;
+                }
+                .right{
+                    width: 75%;
+                    nav{
+                        width: 100%;
+                        border-bottom: dashed;
+                        text-align: center;
+                        display: flex;
+                        justify-content: space-around;
+                    }
+                    p{
+                        margin: 5px 0;
+                    }
+                }
+            }
+            aside{
+                
             }
         }
 }

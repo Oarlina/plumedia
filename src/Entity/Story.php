@@ -44,13 +44,13 @@ class Story
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likeStory')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedStories')]
     private Collection $usersLike;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followStory')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followedStories')]
     private Collection $usersFollow;
 
     /**

@@ -55,4 +55,33 @@ final class StoryController extends AbstractController
         }
         return $this->render('story/new.html.twig', ['form' => $form]);
     }
+
+    #[Route(path:'/detail/{id}', name:'detail_story')]
+    public function detail(Story $id): Response{
+        return $this->render('story/detail.html.twig', ['story' => $id]);
+    }
+    
+    // Si l'utilisateur veut aimer une histoire
+    #[Route(path:'/add/{id}/{id2}/{name}', name:'add')]
+    public function add(Story $id, User $id2, string $name): Response{
+        // j'utilise la fonction pour ajouter soit le like soit le follow 
+        $id->$name($id2);
+        // je met a jour la BDD
+        $this->entityManager->persist($id2);
+        $this->entityManager->flush();
+        // je retourne sur la page detail de l'histoire
+        return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
+    }
+    // si l'utilisateur veut arreter d'aimer une histoire
+    #[Route(path:'/remove/{id}/{id2}/{name}', name:'remove')]
+    public function remove(Story $id, User $id2, string $name): Response{
+        // j'utilise la fonction pour retirer soit le like soit le follow
+        $id->$name($id2);
+        // je met a jour la BDD
+        $this->entityManager->persist($id2);
+        $this->entityManager->flush();
+        // je retourne sur la page detail de l'histoire
+        return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
+    }
+
 }

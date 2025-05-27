@@ -310,15 +310,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function addLikeStory(Story $likeStory): static
     {
-        if (!$this->likeStory->contains($likeStory)) {
-            $this->likeStory->add($likeStory);
+        if (!$this->likedStories->contains($likeStory)) {
+            $this->likedStories->add($likeStory);
         }
 
         return $this;
     }
     public function removeLikeStory(Story $likeStory): static
     {
-        $this->likeStory->removeElement($likeStory);
+        $this->likedStories->removeElement($likeStory);
 
         return $this;
     }
@@ -331,15 +331,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function addFollowStory(Story $followStory): static
     {
-        if (!$this->followStory->contains($followStory)) {
-            $this->followStory->add($followStory);
+        if (!$this->followedStories->contains($followStory)) {
+            $this->followedStories->add($followStory);
         }
 
         return $this;
     }
     public function removeFollowStory(Story $followStory): static
     {
-        $this->followStory->removeElement($followStory);
+        $this->followedStories->removeElement($followStory);
 
         return $this;
     }

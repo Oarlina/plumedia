@@ -45,7 +45,7 @@
                         <div class="story">
                             <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
                             <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
+                            <a class="bouton backgroundPurple" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     {% endfor %}
                     {% for story in stories %}
