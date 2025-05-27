@@ -3,15 +3,15 @@
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <section id="categories">
-        <h1>Catégories</h1>
+    <section id="categories" class="width100">
+        <h1 class="textCenter">Catégories</h1>
 
-        <main>
-            <div class="left">
-            <a href="">Tous</a>
+        <main class="flex flexDirectionRow">
+            <div class="left backgroundGrey flex flexDirectionCollumn">
+            <a href="" class="textBlack">Tous</a>
             {% for category in categories %}
                 {% if category.name != "FAQ" %}
-                <a href="{{path('category', {'id': category.id})}}">{{category.name}} </a>
+                <a href="{{path('category', {'id': category.id})}}"class="textBlack">{{category.name}} </a>
                 {% endif %}
             {% endfor %}
         </div>

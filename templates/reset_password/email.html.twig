@@ -2,6 +2,6 @@
 
 <p>Pour réinitialiser le mot de passe, aller sur le lien suivant.</p>
 
-<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">Réinitialiser le mot de passe</a>
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}" class="textBlack">Réinitialiser le mot de passe</a>
 
 <p>Le lien va expirer dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>

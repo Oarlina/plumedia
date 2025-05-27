@@ -13,24 +13,37 @@
         {% endblock %}
     </head>
     <body>
-        <header>
-            <nav>
+        <header class="width100">
+            <nav class="backgroundPink width100 flex alignCenter">
                 {# je met le / devant pour forcer l'image à être récupérer à la racine car sinon il cherche juste dansle doosier avant #}
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logo"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logo"></a>
-                <a href="{{path('app_category')}}" class="linkBtn">Catégories</a>
-                <a href="" class="linkBtn">Calendrier</a>
-                <a href="" class="linkBtn">Populaires</a>
+                <a href="{{path('app_category')}}" class="linkBtn textBlack">Catégories</a>
+                <a href="" class="linkBtn textBlack">Calendrier</a>
+                <a href="" class="linkBtn textBlack">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
-                        <a href="{{path('app_profil')}}" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
-                        <a href="{{ path('app_logout') }}" class="bouton">Me déconnecter</a>
+                        <a href="{{path('app_profil')}}" class="bouton textBlack backgroundWhite">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
+                        <a href="{{ path('app_logout') }}" class="bouton textBlack backgroundWhite">Me déconnecter</a>
                     {% else %}
-                        <a href="{{ path('app_register') }}" class="bouton">S'inscrire</a>
-                        <a href="{{ path('app_login')}}" class="bouton">Se connecter</a>
+                        <a href="{{ path('app_register') }}" class="bouton textBlack backgroundWhite">S'inscrire</a>
+                        <a href="{{ path('app_login')}}" class="bouton textBlack backgroundWhite">Se connecter</a>
                     {% endif %}
             </nav>
         </header>
             {% block body %}{% endblock %}
+
+        <footer class="backgroundGrey">
+            <i class="fa-brands fa-snapchat"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-youtube"></i>
+            <hr>
+            <a href="" class="textBlack linkBtn">Politique de confidentialité</a>
+            <a href="" class="textBlack linkBtn">Mentions légales</a>
+            <a href="" class="textBlack linkBtn">Contact</a>
+            <a href="" class="textBlack linkBtn">FAQ</a>
+            <a href="" class="textBlack linkBtn">Condition générale de vente</a>
+            <a href="" class="textBlack linkBtn">Cookie</a>
+        </footer>
     </body>
 </html>

@@ -16,36 +16,40 @@
 
     <section id="profil">
         {% if app.user.avatar %}
-            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar">
+            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar" class="width100">
             <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
         {% else %}
-            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar">
+            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar" class="width100">
             <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
         {% endif %}
-        <nav>
-            <a href="{{path('app_profil')}}">Mes informations</a>
+        <nav class="flex">
+            <a href="{{path('app_profil')}}" class="textBlack">Mes informations</a>
             <a href="">|</a>
-            <a href="{{path('app_subscriptionProfil')}}"><b>Mes abonnements</b></a>
+            <a href="{{path('app_subscriptionProfil')}}" class="textBlack"><b>Mes abonnements</b></a>
             <a href="">|</a>
-            <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+            <a href="{{path('app_libraryProfil')}}" class="textBlack">Ma blibliothèque</a>
             <a href="">|</a>
-            <a href="{{path('app_storyProfil')}}">Mes histoires</a>
+            <a href="{{path('app_storyProfil')}}" class="textBlack">Mes histoires</a>
         </nav>
-        <main>
-            <div class="follows">
+        <main class="flex">
+            <div class="follows  alignCenter textCenter">
                 <div class="follow">
                     <h3>Vous suivez ({{user.follow | length}}):</h3>
                     {% for folo in user.follow %}
-                        <p><a href="{{path('app_profile', {'id':folo.id})}}"><img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}</a></p>
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="follows">
+            <div class="follows alignCenter  textCenter">
                 <div class="follow">
                     <h3>Vos abonnés ({{user.isFollow | length}}):</h3>
                     {% for folo in user.isFollow %}
-                        <p><a href="{{path('app_profile', {'id':folo.id})}}"><img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}</a></p>
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
                     {% endfor %}
                 </div>
             </div>

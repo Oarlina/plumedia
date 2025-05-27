@@ -7,297 +7,185 @@
     --myPink: #f7e7ed;
     --myPurple: #dcd8f3;
     --myGrey: #e0e0e0; 
+    --myWhite: #fefefe;
+
 }
-
-body {
-    width: 100%;
-    /* pour les couleurs de textes */
-    .textPurple{
-        color: var(--myPurple);
+/* pour les couleurs de textes*/
+.textPurple{color: var(--myPurple);}
+.textPink{color: var(--myPink);}
+.textGrey{color: var(--myGrey);}
+.textBlack{color: black;}
+/* couleur de fonds */
+.backgroundPink{background-color: var(--myPink);}
+.backgroundGrey{background-color: var(--myGrey);}
+.backgroundWhite{background-color: var(--myWhite);}
+.backgroundPurple{background-color: var(--myPurple);}
+/* petit css */
+.textCenter{text-align: center;}
+.width100{width: 100%;}
+.noBorder, #profil .rightContainer input{border: none;}
+/* display principaux */
+.flex{display: flex;}
+.alignCenter{align-items: center;}
+.flexDirectionRow{flex-direction: row;}
+.flexDirectionCollumn{flex-direction: column;}
+a{
+    text-decoration: none;
+    height: fit-content;
+}
+header nav{
+    height: 60px;
+    justify-content: space-around;
+    .logo{
+        height: 80%;
     }
-    .backgroundPurple{
-        background-color: var(--myPurple);
+}
+/* ceci est pour les boutons */
+.bouton{
+    margin: 5px;
+    text-decoration: none;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-shadow: 0 8px 8px var(--myPurple);
+}
+/* ceci est pour les liens qui ne seront pas des boutons */
+.linkBtn{
+    font-size: large;
+}
+/* gère la page d'inscription et de connexion */
+.ConnectContainer{
+    margin: 10% auto;
+    width: 80%;
+    height: fit-content;
+    .registerContainer .left, .loginContainer .right{
+            width: 50%;
     }
-    .textPink{
-        color: var(--myPink);
+    .registerContainer .right{
+        border-radius: 0 15% 15% 0 ;
     }
-    .textGrey{
-        color: var(--myGrey);
+    .loginContainer .left{
+            border-radius:  15% 0 0 15%;
+        }
+}
+/* ceci est pour la page d'acceuil */
+#home h1,#home h3{
+    margin: 10px auto;
+    width: 20%;
+    font-size: xx-large;
+}
+/* ceci est pour la page de profil d'un utilisateur */
+#profil{
+    #bigAvatar{
+        height: 35vh;
+        position: relative;
+        object-position: center;
+        object-fit: cover;
     }
-    a{
-        text-decoration: none;
-        color: #000;
+    #littleAvatar{
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        top: 100px; left: 50px;
+        border-radius: 100px;
+        box-shadow: 4px 2px var(--myPurple);
     }
-
-    header{
-        width: 100%;
-        nav{
-            width: 100%;
-            height: 60px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background-color: var(--myPink);
+    nav{
+        width: 80%;
+        height: 50px;
+        margin: 0 auto;
+        justify-content: space-around;
+    }
+    main{
+        .leftContainer{
+            width: 15%;
+            a {line-height: 35px;}
+        }
+        .rightContainer{
+            width: 70%;
+            margin: 0 auto;
+            #infos, #lessFifteen, #modifierMdp{
+                border-radius: 15px;
+                margin: 10px 0;
+                padding: 10px;
+                h3 {margin-left: 70px ;}
+                input{
+                    border-radius: 10px;
+                    margin: 10px;
+                    padding: 5px 10px;
+                }
+                .submit {margin: 0 45% 10px 45%;}
+                .details{
+                    font-size: smaller;
+                    margin-left: 20px ;
+                }
+            }
+            #lessFifteen p {margin: 15px 30px;}
+        }
+        .follows{
+            width: 50%;
+            .follow{
+                width: 80%;
+                justify-content: center;
+            }
             a{
-                height: fit-content;
-            }
-            .logo{
-                height: 80%;
-            }
-        }
-    }
-    /* ceci est pour les boutons */
-    .bouton{
-        margin: 5px;
-        text-decoration: none;
-        color: black;
-        width: fit-content;
-        padding: 5px 10px;
-        /* background-color: white; */
-        border-radius: 10px;
-        box-shadow: 0 8px 8px var(--myPurple);
-    }
-    /* ceci est pour les liens qui ne seront pas des boutons */
-    .linkBtn{
-        color: black;
-        font-size: large;
-    }
-    /* .wrapper{ */
-        /* gère la page d'inscription */
-        .registerContainer{
-            margin: 10% auto;
-            width: 80%;
-            height: fit-content;
-            display: flex;
-            flex-direction: row;
-            
-            .left, .right{
-                width: 50%;
-                text-align: center;
-                align-items: center;
-            }
-            .right{
-                background-color: var(--myPink);
-                border-radius: 0 15% 15% 0 ;
-            }
-        }
-        /* gère la page de connexion */
-        .loginContainer{
-            margin: 10% auto;
-            width: 80%;
-            height: fit-content;
-            display: flex;
-            flex-direction: row;
-            
-            .left, .right{
-                width: 50%;
-                text-align: center;
-                align-items: center;
-            }
-            .left{
-                background-color: var(--myPink);
-                border-radius:  15% 0 0 15%;
-            }
-        }
-        /* ceci est pour la pagfe d'acceuil */
-        #home{
-            h1{
-                margin: 10px auto;
-                width: 20%;
-                text-align: center;
-                font-size: xx-large;
-            }
-            h3{
-                margin: 10px auto;
-                width: 20%;
-                text-align: center;
-            }
-            button{
-                background-color: var(--myPurple);
-                border-radius:12%;
-                a{
-                    margin: 10px 15px;
+                justify-content: center;
+                .otherAvatar{
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
                 }
             }
         }
-        /* ceci est pour la page de profil d'un utilisateur */
-        #profil{
-            #bigAvatar{
-                width: 100%;
-                height: 35vh;
-                position: relative;
-                object-position: center;
-                object-fit: cover;
-            }
-            #littleAvatar{
+        .stories{
+            width: 80%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+            .story{
                 width: 200px;
-                height: 200px;
-                position: absolute;
-                top: 100px; left: 50px;
-                border-radius: 100px;
-                background-color: white;
-                box-shadow: 4px 2px var(--myPurple);
+                height: 400px;
+                margin: 15px;
+                img{
+                    height: 75%;
+                    border-radius: 5%;
+                }
+                p{
+                    margin: 0 auto;
+                } 
             }
+        }
+    }
+}
+/* ceci est pour la page de toutes les categories */
+#categories{
+    h1 {margin: 15px 0 ;}
+    main{
+        .left{
+            width: 20%;
+            a {margin: 3px auto;}
+        }
+        .right {width: 80%;}
+    }
+}
+/* c'est pour la page de description d'une histoire */
+#detailStory{
+    h1 {margin: 10px 5px;}
+    main{
+        text-align: justify;
+        img{
+            margin: 30px 5px 0 5px;
+            width: 24%;
+            height: fit-content;
+            border-radius: 5px;
+        }
+        .right{
+            width: 75%;
             nav{
-                width: 80%;
-                height: 50px;
-                margin: 0 auto;
-                display: flex;
+                border-bottom: dashed;
                 justify-content: space-around;
             }
-            #infosOut{
-                h2{
-                    text-align: center;
-                }
-            }
-            main{
-                display: flex;
-                flex-direction: row;
-                .leftContainer{
-                    /* height: 200vh; */
-                    width: 15%;
-                    text-align: center;
-                    a{
-                        line-height: 35px;
-                    }
-                }
-                .rightContainer{
-                    width: 70%;
-                    margin: 0 auto;
-                    #infos, #lessFifteen, #modifierMdp{
-                        background-color: rgb(244, 242, 242);
-                        border-radius: 15px;
-                        margin: 10px 0;
-                        padding: 10px;
-                        h3{
-                            margin-left: 70px ;
-                        }
-                        input{
-                            border-radius: 10px;
-                            margin: 10px;
-                            padding: 5px 10px;
-                            border: none;
-                        }
-                        .submit{
-                            background-color: var(--myPurple);
-                            margin: 0 45% 10px 45%;
-                        }
-                        .details{
-                            font-size: smaller;
-                            margin-left: 20px ;
-                        }
-                    }
-                    #lessFifteen{
-                        p{
-                            margin: 15px 30px;
-                        }
-                    }
-                }
-                .follows{
-                    width: 50%;
-                    text-align: center;
-                    .follow{
-                        width: 80%;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    p{
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        .otherAvatar{
-                            width: 80px;
-                            height: 80px;
-                            border-radius: 50%;
-                        }
-                    }
-                }
-
-                .stories{
-                    width: 80%;
-                    margin: 0 auto;
-                    display: flex;
-                    flex-direction: row;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    .story{
-                        width: 200px;
-                        height: 400px;
-                        text-align: center;
-                        margin: 15px;
-                        img{
-                            height: 75%;
-                            border-radius: 5%;
-                        }
-                        p{
-                            margin: 0 auto;
-                        }
-                        
-                    }
-                }
-
-            }
-
-
+            p {margin: 5px 0;}
         }
-
-        #categories{
-            width: 100%;
-            h1{
-                text-align: center;
-                margin: 15px 0 ;
-            }
-            main{
-                display: flex;
-                flex-direction: row;
-
-                .left{
-                    width: 20%;
-                    background-color: var(--myGrey);
-                    display: flex;
-                    flex-direction: column;
-                    a{
-                        margin: 3px auto;
-                    }
-                }
-                .right{
-                    width: 80%;
-                }
-            }
-        }
-
-        #detailStory{
-            h1{
-                margin: 10px 5px;
-            }
-            main{
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                text-align: justify;
-                
-                img{
-                    margin: 30px 5px 0 5px;
-                    width: 24%;
-                    height: fit-content;
-                    border-radius: 5px;
-                }
-                .right{
-                    width: 75%;
-                    nav{
-                        width: 100%;
-                        border-bottom: dashed;
-                        text-align: center;
-                        display: flex;
-                        justify-content: space-around;
-                    }
-                    p{
-                        margin: 5px 0;
-                    }
-                }
-            }
-            aside{
-                
-            }
-        }
+    }
 }

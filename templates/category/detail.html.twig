@@ -4,13 +4,13 @@
 
 {% block body %}
         <h1>{{category.name}}</h1>
-    <a href="{{path('app_category')}}"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
+        <a href="{{path('app_category')}}"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
         <main>
             {% if category.stories |length <1 %}
                 <p>Aucune histoire dans cette catégorie</p>
             {% else %}
                 {% for story in category.stories %}
-                    <p>{{story.name}}</p>
+                    <p class="textBlack bouton">{{story.name}}</p>
                 {% endfor %}
             {% endif %}
         </main>

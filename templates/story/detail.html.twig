@@ -7,31 +7,30 @@
 
 <section id="detailStory">
     <h1>{{story.name}}</h1>
-    <main>
+    <main class="width100 flex flexDirectionRow">
         <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
         
         <div class="right">
-            <nav>
-                <a href="{{path('detail_story', {'id' : story.id})}}"><b>Description</b></a>
-                <a href="">Chapitres</a>
-                <a href="">Recommendations</a>
+            <nav class="textCenter width100 flex flexDirectionRow">
+                <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack"><b>Description</b></a>
+                <a href="" class="textBlack">Chapitres</a>
+                <a href="" class="textBlack">Recommendations</a>
             </nav>
             <div class="top">
                 <a href="">{{story.usersLike | length}} 
                     {% if app.user  in story.usersLike %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}"><i class="fa-solid fa-heart"></i></a>
+                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="textBlack"><i class="fa-solid fa-heart"></i></a>
                     {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}"><i class="fa-regular fa-heart"></i></a>
+                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="textBlack"><i class="fa-regular fa-heart"></i></a>
                     {% endif %}
                 </a>
                 <a href="">{{story.usersFollow | length}}
                     {% if app.user  in story.usersFollow %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}"><i class="fa-solid fa-minus"></i></a>
+                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="textBlack"><i class="fa-solid fa-minus"></i></a>
                     {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}"><i class="fa-solid fa-plus"></i></a>
+                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="textBlack"><i class="fa-solid fa-plus"></i></a>
                     {% endif %}
                 </a>
-                <a href="">nb abonner</a>
             </div>
             <p><u>Auteur :</u> {{story.person.pseudo}}</p>
             <p><u>Genres :</u> 
