@@ -24,7 +24,7 @@
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
-            <nav class="flex">
+            <nav class="flex justifyContent">
                 <a href="{{path('app_profil')}}" class="textBlack"><b>Mes informations</b></a>
                 <p>|</p>
                 <a href="{{path('app_subscriptionProfil')}}" class="textBlack">Mes abonnements</a>
@@ -60,7 +60,7 @@
         {% endif %}
         {# le reste de la page #}
         {% if app.user and user.id == app.user.id %}
-            <main class="flex">
+            <main class="flex ">
                 <section class="leftContainer textCenter">
                     <a href="#infos"class="textBlack">Editer mes informations</a> <br>
                     <a href="#lessFifteen"class="textBlack">J'ai plus de 15 ans</a><br>

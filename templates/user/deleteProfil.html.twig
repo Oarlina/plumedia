@@ -16,41 +16,41 @@
     
     <section id="profil">
         {% if user.avatar %}
-            <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar">
+            <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
             <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
         {% else %}
-            <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar">
+            <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
             <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
-            <nav>
-                <a href="{{path('app_profil')}}"><b>Mes informations</b></a>
+            <nav class="flex justifyContent">
+                <a href="{{path('app_profil')}}" class="textBlack"><b>Mes informations</b></a>
                 <a href="">|</a>
-                <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
+                <a href="{{path('app_subscriptionProfil')}}" class="textBlack">Mes abonnements</a>
                 <a href="">|</a>
-                <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+                <a href="{{path('app_libraryProfil')}}" class="textBlack">Ma blibliothèque</a>
                 <a href="">|</a>
-                <a href="{{path('app_storyProfil')}}">Mes histoires</a>
+                <a href="{{path('app_storyProfil')}}" class="textBlack">Mes histoires</a>
             </nav>
         {% endif %}
         
         {# le reste de la page #}
         {% if app.user and user.id == app.user.id %}
-            <main>
+            <main class="flex">
                 <section class="leftContainer">
-                    <a href="#infos">Editer mes informations</a> <br>
-                    <a href="#lessFifteen">J'ai plus de 15 ans</a><br>
-                    <a href="#modifierMdp">Modifier mon mot de passe</a>
+                    <a href="#infos" class="textBlack">Editer mes informations</a> <br>
+                    <a href="#lessFifteen" class="textBlack">J'ai plus de 15 ans</a><br>
+                    <a href="#modifierMdp" class="textBlack">Modifier mon mot de passe</a>
                     <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
 
                     {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
-                        <a href="{{path('app_users')}}">Liste des utilisateurs</a> <br>
-                        <a href="{{path('admin')}}">Panneau admin</a>
+                        <a href="{{path('app_users')}}" class="textBlack">Liste des utilisateurs</a> <br>
+                        <a href="{{path('admin')}}" class="textBlack">Panneau admin</a>
                     {% endif %}
                 </section>
                 
-                <section class="rightContainer">
+                <section class="rightContainer #delete">
                     <h1>Suppression de compte en cours</h1>
 
                     <p>Votre compte sera <b>désactivé immédiatement</b>, mais vos données seront conservés pendant 30 jours.  </p>
@@ -62,8 +62,8 @@
                         <li>Vous ne pourrez plus accédez à vos informations et vos contenus.</li>
                         <li>Toute vos données personnelles seront <b>anonymisées</b> de manière iréversible.</li>
                     </ol>
-                    <p>Nous respectons votre vie privée. Si vous avez des questions n'hésitez pas à nous contactez.</p>
-                    <a href="{{path('delete_account', {'user': user.id, 'bool': 1})}}" style="background-color:red"class="bouton">Supprimer mon compte</a>
+                    <p>Nous respectons votre vie privée. Si vous avez des questions n'hésitez pas à nous contactez.</p> <br>
+                    <a href="{{path('delete_account', {'user': user.id, 'bool': 1})}}" style="background-color:red" class="bouton textBlack">Supprimer mon compte</a>
                 </section>
             </main>
         {% endif %}

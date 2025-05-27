@@ -3,7 +3,7 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<section class="registerContainer ConnectContainer flex ">
+<section id="registerContainer" class=" ConnectContainer flex ">
     {# pour la gestion d'erreur #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -17,17 +17,19 @@
             <h1>Inscription</h1>
             {{ form_start(registrationForm) }}
                 {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.pseudo) }}
                 {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
+                {{ form_row(registrationForm.avatar) }}
                 {{ form_row(registrationForm.agreeTerms) }}
                 {{ form_end(registrationForm) }}
-            <button><a href="/connect/google" class="textBlack">S'inscrire avec google</a></button>
+            <a href="/connect/google" class="bouton backgroundPink textBlack">S'inscrire avec google</a>
         </div>
         <div class="right container textCenter backgroundPink">
             <h3>Bienvenue ! </h3>
             <p>Déjà un compte ?</p>
-            <p><a href="{{ path('app_login')}}" class="linkBtn textBlack">Me connecter</a></p>
+            <p><a href="{{ path('app_login')}}" class="bouton backgroundWhite textBlack">Me connecter</a></p>
         </div>
-
     </section>
-    {# {{ recaptcha3_get_script() }} ce script est INDISPENSABLE pour V3 #}
+
+
 {% endblock %}

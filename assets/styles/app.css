@@ -20,60 +20,51 @@
 .backgroundGrey{background-color: var(--myGrey);}
 .backgroundWhite{background-color: var(--myWhite);}
 .backgroundPurple{background-color: var(--myPurple);}
-/* petit css */
-.textCenter{text-align: center;}
-.width100{width: 100%;}
-.noBorder, #profil .rightContainer input{border: none;}
 /* display principaux */
 .flex{display: flex;}
 .alignCenter{align-items: center;}
 .flexDirectionRow{flex-direction: row;}
 .flexDirectionCollumn{flex-direction: column;}
+.justifyContent {justify-content: space-around;}
+/* petit css */
+.textCenter{text-align: center;}
+.width100{width: 100%;}
+.noBorder, #profil .rightContainer input{border: none;}
+.follows, .follow, #registerContainer .left, #registerContainer .right, #loginContainer .right{ width: 50%;}
+.ConnectContainer, #home h1, #home h3 {margin: 10% auto;}
+.ConnectContainer, #profil .stories, #profil .rightContainer, #categories .right {width: 80%;}
 a{
+    display: inline-block; 
     text-decoration: none;
     height: fit-content;
 }
 header nav{
-    height: 60px;
+    height: 50px;
     justify-content: space-around;
-    .logo{
-        height: 80%;
-    }
+    .logoSite {height: 90%;}
 }
 /* ceci est pour les boutons */
 .bouton{
-    margin: 5px;
-    text-decoration: none;
-    width: fit-content;
+    
     padding: 5px 10px;
     border-radius: 10px;
     box-shadow: 0 8px 8px var(--myPurple);
 }
 /* ceci est pour les liens qui ne seront pas des boutons */
-.linkBtn{
-    font-size: large;
-}
+.linkBtn {font-size: large;}
 /* gère la page d'inscription et de connexion */
 .ConnectContainer{
-    margin: 10% auto;
-    width: 80%;
-    height: fit-content;
-    .registerContainer .left, .loginContainer .right{
-            width: 50%;
-    }
-    .registerContainer .right{
-        border-radius: 0 15% 15% 0 ;
-    }
-    .loginContainer .left{
-            border-radius:  15% 0 0 15%;
-        }
+    .left, .right {padding: 10px;}
 }
+#registerContainer .right {border-radius: 0 15% 15% 0 ;}
+#loginContainer .left {border-radius:  15% 0 0 15%;}
 /* ceci est pour la page d'acceuil */
 #home h1,#home h3{
-    margin: 10px auto;
     width: 20%;
     font-size: xx-large;
 }
+
+#infos, #lessFifteen, #modifierMdp, input, button, .details {margin: 15px;}
 /* ceci est pour la page de profil d'un utilisateur */
 #profil{
     #bigAvatar{
@@ -87,59 +78,43 @@ header nav{
         height: 200px;
         position: absolute;
         top: 100px; left: 50px;
-        border-radius: 100px;
+        border-radius: 100%;
         box-shadow: 4px 2px var(--myPurple);
-    }
-    nav{
-        width: 80%;
-        height: 50px;
-        margin: 0 auto;
-        justify-content: space-around;
     }
     main{
         .leftContainer{
-            width: 15%;
+            width: 20%;
             a {line-height: 35px;}
         }
         .rightContainer{
-            width: 70%;
-            margin: 0 auto;
             #infos, #lessFifteen, #modifierMdp{
-                border-radius: 15px;
-                margin: 10px 0;
+                border-radius: 10px;
                 padding: 10px;
                 h3 {margin-left: 70px ;}
                 input{
                     border-radius: 10px;
-                    margin: 10px;
                     padding: 5px 10px;
                 }
                 .submit {margin: 0 45% 10px 45%;}
                 .details{
                     font-size: smaller;
-                    margin-left: 20px ;
                 }
             }
-            #lessFifteen p {margin: 15px 30px;}
         }
         .follows{
-            width: 50%;
             .follow{
-                width: 80%;
                 justify-content: center;
             }
-            a{
-                justify-content: center;
+            a {
                 .otherAvatar{
-                    width: 80px;
-                    height: 80px;
-                    border-radius: 50%;
+                        width: 40%;
+                        height: 40%;
+                        border-radius: 50%;
                 }
             }
         }
+        .stories, .story p {margin: 0 auto;}
         .stories{
-            width: 80%;
-            margin: 0 auto;
             flex-wrap: wrap;
             justify-content: center;
             .story{
@@ -150,13 +125,11 @@ header nav{
                     height: 75%;
                     border-radius: 5%;
                 }
-                p{
-                    margin: 0 auto;
-                } 
             }
         }
     }
 }
+
 /* ceci est pour la page de toutes les categories */
 #categories{
     h1 {margin: 15px 0 ;}
@@ -165,7 +138,6 @@ header nav{
             width: 20%;
             a {margin: 3px auto;}
         }
-        .right {width: 80%;}
     }
 }
 /* c'est pour la page de description d'une histoire */
@@ -175,7 +147,7 @@ header nav{
         text-align: justify;
         img{
             margin: 30px 5px 0 5px;
-            width: 24%;
+            width: 25%;
             height: fit-content;
             border-radius: 5px;
         }

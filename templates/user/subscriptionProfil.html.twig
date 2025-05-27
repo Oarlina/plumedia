@@ -22,7 +22,7 @@
             <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar" class="width100">
             <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
         {% endif %}
-        <nav class="flex">
+        <nav class="flex justifyContent">
             <a href="{{path('app_profil')}}" class="textBlack">Mes informations</a>
             <a href="">|</a>
             <a href="{{path('app_subscriptionProfil')}}" class="textBlack"><b>Mes abonnements</b></a>
@@ -33,8 +33,23 @@
         </nav>
         <main class="flex">
             <div class="follows  alignCenter textCenter">
-                <div class="follow">
+                <div class="follow flex  flexDirectionCollumn">
                     <h3>Vous suivez ({{user.follow | length}}):</h3>
+                    {% for folo in user.follow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
+                    {% for folo in user.follow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
+                    {% for folo in user.follow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
                     {% for folo in user.follow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
@@ -44,8 +59,23 @@
             </div>
 
             <div class="follows alignCenter  textCenter">
-                <div class="follow">
+                <div class="follow flex flexDirectionCollumn">
                     <h3>Vos abonnés ({{user.isFollow | length}}):</h3>
+                    {% for folo in user.isFollow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
+                    {% for folo in user.isFollow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
+                    {% for folo in user.isFollow %}
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                        </a>
+                    {% endfor %}
                     {% for folo in user.isFollow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}

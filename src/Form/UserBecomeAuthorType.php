@@ -33,7 +33,7 @@ class UserBecomeAuthorType extends AbstractType
                     'mapped' => false
                 ])
             ->add('agreeTerms', CheckboxType::class, ['mapped' => false, "label" => 'Accepter les conditions d\'écrivains'])
-            ->add('Submit', SubmitType::class, ['label' => 'Envoyer'])
+            ->add('Submit', SubmitType::class, ['label' => 'Envoyer', 'attr' => ['class' => 'backgroundPink']] )
         ;
     }
 

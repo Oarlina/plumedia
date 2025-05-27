@@ -7,8 +7,15 @@
 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<div class="loginContainer ConnectContainer flex">
-    <div class="left container alignCenter textCenter backgroundPink">
+<div id="loginContainer" class="loginContainer ConnectContainer flex">
+    <div class="left container textCenter backgroundPink">
+        <h3>Bienvenue ! </h3>
+        
+        <p>Pas encore de compte ? </p>
+        <a href="{{path('app_register')}}" class="bouton backgroundWhite textBlack">M'inscrire</a>
+    </div>
+
+    <div class="right container alignCenter textCenter">
         <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
         <form method="post">
 
@@ -24,17 +31,11 @@
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
-            <a href="{{ path('app_forgot_password_request')}}" class="linkBtn textBlack">Mot de passe oublié?</a>
-            <button class="btn btn-lg btn-primary" type="submit">Me connecter</button>
-            <button><a href="/connect/google" class="textBlack">Se connecter avec google</a></button>
+            <button class="bouton textBlack backgroundPink noBorder" type="submit">Me connecter</button> <br>
+            <a href="{{ path('app_forgot_password_request')}}" class="textBlack noBorder">Mot de passe oublié?</a> <br>
+            <a href="/connect/google" class="bouton textBlack backgroundPink noBorder">Se connecter avec google</a>
         </form>
     </div>
-    </p>
-    <div class="right container textCenter">
-        <h3>Bienvenue ! </h3>
-        
-        <p>Pas encore de compte ? </p>
-        <a href="{{path('app_register')}}" class="bouton textBlack">M'inscrire</a>
-    </div>
+    
 </div>
 {% endblock %}
