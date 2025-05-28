@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StoryController!{% endblock %}
+{% block title %}Desciption histoire{% endblock %}
 
 {% block body %}
                 {# {{dump(story.usersLike )}} #}
@@ -13,7 +13,7 @@
         <div class="right">
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack"><b>Description</b></a>
-                <a href="" class="textBlack">Chapitres</a>
+                <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
                 <a href="" class="textBlack">Recommendations</a>
             </nav>
             <div class="top">

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StoryController!{% endblock %}
+
+{% block body %}
+                {# {{dump(file)}} #}
+
+<section id="detailStory">
+    <h1>{{story.name}}</h1>
+    <main class="width100 flex flexDirectionRow">
+        <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
+        
+        <div class="right">
+            <nav class="textCenter width100 flex flexDirectionRow">
+                <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack">Description</a>
+                <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack"><b>Chapitres</b></a>
+                <a href="" class="textBlack">Recommendations</a>
+            </nav>
+            <div class="top">
+                {% if app.user and app.user.id == story.person.id %}
+                    <a href="" class="textBlack bouton backgroundPurple">Ajouter un chapitre</a>
+                {% endif %}
+
+                {# on verife qu'il y a des chapitres #}
+                {% if chapters %}
+                    
+                {% else %}
+                    <p>Il n'y a pas encore de chapitres patienté ! </p>
+                {% endif %}
+
+                {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
+                <iframe src="{{ asset('uploads/chapters/tableau-question.pdf') }}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe>
+            
+                {# <object type="application/PDF" name="PDF" id="PDF" data="{{ asset('uploads/chapters/tableau-question.pdf') }}" width="700px" height="1000px"/> #}
+                {# </object> #}
+
+                
+            {# <object data="{{ asset('uploads/chapters/tableau-question.pdf') }}"  type="application/pdf" width="80%" height="500px">
+            <p>It appears your Web browser is not configured to display PDF files.
+                No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a>
+            </p>
+ 
+        </object> #}
+            
+            
+            
+            </div>
+    </main>
+</section>
+{% endblock %}

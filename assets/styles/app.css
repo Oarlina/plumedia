@@ -30,9 +30,9 @@
 .textCenter{text-align: center;}
 .width100{width: 100%;}
 .noBorder, #profil .rightContainer input{border: none;}
-.follows, .follow, #registerContainer .left, #registerContainer .right, #loginContainer .right{ width: 50%;}
+.follows, .follow, #registerContainer .left, #registerContainer .right, #loginContainer .right, #loginContainer .left{ width: 50%;}
 .ConnectContainer, #home h1, #home h3 {margin: 10% auto;}
-.ConnectContainer, #profil .stories, #profil .rightContainer, #categories .right {width: 80%;}
+.ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
 a{
     display: inline-block; 
     text-decoration: none;
@@ -113,25 +113,12 @@ header nav{
                 }
             }
         }
-        .stories, .story p {margin: 0 auto;}
-        .stories{
-            flex-wrap: wrap;
-            justify-content: center;
-            .story{
-                width: 200px;
-                height: 400px;
-                margin: 15px;
-                img{
-                    height: 75%;
-                    border-radius: 5%;
-                }
-            }
-        }
+        
     }
 }
 
 /* ceci est pour la page de toutes les categories */
-#categories{
+.categories{
     h1 {margin: 15px 0 ;}
     main{
         .left{
@@ -161,3 +148,18 @@ header nav{
         }
     }
 }
+
+.stories, .story p {margin: 0 auto;}
+        .stories{
+            flex-wrap: wrap;
+            justify-content: center;
+            .story{
+                width: 200px;
+                height: 400px;
+                margin: 15px;
+                img{
+                    height: 75%;
+                    border-radius: 5%;
+                }
+            }
+        }

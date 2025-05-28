@@ -3,15 +3,34 @@
 {% block title %}{{category.name}}{% endblock %}
 
 {% block body %}
-        <h1>{{category.name}}</h1>
-        <a href="{{path('app_category')}}"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
-        <main>
-            {% if category.stories |length <1 %}
-                <p>Aucune histoire dans cette catégorie</p>
-            {% else %}
-                {% for story in category.stories %}
-                    <p class="textBlack bouton">{{story.name}}</p>
+    <section class="categories" class="width100">
+        <h1 class="textCenter">{{category.name}}</h1>
+        <a href="{{path('app_category')}}" class="textBlack"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
+        
+        <main class="flex flexDirectionRow">
+            <div class="left backgroundGrey flex flexDirectionCollumn">
+                <a href="" class="textBlack">Tous</a>
+                {% for cat in categories %}
+                    {% if cat.name == category.name %}
+                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack"><b>{{cat.name}}</b> </a>
+                    {% else %}
+                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack">{{cat.name}} </a>
+                    {% endif %}
                 {% endfor %}
-            {% endif %}
+            </div>
+            <div class="right stories flex flexDirectionRow">
+                {% if category.stories |length <1 %}
+                    <p>Aucune histoire dans cette catégorie</p>
+                {% else %}
+                    {% for story in category.stories %}
+                        <div class="story textCenter">
+                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                            <p class="textBlack">{{story.name}}</p>
+                            <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </main>
+    </section>
 {% endblock %}

@@ -2,17 +2,27 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Story;
+use App\Repository\ChapterRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ChapterController extends AbstractController
 {
-    #[Route('/chapter', name: 'app_chapter')]
-    public function index(): Response
+    public function __construct(
+        private ChapterRepository $chapterRepository,
+        private EntityManagerInterface $entityManager
+    ) {
+    }
+    #[Route('/chapitre/{idStory}', name: 'chapterForStory')]
+    public function chapterForStory(Story $idStory): Response
     {
-        return $this->render('chapter/index.html.twig', [
-            'controller_name' => 'ChapterController',
+        $chapters = $this->chapterRepository->findBy(['story' => $idStory->getId()]);
+
+        return $this->render('story/chapters.html.twig', [
+            'chapters' => $chapters, 'story' => $idStory
         ]);
     }
 }

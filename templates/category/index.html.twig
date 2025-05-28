@@ -3,21 +3,28 @@
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <section id="categories" class="width100">
+    <section class="categories" class="width100">
         <h1 class="textCenter">Catégories</h1>
 
         <main class="flex flexDirectionRow">
             <div class="left backgroundGrey flex flexDirectionCollumn">
-            <a href="" class="textBlack">Tous</a>
+            <a href="" class="textBlack"><b>Tous</b></a>
             {% for category in categories %}
-                {% if category.name != "FAQ" %}
                 <a href="{{path('category', {'id': category.id})}}"class="textBlack">{{category.name}} </a>
-                {% endif %}
             {% endfor %}
         </div>
-        <div class="right">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat saepe debitis eius minus, labore ullam atque earum magni blanditiis adipisci maxime distinctio iure neque hic at omnis eligendi magnam provident.
-            Praesentium perferendis aliquid consectetur magni placeat eos voluptatibus illo, ut sed accusantium aliquam magnam qui consequatur, deserunt dolores facere porro dolorum sapiente itaque rerum dolor. Itaque hic omnis veniam exercitationem!</p>
+        <div class="right stories flex flexDirectionRow">
+            {% if stories %}
+                {% for story in stories %}
+                    <div class="story textCenter">
+                        <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                        <p>{{story.name}}</p>
+                        <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Aucune histoires !</p>
+            {% endif %}
         </div>
         </main>
     </section>

@@ -56,7 +56,7 @@ final class StoryController extends AbstractController
         return $this->render('story/new.html.twig', ['form' => $form]);
     }
 
-    #[Route(path:'/detail/{id}', name:'detail_story')]
+    #[Route(path:'/description_histoire/{id}', name:'detail_story')]
     public function detail(Story $id): Response{
         return $this->render('story/detail.html.twig', ['story' => $id]);
     }
