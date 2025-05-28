@@ -7,8 +7,8 @@
         <h1 class="textCenter">Catégories</h1>
 
         <main class="flex flexDirectionRow">
-            <div class="left backgroundGrey flex flexDirectionCollumn">
-            <a href="" class="textBlack"><b>Tous</b></a>
+            <div class="left flex flexDirectionCollumn">
+            <a href="" class="textBlack larger bouton backgroundGrey"><b>Tous</b></a>
             {% for category in categories %}
                 <a href="{{path('category', {'id': category.id})}}"class="textBlack">{{category.name}} </a>
             {% endfor %}
@@ -20,6 +20,7 @@
                         <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
                         <p>{{story.name}}</p>
                         <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                        <p class="summary backgroundWhite">{{story.summary}}</p>
                     </div>
                 {% endfor %}
             {% else %}

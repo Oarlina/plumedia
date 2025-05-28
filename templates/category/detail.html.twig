@@ -8,11 +8,11 @@
         <a href="{{path('app_category')}}" class="textBlack"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
         
         <main class="flex flexDirectionRow">
-            <div class="left backgroundGrey flex flexDirectionCollumn">
-                <a href="" class="textBlack">Tous</a>
+            <div class="left flex flexDirectionCollumn">
+                <a href="{{path('app_category')}}" class="textBlack">Tous</a>
                 {% for cat in categories %}
                     {% if cat.name == category.name %}
-                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack"><b>{{cat.name}}</b> </a>
+                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
                     {% else %}
                     <a href="{{path('category', {'id': cat.id})}}"class="textBlack">{{cat.name}} </a>
                     {% endif %}
@@ -27,6 +27,8 @@
                             <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
                             <p class="textBlack">{{story.name}}</p>
                             <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                            <p class="summary backgroundWhite">{{story.summary}}</p>
+
                         </div>
                     {% endfor %}
                 {% endif %}

@@ -9,13 +9,15 @@
     <h1>{{story.name}}</h1>
     <main class="width100 flex flexDirectionRow">
         <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-        
+        {# la partie ou il n'y a pas d'image  #}
         <div class="right">
+            {# la nav du haut #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack"><b>Description</b></a>
                 <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
                 <a href="" class="textBlack">Recommendations</a>
             </nav>
+            {# la partie de like + follow #}
             <div class="top">
                 <a href="">{{story.usersLike | length}} 
                     {% if app.user  in story.usersLike %}
@@ -31,16 +33,26 @@
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="textBlack"><i class="fa-solid fa-plus"></i></a>
                     {% endif %}
                 </a>
+                <a href=""></a>
+                <a>
+                    {% if story.isFinish %}
+                        Terminé
+                    {% else %}
+                        En cours
+                    {% endif %}
+                </a>
             </div>
+            {# les informations de l'histoire #}
             <p><u>Auteur :</u> {{story.person.pseudo}}</p>
-            <p><u>Genres :</u> 
-            </p>
+            <p><u>Genres :</u></p>
             <ul>
                 {% for category in story.categories %}
                     <li>{{category.name }}</li>
                 {% endfor %}
             </ul>
+
             <p><u>Hashtags :</u> </p>
+            <p><u>Date de sortie :</u> {{story.createStory | date("d/m/Y")}}</p>
             <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
             <p> <u>Résumé :</u> {{story.summary}}</p>
         </div>
