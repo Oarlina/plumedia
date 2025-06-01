@@ -33,101 +33,24 @@
         </nav>
         {# si le role autheur n'est pas dans les roles alors j'affiche  #}
         {% if app.user and 'ROLE_AUTHOR' not in app.user.roles %}
-        <a href="{{path('form_become_author', {'user' : app.user.id})}}" class="textBlack">Devenir écrivain</a>
+            <a href="{{path('form_become_author', {'user' : app.user.id})}}" class="textBlack">Devenir écrivain</a>
         {% elseif app.user and 'ROLE_AUTHOR' in app.user.roles %}
         
-        {# si l'autheur a des histoires alors je les affiches #}
-        {% if stories | length > 0 %}
-            <a href="{{path('create_story', {'user': app.user.id})}}" class="textBlack">Créer une histoire</a>
             <main class="flex">
-                <section class="stories flex flexDirectionRow">
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                    {% for story in stories %}
-                        <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
-                            <h3>{{story.name}}  </h3>
-                            <p class="bouton backgroundPurple textBlack">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                        </div>
-                    {% endfor %}
-                </section>
+                {# si l'autheur a des histoires alors je les affiches #}
+                {% if stories | length > 0 %}
+                    <a href="{{path('create_story', {'user': app.user.id})}}" class="textBlack">Créer une histoire</a>
+                    <section class="stories flex flexDirectionRow">
+                        {% for story in stories %}
+                            <div class="story textCenter">
+                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
+                                <h3>{{story.name}}  </h3>
+                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        {% endfor %}
+                    </section>
                 {% else %}
-                    <a href="{{path('create_story', {'user': app.user.id})}}">Créer ma première histoire</a>
+                <a href="{{path('create_story', {'user': app.user.id})}}">Créer ma première histoire</a>
                 {% endif %}
             </main>
         {% endif %}

@@ -25,7 +25,7 @@ class Story
     #[ORM\Column]
     private ?bool $isFinish = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -56,7 +56,7 @@ class Story
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'Stories')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'Stories')]
     private Collection $categories;
 
     public function __construct()
@@ -113,7 +113,7 @@ class Story
         return $this->cover;
     }
 
-    public function setCover(string $cover): static
+    public function setCover(?string $cover): static
     {
         $this->cover = $cover;
 

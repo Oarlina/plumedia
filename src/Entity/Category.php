@@ -21,7 +21,7 @@ class Category
     /**
      * @var Collection<int, Story>
      */
-    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Story::class, mappedBy: 'categories')]
     private Collection $Stories;
 
     public function __construct()

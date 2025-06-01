@@ -23,13 +23,22 @@
 
                 {# on verife qu'il y a des chapitres #}
                 {% if chapters %}
-                    
+                    <div class="chapters">
+                        {% for chapter in chapters %}
+                        <div class="chapter">
+                            <p> {{chapter.name}} </p>
+                            <p>{{chapter.publish}}</p>
+                            <p>{{chapter.in_season}}</p>
+                            <p>{{chapter.isFree}}</p>
+                        </div>
+                    {% endfor %}
+                    </div>
                 {% else %}
                     <p>Il n'y a pas encore de chapitres patienté ! </p>
                 {% endif %}
 
                 {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
-                <iframe src="{{ asset('uploads/chapters/tableau-question.pdf') }}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe>
+                {# <iframe src="{{ asset('uploads/chapters/tableau-question.pdf') }}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
             
                 {# <object type="application/PDF" name="PDF" id="PDF" data="{{ asset('uploads/chapters/tableau-question.pdf') }}" width="700px" height="1000px"/> #}
                 {# </object> #}

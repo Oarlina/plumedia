@@ -1,10 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une histoire{% endblock %}
+{% block title %}
+    {% if edit %}   
+        <h1>Modifier mon histoire</h1>
+    {% else %}
+        <h1>Créer une histoire :</h1>
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Créer une histoire :</h1>
+    {% if edit %}
+        <h1>Modifier mon histoire</h1>
+    {% else %}
+        <h1>Créer une histoire :</h1>
+    {% endif %}
 
-    {{ form_start(form) }}
-    {{ form_end(form) }}
+{# {{dump(form.cover)}} #}
+     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+        {{ form_row(form.name) }}
+        {% if  not edit %}
+            {{ form_row(form.cover)}}
+        {% else %}
+            {{ form_widget(form.cover, {'attr': {'style': 'display:none;'}}) }}
+        {% endif %}
+        {{ form_row(form.summary) }}
+        {{ form_row(form.categories) }}
+
+        {{ form_row(form.Submit) }}
+        {{ form_end(form) }} 
+    {# render_rest permet de sortir tout ce qui n'a pas encore été sortie #}
 {% endblock %}
