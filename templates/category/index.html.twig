@@ -3,30 +3,28 @@
 {% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <section class="categories" class="width100">
-        <h1 class="textCenter">Catégories</h1>
+    <h1 class="textCenter">Catégories</h1>
 
-        <main class="flex flexDirectionRow">
-            <div class="left flex flexDirectionCollumn">
-            <a href="" class="textBlack larger bouton backgroundGrey"><b>Tous</b></a>
-            {% for category in categories %}
-                <a href="{{path('show_category', {'idCategory': category.id})}}"class="textBlack">{{category.name}} </a>
+    <main class="flex flexDirectionRow width100 categories">
+        <div class="left flex flexDirectionCollumn">
+        <a href="" class="textBlack larger bouton backgroundGrey"><b>Tous</b></a>
+        {% for category in categories %}
+            <a href="{{path('show_category', {'idCategory': category.id})}}" class="textBlack">{{category.name}} </a>
+        {% endfor %}
+    </div>
+    <div class="right stories flex flexDirectionRow">
+        {% if stories %}
+            {% for story in stories %}
+                <div class="story textCenter">
+                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                    <p>{{story.name}}</p>
+                    <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                    <p class="summary backgroundWhite">{{story.summary}}</p>
+                </div>
             {% endfor %}
-        </div>
-        <div class="right stories flex flexDirectionRow">
-            {% if stories %}
-                {% for story in stories %}
-                    <div class="story textCenter">
-                        <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
-                        <p>{{story.name}}</p>
-                        <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                        <p class="summary backgroundWhite">{{story.summary}}</p>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Aucune histoires !</p>
-            {% endif %}
-        </div>
-        </main>
-    </section>
+        {% else %}
+            <p>Aucune histoires !</p>
+        {% endif %}
+    </div>
+    </main>
 {% endblock %}

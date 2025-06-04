@@ -14,13 +14,21 @@
         {% endfor %}
     {% endfor %}
 
-    <section id="profil">
-        {% if app.user.avatar %}
-            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar" class="width100">
-            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+    <div id="profil">
+        {% if user.avatar %}
+            <picture>
+                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            </picture>
         {% else %}
-            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar" class="width100">
-            <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            </picture>
         {% endif %}
         <nav class="flex justifyContent">
             <a href="{{path('app_profil')}}" class="textBlack">Mes informations</a>
@@ -54,6 +62,6 @@
                 {% endif %}
             </main>
         {% endif %}
-    </section>
+    </div>
 
 {% endblock %}

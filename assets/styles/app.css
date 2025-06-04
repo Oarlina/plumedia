@@ -72,6 +72,7 @@ header nav{
         height: 35vh;
         object-position: center;
         object-fit: cover;
+        overflow: hidden;
     }
     #littleAvatar{
         width: 200px;

@@ -16,11 +16,15 @@
     
     <section id="profil">
         {% if user.avatar %}
-            <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
-            <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
+                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            </picture>
         {% else %}
-            <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
-            <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
+                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            </picture>
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}

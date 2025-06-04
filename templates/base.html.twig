@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') |raw }}{% endblock %}
         {% endblock %}
     </head>
     <body>
@@ -19,8 +18,8 @@
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logoSite backgroundPink"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
                 <a href="{{path('app_category')}}" class="linkBtn textBlack backgroundPink">Catégories</a>
-                <a href="" class="linkBtn textBlack backgroundPink">Calendrier</a>
-                <a href="" class="linkBtn textBlack backgroundPink">Populaires</a>
+                <a href="/.." class="linkBtn textBlack backgroundPink">Calendrier</a>
+                <a href="/.." class="linkBtn textBlack backgroundPink">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
                         <a href="{{path('app_profil')}}" class="bouton textBlack backgroundWhite">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>

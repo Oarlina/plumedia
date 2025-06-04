@@ -3,8 +3,6 @@
 {% block title %}Desciption histoire{% endblock %}
 
 {% block body %}
-                {# {{dump(story.usersLike )}} #}
-
 <section id="detailStory">
     <h1>
         {{story.name}} - 
@@ -39,7 +37,7 @@
                 {# je fais la gestion de follow d'une histoire #}
                 <a href="">{{story.usersFollow | length}}
                     {% if app.user  in story.usersFollow %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}"class="bouton backgroundPink textBlack">Se désabonner</a>
+                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton backgroundPink textBlack">Se désabonner</a>
                     {% else %}
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink textBlack">S'abonner</a>
                     {% endif %}

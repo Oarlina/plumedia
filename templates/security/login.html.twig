@@ -10,17 +10,16 @@
 <div id="loginContainer" class="loginContainer ConnectContainer flex">
     <div class="left container textCenter backgroundPink">
         <h3>Bienvenue ! </h3>
-        
         <p>Pas encore de compte ? </p>
         <a href="{{path('app_register')}}" class="bouton backgroundWhite textBlack">M'inscrire</a>
     </div>
 
     <div class="right container alignCenter textCenter">
-        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+        <h2>Connexion</h2>
         <form method="post">
 
             <label for="inputEmail"></label>
-            <input type="email" name="email" id="inputEmail" class="form-control" autocomplete="pseudo" required autofocus>
+            <input type="email" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
             <label for="inputPassword"></label>
             <input type="password"  name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
         

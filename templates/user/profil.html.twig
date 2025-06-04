@@ -14,13 +14,22 @@
         {% endfor %}
     {% endfor %}
     
-    <section id="profil">
+    <div id="profil">
+        
         {% if user.avatar %}
-            <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
-            <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            </picture>
         {% else %}
-            <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
-            <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            </picture>
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
@@ -36,7 +45,7 @@
         {% endif %}
         {# ce que les autres utilisateur verront #}
         {% if app.user == null or user.id != app.user.id  %}
-            <div id="infosOut">
+            <div id="infosOut"> 
                 <h1 class="textCenter"> {{user.pseudo}} </h1>
                 {# gestion de si l'utilisateur connecter suit la personne ou non #}
                 {% set estSuivi = false %}  
@@ -109,40 +118,40 @@
         {# le reste de la page #}
         {% if app.user and user.id == app.user.id %}
             <main class="flex ">
-                <section class="leftContainer textCenter">
-                    <a href="#infos"class="textBlack">Editer mes informations</a> <br>
-                    <a href="#lessFifteen"class="textBlack">J'ai plus de 15 ans</a><br>
-                    <a href="#modifierMdp"class="textBlack">Modifier mon mot de passe</a>
+                <div class="leftContainer textCenter">
+                    <a href="#infos" class="textBlack">Editer mes informations</a> <br>
+                    <a href="#lessFifteen" class="textBlack">J'ai plus de 15 ans</a><br>
+                    <a href="#modifierMdp" class="textBlack">Modifier mon mot de passe</a>
                     <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
 
                     {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
                         <a href="{{path('app_users')}}" class="textBlack">Liste des utilisateurs</a> <br>
                         <a href="{{path('admin')}}" class="textBlack">Panneau admin</a>
                     {% endif %}
-                </section>
+                </div>
                 
-                <section class="rightContainer">
-                    <div id="infos" class="backgroundGrey">
-                        <h3>Mes informations</h3>
+                <div class="rightContainer">
+                    <section id="infos" class="backgroundGrey">
+                        <h2>Mes informations</h2>
                         <hr>
                         <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>
                         <form action="{{path('changeMailAvatar')}}" method="post" enctype="multipart/form-data">
-                            <label for="">Pseudo :</label>
-                            <input type="text" name="pseudo" value="{{user.pseudo}}"> <br>
+                            <label for="pseudo">Pseudo :</label>
+                            <input type="text" name="pseudo" id="pseudo" value="{{user.pseudo}}"> <br>
 
-                            <label for="">Email (facultatif):</label>
-                            <input type="email" name="email" value="{{user.email}}"> <br>
+                            <label for="email">Email (facultatif):</label>
+                            <input type="email" name="email" id="email" value="{{user.email}}"> <br>
 
-                            <label for="">Avatar :</label>
-                            <input type="file" name="avatar" value="">
+                            <label for="avatar">Avatar :</label>
+                            <input type="file" id="avatar"  name="avatar">
                             <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> <br>
 
                             {# <input type="button" class="submit backgroundPurple" value="Enregistrer"> #}
                             <button  class="submit backgroundPurple noBorder bouton" >Enregistrer</button>
                         </form>
-                    </div>
-                    <div id="lessFifteen" class="backgroundGrey">
-                        <h3>J'ai moins de 15 ans </h3>
+                    </section>
+                    <section id="lessFifteen" class="backgroundGrey">
+                        <h2>J'ai moins de 15 ans </h2>
                         <hr>
                         <p>
                             Conformément aux dispositions de l'article 8 du règlement européen 2016/679 et à la loi informatiue etr libertés, seuls les mineurs âgés de 15 ans ou plus peuvent consentir au traitmeent de leur données personnelles.
@@ -153,32 +162,33 @@
                         <p>
                             Si vous avez moins de 15 ans, récupérez ce formulaire, faites-le remplir par votre représentant légal, scannez-le et téléversez-le dans le champ ci-dessous. 
                         </p>
-                        <form action="">
-                            <input type="file">
+                        <form>
+                            <label for="file">Fichier : </label>
+                            <input type="file" id="file">
                             <p class="details">
                                 Si vous avez moins de 15 ans et que vous ne téléverez pas d'autrorisation de votre représentant légales, Plumédia ne saura être tenu responsble en cas de problème.
                             </p>
                             <input type="button" class="submit backgroundPurple bouton" value="Envoyer">
                         </form>
-                    </div>
-                    <div id="modifierMdp" class="backgroundGrey">
-                        <h3>Modifier mon mot de passe</h3>
+                    </section>
+                    <section id="modifierMdp" class="backgroundGrey">
+                        <h2>Modifier mon mot de passe</h2>
                         <hr>
                         <form action="{{path('changePassword')}}" method="post">
-                            <label for="">Ancien mot de passe : </label>
-                            <input type="password" name="oldPassword"> <br>
+                            <label for="oldPassword">Ancien mot de passe : </label>
+                            <input type="password" id="oldPassword" name="oldPassword"> <br>
 
-                            <label for="">Nouveau mot de passe : </label>
-                            <input type="password" name="newPassword"> <br>
+                            <label for="newPassword">Nouveau mot de passe : </label>
+                            <input type="password" id="newPassword" name="newPassword"> <br>
 
-                            <label for="">Confirmer le nouveau mot de passe : </label>
-                            <input type="password" name="confirmPassword"><br>
+                            <label for="confirmPassword">Confirmer le nouveau mot de passe : </label>
+                            <input type="password" id="confirmPassword" name="confirmPassword"><br>
 
                             <button  class="submit backgroundPurple noBorder bouton" >Enregistrer </button>
                         </form>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </main>
         {% endif %}
-    </section>
+    </div>
 {% endblock %}

@@ -87,7 +87,7 @@ class SecurityController extends AbstractController
             // si l'extension est jpg, jpeg, svg, png ou webp alors je l'enregistre sinon erreur
             if ($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" || $file->guessExtension() == "svg" || $file->guessExtension() == "png" || $file->guessExtension() == "webp"){
                 // je le renomme et recupere l'extension
-                $newFile = 'user-'.uniqid().'.'.$file->guessExtension();
+                $newFile = 'user-'.uniqid().'.avif';
                 $file->move('uploads/user/', $newFile);
 
                 // si l'utilisateur a un avatar alors je supprime le fichier du dossier uploads

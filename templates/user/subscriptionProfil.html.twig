@@ -14,14 +14,22 @@
         {% endfor %}
     {% endfor %}
 
-    <section id="profil">
+    <div id="profil">
         {# deux images du haut #}
-        {% if app.user.avatar %}
-            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="bigAvatar" class="width100">
-            <img src="uploads/user/{{app.user.avatar}}" alt="image avatar" id="littleAvatar"> 
+        {% if user.avatar %}
+            <picture>
+                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            </picture>
         {% else %}
-            <img src="img/avatar_base.png" alt="image faux avatar" id="bigAvatar" class="width100">
-            <img src="img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            <picture>
+                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            </picture>
         {% endif %}
         {# la nav bar du haut #}
         <nav class="flex justifyContent">
@@ -36,27 +44,27 @@
 
         <main class="flex">
             <div class="follows  alignCenter textCenter">
-                <div class="follow flex  flexDirectionCollumn">
-                    <h3>Vous suivez ({{user.follow | length}}):</h3>
+                <section class="follow flex  flexDirectionCollumn">
+                    <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
                         </a>
                     {% endfor %}
-                </div>
+                </section>
             </div>
 
             <div class="follows alignCenter  textCenter">
-                <div class="follow flex flexDirectionCollumn">
-                    <h3>Vos abonnés ({{user.isFollow | length}}):</h3>
+                <section class="follow flex flexDirectionCollumn">
+                    <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
                         </a>
                     {% endfor %}
-                </div>
+                </section>
             </div>
         </main>
-    </section>
+    </div>
 
 {% endblock %}
