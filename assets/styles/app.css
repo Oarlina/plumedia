@@ -46,7 +46,6 @@ header nav{
 }
 /* ceci est pour les boutons */
 .bouton{
-    
     padding: 5px 10px;
     border-radius: 10px;
     box-shadow: 0 8px 8px var(--myPurple);
@@ -131,7 +130,7 @@ header nav{
     h1 {margin: 10px 5px;}
     main{
         text-align: justify;
-        img{
+        .cover{
             margin: 30px 5px 0 5px;
             width: 25%;
             height: fit-content;
@@ -148,7 +147,7 @@ header nav{
     }
 }
 
-.stories, .story p {margin: 0 auto;}
+.stories, .story p{margin: 0 auto;}
 .stories{
     flex-wrap: wrap;
     justify-content: center;

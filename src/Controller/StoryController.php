@@ -23,6 +23,7 @@ final class StoryController extends AbstractController
         private StoryRepository $storyRepository,
     ) {
     }
+    // la liste des histoires
     #[Route('/story', name: 'app_story')]
     public function index(): Response
     {
@@ -30,6 +31,7 @@ final class StoryController extends AbstractController
             'controller_name' => 'StoryController',
         ]);
     }
+    // pour créer ou modifier une histoire
     #[Route(path:'/story/edit/{id}', name:'change_story')]
     #[Route(path:'/story/new/{user}', name:'create_story')]
     public function createStory(User $user = null, Request $request, Story $id = null): Response {
@@ -90,7 +92,7 @@ final class StoryController extends AbstractController
         return $this->render('story/detail.html.twig', ['story' => $id]);
     }
     
-    // Si l'utilisateur veut aimer une histoire
+    // Si l'utilisateur veut aimer/ liker une histoire
     #[Route(path:'/add/{id}/{id2}/{name}', name:'add')]
     public function add(Story $id, User $id2, string $name): Response{
         // j'utilise la fonction pour ajouter soit le like soit le follow 
@@ -101,7 +103,7 @@ final class StoryController extends AbstractController
         // je retourne sur la page detail de l'histoire
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
-    // si l'utilisateur veut arreter d'aimer une histoire
+    // si l'utilisateur veut arreter d'aimer/ liker une histoire
     #[Route(path:'/remove/{id}/{id2}/{name}', name:'remove')]
     public function remove(Story $id, User $id2, string $name): Response{
         // j'utilise la fonction pour retirer soit le like soit le follow
@@ -112,4 +114,25 @@ final class StoryController extends AbstractController
         // je retourne sur la page detail de l'histoire
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
+
+    // si l'auteur veut marquer une histoire en cours, en pause, fini
+    #[Route(path:'/changeFinish/{id}/{make}', name:'changeIsFinish')]
+    public function changeFinish(Story $id, int $make): Response{
+        $id->setIsFinish($make); // le make donne le numéro a set
+
+        // je met a jour la BDD
+        $this->entityManager->persist($id);
+        $this->entityManager->flush();
+        // je retourne sur la page detail de l'histoire
+        return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
+    }
+
+    #[Route(path:'/suggestions/{idStory}', name:'suggestions_story')]
+    public function suggestionsStory (Story $idStory) : Response  {
+
+
+
+        return $this->render('story/suggestions.html.twig', ['story' => $idStory]);
+    }
+    
 }

@@ -23,8 +23,8 @@ class Story
     private ?\DateTimeInterface $createStory = null;
 
     #[ORM\Column]
-    private ?bool $isFinish = null;
-
+    private ?int $isFinish = null;
+    // il pourra valoir 0, 1, 2 pour en cours, terminée et en pause
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
 
@@ -96,12 +96,12 @@ class Story
         return $this;
     }
 
-    public function getIsFinish(): ?bool
+    public function getIsFinish(): ?int
     {
         return $this->isFinish;
     }
 
-    public function setIsFinish(bool $isFinish): static
+    public function setIsFinish(int $isFinish): static
     {
         $this->isFinish = $isFinish;
 

@@ -33,13 +33,13 @@
         </nav>
         {# si le role autheur n'est pas dans les roles alors j'affiche  #}
         {% if app.user and 'ROLE_AUTHOR' not in app.user.roles %}
-            <a href="{{path('form_become_author', {'user' : app.user.id})}}" class="textBlack">Devenir écrivain</a>
+            <a href="{{path('form_become_author', {'user' : app.user.id})}}" class="textBlack bouton backgroundPink">Devenir écrivain</a>
         {% elseif app.user and 'ROLE_AUTHOR' in app.user.roles %}
         
+            <a href="{{path('create_story', {'user': app.user.id})}}" class="textBlack bouton backgroundPink">Créer une histoire</a>
             <main class="flex">
                 {# si l'autheur a des histoires alors je les affiches #}
                 {% if stories | length > 0 %}
-                    <a href="{{path('create_story', {'user': app.user.id})}}" class="textBlack">Créer une histoire</a>
                     <section class="stories flex flexDirectionRow">
                         {% for story in stories %}
                             <div class="story textCenter">

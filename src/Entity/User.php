@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique:true)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     /**
@@ -34,10 +34,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column(nullable:true)]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-     #[ORM\Column]
+    #[ORM\Column]
     private bool $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -61,6 +61,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Story>
      */
+    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Story::class)]
+    private Collection $stories;
+
+    /**
+     * @var Collection<int, Story>
+     */
     #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersLike')]
     #[ORM\JoinTable(name: 'likestory')] // cette ligne permet de renommer le nom de la table 
     private Collection $likedStories;
@@ -76,20 +82,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Chapter>
      */
     #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'usersLike')]
-    #[ORM\JoinTable(name: 'likechapter')]// cette ligne permet de renommer le nom de la table 
+    #[ORM\JoinTable(name: 'likechapter')] // cette ligne permet de renommer le nom de la table 
     private Collection $likedChapters;
 
     /**
      * @var Collection<int, Chapter>
      */
     #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'userHaveRead')]
-    #[ORM\JoinTable(name: 'haveread')]// cette ligne permet de renommer le nom de la table 
+    #[ORM\JoinTable(name: 'haveread')] // cette ligne permet de renommer le nom de la table 
     private Collection $readChapters;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createAccount = null;
-    
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable:true)]
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleteAccount = null;
 
     public function __construct()
@@ -102,73 +108,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->readChapters = new ArrayCollection();
         $this->createAccount = new \DateTimeImmutable();
     }
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
+
     public function getUserIdentifier(): string
     {
         return (string) $this->pseudo;
     }
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
+
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
-    /**
-     * @param list<string> $roles
-     */
+
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
         return $this;
     }
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
+
     public function getPassword(): ?string
     {
         return $this->password;
     }
+
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
-    /**
-     * @see UserInterface
-     */
+
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-     public function isVerified(): bool
+
+    public function isVerified(): bool
     {
         return $this->isVerified;
     }
@@ -176,29 +167,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
-
         return $this;
     }
+
     public function getAvatar(): ?string
     {
         return $this->avatar;
     }
+
     public function setAvatar(?string $avatar): static
     {
         $this->avatar = $avatar;
-
         return $this;
     }
+
     public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
+
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
-
         return $this;
     }
+
     /**
      * @return Collection<int, Story>
      */
@@ -206,183 +199,136 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->stories;
     }
-    public function addStory(Story $story): static
-    {
+
+    public function addStory(Story $story): static {
         if (!$this->stories->contains($story)) {
             $this->stories->add($story);
             $story->setPerson($this);
         }
-
         return $this;
     }
-    public function removeStory(Story $story): static
-    {
+
+    public function removeStory(Story $story):static {
         if ($this->stories->removeElement($story)) {
-            // set the owning side to null (unless already changed)
             if ($story->getPerson() === $this) {
                 $story->setPerson(null);
             }
         }
-
         return $this;
     }
-    public function getUsers(): ?self
-    {
-        return $this->users;
-    }
-    public function setUsers(?self $users): static
-    {
-        $this->users = $users;
 
-        return $this;
-    }
-    public function addUser(self $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setUsers($this);
-        }
-
-        return $this;
-    }
-    public function removeUser(self $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getUsers() === $this) {
-                $user->setUsers(null);
-            }
-        }
-
-        return $this;
-    }
-    /**
-     * @return Collection<int, self>
-     */
-    public function getFollow(): Collection
-    {
+    public function getFollow(): Collection {
         return $this->follow;
     }
+
     public function addFollow(self $follow): static
     {
         if (!$this->follow->contains($follow)) {
             $this->follow->add($follow);
         }
-
         return $this;
     }
+
     public function removeFollow(self $follow): static
     {
         $this->follow->removeElement($follow);
-
         return $this;
     }
-    /**
-     * @return Collection<int, self>
-     */
+
     public function getIsFollow(): Collection
     {
         return $this->isFollow;
     }
+
     public function addIsFollow(self $isFollow): static
     {
         if (!$this->isFollow->contains($isFollow)) {
             $this->isFollow->add($isFollow);
             $isFollow->addFollow($this);
         }
-
         return $this;
     }
+
     public function removeIsFollow(self $isFollow): static
     {
         if ($this->isFollow->removeElement($isFollow)) {
             $isFollow->removeFollow($this);
         }
-
         return $this;
     }
-    /**
-     * @return Collection<int, Story>
-     */
-    public function getLikeStory(): Collection
+
+    public function getLikedStories(): Collection
     {
-        return $this->likeStory;
+        return $this->likedStories;
     }
-    public function addLikeStory(Story $likeStory): static
-    {
-        if (!$this->likedStories->contains($likeStory)) {
-            $this->likedStories->add($likeStory);
+
+    public function addLikedStory(Story $likedStory): static {
+        if (!$this->likedStories->contains($likedStory)) {
+            $this->likedStories->add($likedStory);
         }
-
         return $this;
     }
-    public function removeLikeStory(Story $likeStory): static
-    {
-        $this->likedStories->removeElement($likeStory);
 
+    public function removeLikedStory(Story $likedStory): static
+    {
+        $this->likedStories->removeElement($likedStory);
         return $this;
     }
-    /**
-     * @return Collection<int, Story>
-     */
-    public function getFollowStory(): Collection
+
+    public function getFollowedStories(): Collection
     {
-        return $this->followStory;
+        return $this->followedStories;
     }
-    public function addFollowStory(Story $followStory): static
+
+    public function addFollowedStory(Story $followedStory): static
     {
-        if (!$this->followedStories->contains($followStory)) {
-            $this->followedStories->add($followStory);
+        if (!$this->followedStories->contains($followedStory)) {
+            $this->followedStories->add($followedStory);
         }
-
         return $this;
     }
-    public function removeFollowStory(Story $followStory): static
-    {
-        $this->followedStories->removeElement($followStory);
 
+    public function removeFollowedStory(Story $followedStory): static
+    {
+        $this->followedStories->removeElement($followedStory);
         return $this;
     }
-    /**
-     * @return Collection<int, Chapter>
-     */
-    public function getLikeChapter(): Collection
+
+    public function getLikedChapters(): Collection
     {
-        return $this->likeChapter;
+        return $this->likedChapters;
     }
-    public function addLikeChapter(Chapter $likeChapter): static
+
+    public function addLikedChapter(Chapter $likedChapter): static
     {
-        if (!$this->likeChapter->contains($likeChapter)) {
-            $this->likeChapter->add($likeChapter);
+        if (!$this->likedChapters->contains($likedChapter)) {
+            $this->likedChapters->add($likedChapter);
         }
-
         return $this;
     }
-    public function removeLikeChapter(Chapter $likeChapter): static
-    {
-        $this->likeChapter->removeElement($likeChapter);
 
+    public function removeLikedChapter(Chapter $likedChapter): static
+    {
+        $this->likedChapters->removeElement($likedChapter);
         return $this;
     }
-    /**
-     * @return Collection<int, Chapter>
-     */
-    public function getHaveRead(): Collection
+
+    public function getReadChapters(): Collection
     {
-        return $this->haveRead;
+        return $this->readChapters;
     }
-    public function addHaveRead(Chapter $haveRead): static
+
+    public function addReadChapter(Chapter $readChapter): static
     {
-        if (!$this->haveRead->contains($haveRead)) {
-            $this->haveRead->add($haveRead);
+        if (!$this->readChapters->contains($readChapter)) {
+            $this->readChapters->add($readChapter);
         }
-
         return $this;
     }
-    public function removeHaveRead(Chapter $haveRead): static
-    {
-        $this->haveRead->removeElement($haveRead);
 
+    public function removeReadChapter(Chapter $readChapter): static
+    {
+        $this->readChapters->removeElement($readChapter);
         return $this;
     }
 
@@ -394,47 +340,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreateAccount(\DateTimeInterface $createAccount): static
     {
         $this->createAccount = $createAccount;
-
         return $this;
     }
 
-    /**
-     * Get the value of deleteAccount
-     */ 
-    public function getDeleteAccount()
+    public function getDeleteAccount(): ?\DateTimeInterface
     {
         return $this->deleteAccount;
     }
 
-    /**
-     * Set the value of deleteAccount
-     *
-     * @return  self
-     */ 
-    public function setDeleteAccount($deleteAccount)
+    public function setDeleteAccount(?\DateTimeInterface $deleteAccount): static
     {
         $this->deleteAccount = $deleteAccount;
-
         return $this;
     }
 
-    /**
-     * Get the value of followedStories
-     */ 
-    public function getFollowedStories()
-    {
-        return $this->followedStories;
-    }
-
-    /**
-     * Set the value of followedStories
-     *
-     * @return  self
-     */ 
-    public function setFollowedStories($followedStories)
+    public function setFollowedStories($followedStories): static
     {
         $this->followedStories = $followedStories;
-
         return $this;
     }
 }

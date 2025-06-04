@@ -6,19 +6,29 @@
                 {# {{dump(story.usersLike )}} #}
 
 <section id="detailStory">
-    <h1>{{story.name}}</h1>
+    <h1>
+        {{story.name}} - 
+        {% if story.isFinish == 0 %}
+            <i class="fa-solid fa-play"></i> En cours
+        {% elseif story.isFinish == 1 %}
+            <i class="fa-solid fa-flag-checkered"></i> Terminée
+        {% else %}
+            <i class="fa-solid fa-pause"></i> En pause
+        {% endif %}
+    </h1>
     <main class="width100 flex flexDirectionRow">
-        <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="image de couverture">
+        <img src="{{ asset('uploads/story/' ~ story.cover) }}" class="cover" alt="image de couverture">
         {# la partie ou il n'y a pas d'image  #}
         <div class="right">
             {# la nav du haut #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack"><b>Description</b></a>
                 <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
-                <a href="" class="textBlack">Recommendations</a>
+                <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="textBlack">Recommandations</a>
             </nav>
             {# la partie de like + follow #}
             <div class="top">
+                {# je fais la gestion de like d'une histoire #}
                 <a href="">{{story.usersLike | length}} 
                     {% if app.user  in story.usersLike %}
                         <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="textBlack"><i class="fa-solid fa-heart"></i></a>
@@ -26,33 +36,42 @@
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="textBlack"><i class="fa-regular fa-heart"></i></a>
                     {% endif %}
                 </a>
+                {# je fais la gestion de follow d'une histoire #}
                 <a href="">{{story.usersFollow | length}}
                     {% if app.user  in story.usersFollow %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="textBlack"><i class="fa-solid fa-minus"></i></a>
+                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}"class="bouton backgroundPink textBlack">Se désabonner</a>
                     {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="textBlack"><i class="fa-solid fa-plus"></i></a>
+                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink textBlack">S'abonner</a>
                     {% endif %}
                 </a>
-                <a href=""></a>
-                <a href="{{path('change_story', {'id': story.id})}}">
-                    {% if story.isFinish == 1%}
-                        Terminé
-                    {% elseif story.isFinish == 0 %}
-                        En cours 
-                    {% endif %}
-                    {% if app.user and app.user.id == story.person.id %}
-                        <i class="fa-solid fa-pen-nib"></i>
-                    {% endif %}
-                </a>
+                {# c'est la gestion de modification d'une histoire qui n'est visible que pour l'auteur #}
+                {% if app.user and app.user.id == story.person.id %}
+                    <a href="{{path('change_story', {'id': story.id})}}"  class="bouton backgroundPurple textBlack">
+                        Modifier l'histoire <i class="fa-solid fa-pen-nib"></i>
+                    </a>
+                    <a href="" class="textBlack">-</a>
+                    {# gestion de l'histoire fini ou non pour auteur #}
+                    {% if story.isFinish == 0 %}
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 1}) }}" class="bouton backgroundPurple textBlack">
+                            Marqué terminée 
+                        </a>
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 2}) }}" class="bouton backgroundPurple textBlack">
+                            Marqué en pause
+                        </a>
+                        {% elseif story.isFinish == 1 or story.isFinish == 2 %}
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 0}) }}" class="bouton backgroundPurple textBlack">
+                            Marqué en cours
+                        </a>
+                        {% endif %}
+                {% endif %}
             </div>
             {# les informations de l'histoire #}
-            <p><u>Auteur :</u> {{story.person.pseudo}}</p>
-            <p><u>Genres :</u></p>
-            <ul>
+            <p><u>Auteur :</u> <a href="{{path('app_profile', {'id':story.person.id})}}" class="textBlack">{{story.person.pseudo}}</a></p>
+            <p><u>Genres :</u>
                 {% for category in story.categories %}
-                    <li>{{category.name }}</li>
+                    <a href="{{ path('category', {'id' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
                 {% endfor %}
-            </ul>
+            </p>
 
             <p><u>Hashtags :</u> </p>
             <p><u>Date de sortie :</u> {{story.createStory | date("d/m/Y")}}</p>
