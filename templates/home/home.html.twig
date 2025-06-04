@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block body %}
+
+    {# j'affiche les 3 plus populaire du moment (histoire qui a le plus d'abonner) #}
+    <div class="popular">
+        <h3>Les plus populaires : </h3>
+
+
+        
+    </div>
+    {# j'affiche 3 premieres sorties du jour #}
+    <div class="day">
+        <h3>Sortie du jour : </h3>
+
+
+
+    </div>
+    {# j'affiche les catégories avec le plus d'histoires #}
+    <div class="categories">
+        <h3>Catégories : </h3>
+        {% for category in categories %}
+            <p><a href="{{path('show_category', {'idCategory' : category.id})}}" class="bouton textBlack">{{category.name}}</a></p>
+        {% endfor %}
+        <a href="{{path('app_category')}}" class="bouton backgroundPurple textBlack">Voir plus -></a>
+    </div>
+
+{% endblock %}

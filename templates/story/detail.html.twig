@@ -69,7 +69,7 @@
             <p><u>Auteur :</u> <a href="{{path('app_profile', {'id':story.person.id})}}" class="textBlack">{{story.person.pseudo}}</a></p>
             <p><u>Genres :</u>
                 {% for category in story.categories %}
-                    <a href="{{ path('category', {'id' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
+                    <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
                 {% endfor %}
             </p>
 

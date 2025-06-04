@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
-<section id="home">
+    <section id="home">
     <h1 class="textCenter">Publiez et lisez des histoires sur <span class="textPurple">Plumédia</span>.</h1>
-    <h3 class="textCenter">Améliorer votre écriture en postant vos histoires.</h3>
-    
-    <a class="backgroundPurple bouton" href="">Lire maintenant </a>
-    <p>Comment utiliser et se repérer dans le site?</p>
-</section>
-{% if app.user %}
-{% endif %}
+    <h2 class="textCenter">Améliorer votre écriture en postant vos histoires.</h2>
 
+    <a class="backgroundPurple bouton textBlack" href="{{path('show_home')}}">Lire maintenant </a>
+    <p>Comment utiliser et se repérer dans le site?</p>
+    </section>
 {% endblock %}

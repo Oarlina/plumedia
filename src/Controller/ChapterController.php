@@ -21,7 +21,7 @@ final class ChapterController extends AbstractController
     {
         $chapters = $this->chapterRepository->findBy(['story' => $idStory->getId()]);
 
-        return $this->render('story/chapters.html.twig', [
+        return $this->render('chapter/chapters.html.twig', [
             'chapters' => $chapters, 'story' => $idStory
         ]);
     }

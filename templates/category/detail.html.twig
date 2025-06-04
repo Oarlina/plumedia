@@ -12,9 +12,9 @@
                 <a href="{{path('app_category')}}" class="textBlack">Tous</a>
                 {% for cat in categories %}
                     {% if cat.name == category.name %}
-                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
+                    <a href="{{path('show_category', {'idCategory': cat.id})}}"class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
                     {% else %}
-                    <a href="{{path('category', {'id': cat.id})}}"class="textBlack">{{cat.name}} </a>
+                    <a href="{{path('show_category', {'idCategory': cat.id})}}"class="textBlack">{{cat.name}} </a>
                     {% endif %}
                 {% endfor %}
             </div>

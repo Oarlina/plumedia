@@ -32,7 +32,7 @@
 .noBorder, #profil .rightContainer input{border: none;}
 .larger{font-size: larger;}
 .follows, .follow, #registerContainer .left, #registerContainer .right, #loginContainer .right, #loginContainer .left{ width: 50%;}
-.ConnectContainer, #home h1, #home h3 {margin: 10% auto;}
+.ConnectContainer, #home h1, #home h3 {margin: 10px auto;}
 .ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
 a{
     display: inline-block; 

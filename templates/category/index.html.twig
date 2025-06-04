@@ -10,7 +10,7 @@
             <div class="left flex flexDirectionCollumn">
             <a href="" class="textBlack larger bouton backgroundGrey"><b>Tous</b></a>
             {% for category in categories %}
-                <a href="{{path('category', {'id': category.id})}}"class="textBlack">{{category.name}} </a>
+                <a href="{{path('show_category', {'idCategory': category.id})}}"class="textBlack">{{category.name}} </a>
             {% endfor %}
         </div>
         <div class="right stories flex flexDirectionRow">

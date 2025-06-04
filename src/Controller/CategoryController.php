@@ -28,13 +28,13 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/detail/{id}', name: 'category')]
-    public function detail(Category $id): Response
+    #[Route('/detail/{idCategory}', name: 'show_category')]
+    public function detail(Category $idCategory): Response
     {
         $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
         // dd($categories);
         return $this->render('category/detail.html.twig', [
-            'category' => $id, 'categories' => $categories
+            'category' => $idCategory, 'categories' => $categories
         ]);
     }
 }
