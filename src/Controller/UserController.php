@@ -28,76 +28,80 @@ final class UserController extends AbstractController
     #[Route(path:'/compte/{id}', name:'app_profile')]
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(User $user = null): Response{
-        if(!$user){
+        if ($this->getUser()){
+            if(!$user){
             $user = $this->getUser();
         }
         return $this->render('user/profil.html.twig', ['user' => $user]);
+        }
+        return $this->redirectToRoute('app_login');
     }
     
     // c'est la page d'abonnement du profil
     #[Route(path:'/mes_abonnements', name:'app_subscriptionProfil')]
     public function subscriptionProfil(): Response{
-        $user = $this->getUser();
-        return $this->render('user/subscriptionProfil.html.twig', ['user' => $user]);
+        if ($this->getUser()){
+            return $this->render('user/subscriptionProfil.html.twig', ['user' => $this->getUser()]);
+        }
+        return $this->redirectToRoute('app_login');
     }
     
     // c'est la page des histoires du profil
     #[Route(path:'/mes_histoires', name:'app_storyProfil')]
     public function storyProfil(): Response{
-        $user = $this->getUser();
-        $stories = $this->storyRepository->findBy(['person' => $user->getId()]);
-        return $this->render('user/storyProfil.html.twig', ['user' => $user, 'stories' => $stories]);
+        if ($this->getUser()){
+            $user = $this->getUser();
+            $stories = $this->storyRepository->findBy(['person' => $user->getId()]);
+            return $this->render('user/storyProfil.html.twig', ['user' => $user, 'stories' => $stories]);
+        }
+        return $this->redirectToRoute('app_login');
     }
     // c'est la page de la blibliothèque du profil
     #[Route(path:'/ma_blibliothèque', name:'app_libraryProfil')]
     public function libraryProfil(): Response{
-        $user = $this->getUser();
-        return $this->render('user/libraryProfil.html.twig', ['user' => $user]);
+        if ($this->getUser()){
+            $user = $this->getUser();
+            return $this->render('user/libraryProfil.html.twig', ['user' => $user]);
+        }
     }
-    // 
-    #[Route(path:'/follow/{pseudo}', name:'follow')]
-    public function follow($pseudo): Response{
-        $user = $this->getUser();
-        $user2 = $this->userRepository->findOneBy(["pseudo" => $pseudo]);
-        $user->addFollow($user2);
-        
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+    // gestion de follow ou unfollow
+    #[Route(path:'/follow/{pseudo}/{name}', name:'follow_or_not')]
+    public function follow($pseudo, string $name): Response{
+        if ($this->getUser()){
+            $user = $this->getUser();
+            $user2 = $this->userRepository->findOneBy(["pseudo" => $pseudo]);
+            $user->$name($user2);
+            
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
-        return $this->redirectToRoute('app_profile', ['id' => $user2->getId()]);
-        
-    }
-
-    #[Route(path:'/unFollow/{pseudo}', name:'unFollow')]
-    public function unFollow($pseudo): Response{
-        $user = $this->getUser();
-        $user2 = $this->userRepository->findOneBy(["pseudo" => $pseudo]);
-        $user->removeFollow($user2);
-        
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('app_profile', ['id' => $user2->getId()]);
+            return $this->redirectToRoute('app_profile', ['id' => $user2->getId()]);
+        }
+        return $this->redirectToRoute('app_login');
         
     }
     
     #[Route(path:'/devenir_autheur/{user}', name:'form_become_author')]
     public function becomeAuthor(User $user, Request $request, MailerInterface $mailer): Response {
-        $form = $this->createForm(UserBecomeAuthorType::class, $user);
-        $form->handleRequest($request);
+        if($this->getUser()){
+            // je l'envoie sur un formulaire
+            $form = $this->createForm(UserBecomeAuthorType::class, $user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // dd($form->get('email')->getData());
-            $email = (new Email())
-                ->from($form->get('email')->getData())
-                ->to('mailer@plumedia.com')
-                ->subject($form->get('objet')->getData())
-                ->text($form->get('text')->getData());
-
-            $mailer->send($email);
-            return $this->redirectToRoute('app_profil');
+            if ($form->isSubmitted() && $form->isValid()) {
+                // je prepare le mail et l'envoie
+                $email = (new Email())
+                    ->from($form->get('email')->getData())
+                    ->to('mailer@plumedia.com')
+                    ->subject('Je voudrais devenir auteur')
+                    ->text($form->get('text')->getData());
+                $mailer->send($email);
+                // l'utilisateur devient ecrivain et peut poster une histoire
+                return $this->redirectToRoute('change_role_user', ['user'=> $user->getId(), 'role'=>'ROLE_AUTHOR']);
+            }
+            return $this->render('security/newAuthor.html.twig', ['form' => $form]);
         }
-        return $this->render('security/newAuthor.html.twig', ['form' => $form]);
+        return $this->redirectToRoute('app_login');
     }
 
     

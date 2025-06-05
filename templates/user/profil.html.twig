@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    {# pour la gestion d'erreur #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{label}}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
     
     <div id="profil">
         
@@ -58,9 +50,9 @@
                 {% endif %}
 
                 {% if estSuivi %}
-                    <a href="{{ path('unFollow', {'pseudo': user.pseudo}) }}" class="textBlack bouton"><i class="fa-solid fa-heart"></i>Ne plus suivre</a>
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'removeFollow'}) }}" class="textBlack bouton"><i class="fa-solid fa-heart"></i>Ne plus suivre</a>
                 {% else %}
-                    <a href="{{ path('follow', {'pseudo': user.pseudo}) }}" class="textBlack bouton"><i class="fa-regular fa-heart"></i>Suivre</a>
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'addFollow'}) }}" class="textBlack bouton"><i class="fa-regular fa-heart"></i>Suivre</a>
 
                 {% endif %}
 

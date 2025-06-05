@@ -18,11 +18,6 @@ class UserBecomeAuthorType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('objet', TextType::class, 
-                ['constraints' => [
-                    new NotBlank([
-                        'message' => 'Mettez votre objet',])],
-                'mapped' => false])
             ->add('text', TextType::class, 
                 ['constraints' => [
                     new NotBlank([

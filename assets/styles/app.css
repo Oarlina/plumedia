@@ -170,5 +170,7 @@ header nav{
     }
     .story:hover .summary{opacity: 0.4; }
 }
-.toggle-password-button{top: 0px !important;
-                            right: 100px !important;}
+.toggle-password-button{top: 0px !important; right: 100px !important;}
+.alert-success{color:green;}
+.alert-error{color:red;}
+.alert-warning{color:orangered;}

@@ -3,9 +3,9 @@
 {% block title %}Mot de passe oublié{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
+    {# {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    {% endfor %} #}
     <h1>Mot de passe oublié</h1>
 
     {{ form_start(requestForm) }}

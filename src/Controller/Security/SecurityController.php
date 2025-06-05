@@ -24,13 +24,13 @@ class SecurityController extends AbstractController
 
 
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         // pour afficher l'erreur si l'utilisateur a fait une erreur dans la connexion
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        
+
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
     // pour que l'utilisateur se deconnecte
@@ -143,14 +143,17 @@ class SecurityController extends AbstractController
     // pour que le premier admin puissent voir les utilisateurs
     #[Route(path:'/users', name:'app_users')]
     public function listUsers (UserRepository $userRepository): Response{
-        $users = $userRepository->findBy([], ["pseudo" => "ASC"]);
+        if($this->getUser() and $this->getUser()->getId() == 1){
+            $users = $userRepository->findBy([], ["pseudo" => "ASC"]);
+            return $this->render('security/listUsers.html.twig', ['users' => $users]);
+        }
+        return $this->redirectToRoute('app_storyProfil');
 
-        return $this->render ("security/listUsers.html.twig", ["users" => $users]);
     }
 
     // pour que le premier admin puisse voir et changer les roles
     #[Route(path:"/users/{user}/{role}", name:'change_role_user')]
-    public function changeRoleAdmin ($user, $role, UserRepository $userRepository, EntityManagerInterface $entityManager) :Response {
+    public function changeRoleUser (User $user, $role, UserRepository $userRepository, EntityManagerInterface $entityManager) :Response {
         // je recupere l'utilisateur, ces roles et creer un booleen qui verifiera si le role existe deja
         $user = $userRepository->findOneBy(["id" => $user]);
         $roles = $user->getRoles();

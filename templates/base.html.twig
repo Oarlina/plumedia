@@ -30,19 +30,30 @@
                     {% endif %}
             </nav>
         </header>
-            {% block body %}{% endblock %}
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+        
+        {% block body %}
+        {% endblock %}
 
         <footer>
             <i class="fa-brands fa-snapchat"></i>
             <i class="fa-brands fa-instagram"></i>
             <i class="fa-brands fa-youtube"></i>
             <hr>
-            <a href="" class="textBlack linkBtn">Politique de confidentialité</a>
-            <a href="" class="textBlack linkBtn">Mentions légales</a>
-            <a href="" class="textBlack linkBtn">Contact</a>
+            <a href="{{path('legal_privacy_policy')}}" class="textBlack linkBtn">Politique de confidentialité</a>
+            <a href="{{path('legal_mentions')}}" class="textBlack linkBtn">Mentions légales</a>
+            <a href="{{path('contact_form')}}" class="textBlack linkBtn">Contact</a>
             <a href="" class="textBlack linkBtn">FAQ</a>
-            <a href="" class="textBlack linkBtn">Condition générale de vente</a>
-            <a href="" class="textBlack linkBtn">Cookie</a>
+            <a href="{{path('legal_cgv')}}" class="textBlack linkBtn">Condition générale de vente</a>
+            <a href="{{path('legal_cookies')}}" class="textBlack linkBtn">Cookie</a>
         </footer>
     </body>
 </html>

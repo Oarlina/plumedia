@@ -82,6 +82,7 @@ final class StoryController extends AbstractController
             
             $this->entityManager->persist($story);
             $this->entityManager->flush();
+            $this->addFlash('sucess', 'L\'histoire à été publié');
             return $this->redirectToRoute('detail_story', ["id" => $story->getId()]);
         }
         return $this->render('story/new.html.twig', ['form' => $form, 'edit' => $id]);
@@ -118,19 +119,22 @@ final class StoryController extends AbstractController
     // si l'auteur veut marquer une histoire en cours, en pause, fini
     #[Route(path:'/changeFinish/{id}/{make}', name:'changeIsFinish')]
     public function changeFinish(Story $id, int $make): Response{
-        $id->setIsFinish($make); // le make donne le numéro a set
-
-        // je met a jour la BDD
-        $this->entityManager->persist($id);
-        $this->entityManager->flush();
-        // je retourne sur la page detail de l'histoire
+        if ($make ==0 or $make ==1 or $make ==2){
+            $id->setIsFinish($make); // le make donne le numéro a set
+    
+            // je met a jour la BDD
+            $this->entityManager->persist($id);
+            $this->entityManager->flush();
+            // je retourne sur la page detail de l'histoire
+            $this->addFlash('success', 'Modification réussie');
+            return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
+        }
+        $this->addFlash('error', 'Erreur, veuillez recommencer');
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
 
     #[Route(path:'/suggestions/{idStory}', name:'suggestions_story')]
     public function suggestionsStory (Story $idStory) : Response  {
-
-
 
         return $this->render('story/suggestions.html.twig', ['story' => $idStory]);
     }

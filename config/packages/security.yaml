@@ -29,7 +29,8 @@ security:
             # si on vide la cache le throttling est annulé
             login_throttling: #je peux faire trois tentatives puis je dois attendre une heure
                 max_attempts : 3
-                interval: '1 hour'
+                interval: '10 sec'
+                # interval: '1 hour'
             logout:
                 path: app_logout
                 # where to redirect after logout
