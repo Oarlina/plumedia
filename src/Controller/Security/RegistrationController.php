@@ -47,8 +47,16 @@ class RegistrationController extends AbstractController
             $user->setCreateAccount(new DatetimeImmutable());
             // dd($user->getCreateAccount());
 
-            // je récupère le mot de passe, le hash et le renvoie dans user
+            // je récupère les mots de passes 
             $plainPassword = $form->get('plainPassword')->getData();
+            $confirmPassword = $form->get('confirmPassword')->getData();
+            // je vérifie qu'ils sont égaux sinon je renvoie une erreur
+            if ($plainPassword != $confirmPassword){
+                $this->addFlash('error', 'Les mots de passes ne sont pas identiques.');
+                return $this->redirectToRoute('app_register');
+            }
+            
+
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             // je recupere l'image du formulaire
@@ -62,9 +70,6 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
-            
-            // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('mailer@example.com', 'AcmeMailBot'))
@@ -74,7 +79,6 @@ class RegistrationController extends AbstractController
             );
             return $security->login($user, UserAuthentificatorAuthenticator::class, 'main');
         }
-
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);

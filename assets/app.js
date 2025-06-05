@@ -19,3 +19,21 @@ setTimeout(() => {
         setTimeout(() => el.remove(), 1000); // supprime après le fondu
     });
 }, 5000); // 10000ms = 10 secondes
+
+// je met mindow.variable pour qu'elle soit accessible dans l'HTML
+// pour rendre visible ou non les mots de passe lors de l'inscription et de la connexion d'un utilisateur 
+// (nameInput permet de recuperer le nom de l'id de l'input pour pouvoir le realiser sur plusieurs input different avec une seule fonction)
+window.changeInput = function (nameInput){
+    let input = document.getElementById(nameInput);
+    // let icon = event.target;
+
+    if (input.type === "password") {
+        input.type = "text";
+        // icon.classList.remove("fa-eye");
+        // icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        // icon.classList.remove("fa-eye-slash");
+        // icon.classList.add("fa-eye");
+    }
+}

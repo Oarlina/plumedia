@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -38,18 +39,41 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez donnez un mot de passe',
                     ]),
-                    new Length([
-                        'min' => 12,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),],])
+                    new Regex(array(
+                            // la regex : 
+                                // '^' correspond au debut d'une chaine, '*' anonnonce une ou plusieurs occurences, '?' pour aucune ou une occurence
+                                // '$' correspond a la fin de la chaine, '{n,}' pour au moins n occurences
+                                //  {12,4096} doit avoir entre 12 et 4096 caractères; $[a-z] doit avoir une minuscule; *[A-Z] doit avoir majuscule
+                                // *\d pour avoir des nombres; $\W pour avoir des caractères spéciaux. 
+                        'pattern' => '/^(?=.{12,4096})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).*$/',
+                        'message' => 'Le mot de passe doit au moins faire 12 caractères, avoir une majuscule, une minuscule, un chiffre et un caractère spécial.'
+                        ))],])
+            ->add('confirmPassword', PasswordType::class,[
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez donnez un mot de passe',
+                    ]),
+                    new Regex(array(
+                            // la regex : 
+                                // '^' correspond au debut d'une chaine, '*' anonnonce une ou plusieurs occurences, '?' pour aucune ou une occurence
+                                // '$' correspond a la fin de la chaine, '{n,}' pour au moins n occurences
+                                // {12,4096} doit avoir entre 12 et 4096 caractères; $[a-z] doit avoir une minuscule; *[A-Z] doit avoir majuscule
+                                // *\d pour avoir des nombres; $\W pour avoir des caractères spéciaux. 
+                            'pattern' => '/^(?=.{12,4096})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).*$/',
+                            'message' => 'Le mot de passe doit au moins faire 12 caractèrs, avoir une majuscule, une minuscule, un chiffre et un caractère spécial.'
+                            ))],])
             ->add('agreeTerms', CheckboxType::class, [
                             'mapped' => false,
                             'constraints' => [

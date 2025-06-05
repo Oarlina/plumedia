@@ -22,6 +22,7 @@
             <input type="email" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
             <label for="inputPassword"></label>
             <input type="password"  name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            <i class="fa-solid fa-eye" onclick="changeInput('inputPassword')"></i>
         
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
         

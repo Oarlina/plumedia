@@ -26,7 +26,6 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        
         // pour afficher l'erreur si l'utilisateur a fait une erreur dans la connexion
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user

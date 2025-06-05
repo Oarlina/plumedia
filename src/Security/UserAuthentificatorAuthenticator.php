@@ -61,7 +61,6 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
             ]
         );
     }
-    // 2025-04-20 07:43:45
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
