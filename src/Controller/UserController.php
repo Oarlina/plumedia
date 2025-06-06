@@ -96,8 +96,15 @@ final class UserController extends AbstractController
                     ->subject('Je voudrais devenir auteur')
                     ->text($form->get('text')->getData());
                 $mailer->send($email);
-                // l'utilisateur devient ecrivain et peut poster une histoire
-                return $this->redirectToRoute('change_role_user', ['user'=> $user->getId(), 'role'=>'ROLE_AUTHOR']);
+                // je met à jour le rôle pour que l'admin ne soit pas obligé de le faire 
+                $roles = $user->getRoles();
+                $roles [] = 'ROLE_AUTHOR';
+                // je met rajoutes le roles à user et je met à jour la BDD
+                $user->setRoles($roles);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('app_storyProfil');
             }
             return $this->render('security/newAuthor.html.twig', ['form' => $form]);
         }

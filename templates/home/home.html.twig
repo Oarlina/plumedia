@@ -22,7 +22,7 @@
     <div class="categories">
         <h3>Catégories : </h3>
         {% for category in categories %}
-            <p><a href="{{path('show_category', {'idCategory' : category.id})}}" class="bouton textBlack">{{category.name}}</a></p>
+            <p><a href="{{path('show_category', {'idCategory' : category.id})}}" class="textBlack">{{category.name}}</a></p>
         {% endfor %}
         <a href="{{path('app_category')}}" class="bouton backgroundPurple textBlack">Voir plus -></a>
     </div>
