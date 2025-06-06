@@ -37,7 +37,7 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
         // je recupere la date de demande de suppression du compte et verifie si elle existe
         $user = $this->userRepository->findOneBy(['email' => $email]);
 
-        if($user->getDeleteAccount()){
+        if($user and $user->getDeleteAccount()){
             // si elle existe, alors je regarde le nombre de jours qui sont passé depuis la demande
             $now = new DateTime();
             $diff = (int)($user->getDeleteAccount()->diff($now)->days);
@@ -46,6 +46,9 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
             if ($diff > 30){
                 $user->setEmail('anonymous_'.uniqid().'@gmail.com');
                 $user->setPseudo('anonymous_'.uniqid());
+
+                $this->addFlash('error', 'Ce compte n\'existe pas');
+                return $this->redirectToRoute('app_login');
             }
             $user->setDeleteAccount(null);
 

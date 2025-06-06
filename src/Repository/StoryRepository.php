@@ -11,10 +11,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(ManagerRegistry $registry){
         parent::__construct($registry, Story::class);
     }
+
+    public function popularStory (int $limit): ?Story{
+        return $this->createQueryBuilder('s');
+        
+    }
+
+    // public function loadUserByIdentifier(string $identifier): ?User  {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.pseudo = :pseudo')
+    //         ->setParameter('pseudo', $identifier)
+    //         ->getQuery()
+    //         ->getOneOrNullResult();
+    // }
 
 //    /**
 //     * @return Story[] Returns an array of Story objects

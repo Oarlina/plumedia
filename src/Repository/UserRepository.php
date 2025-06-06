@@ -22,8 +22,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
@@ -33,14 +32,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
     
-    public function loadUserByIdentifier(string $identifier): ?User
-{
-    return $this->createQueryBuilder('u')
-        ->andWhere('u.pseudo = :pseudo')
-        ->setParameter('pseudo', $identifier)
-        ->getQuery()
-        ->getOneOrNullResult();
-}
+    public function loadUserByIdentifier(string $identifier): ?User  {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.pseudo = :pseudo')
+            ->setParameter('pseudo', $identifier)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     //    /**
     //     * @return User[] Returns an array of User objects

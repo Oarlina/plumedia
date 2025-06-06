@@ -105,15 +105,12 @@ header nav{
             .follow{
                 justify-content: center;
             }
-            a {
-                .otherAvatar{
-                        width: 40%;
-                        height: 40%;
-                        border-radius: 50%;
-                }
+            .otherAvatar{
+                    width: 30%;
+                    height: 30%;
+                    border-radius: 50%;
             }
         }
-        
     }
 }
 /* ceci est pour la page de toutes les categories */
@@ -171,6 +168,6 @@ header nav{
     .story:hover .summary{opacity: 0.4; }
 }
 .toggle-password-button{top: 0px !important; right: 100px !important;}
-.alert-success{color:green;}
+.alert-sucess{color:green;}
 .alert-error{color:red;}
 .alert-warning{color:orangered;}
