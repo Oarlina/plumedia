@@ -15,7 +15,11 @@
         {% endif %}
     </h1>
     <main class="width100 flex flexDirectionRow">
-        <img src="{{ asset('uploads/story/' ~ story.cover) }}" class="cover" alt="image de couverture">
+        {% if story.cover %}
+            <img src="{{ asset('uploads/story/' ~ story.cover) }}" class="cover"alt="couverture de {{story.name}}">  
+        {% else %}
+            <img src="{{ asset('img/forNoCover.png') }}" class="cover"alt="couverture de {{story.name}}">  
+        {% endif %}
         {# la partie ou il n'y a pas d'image  #}
         <div class="right">
             {# la nav du haut #}

@@ -31,3 +31,26 @@ window.changeInput = function (nameInput){
         input.type = "password";
     }
 }
+
+// gestion de la navbar pour les populaires
+
+let scrollContainer = document.querySelector('.gallery');
+let backBtn = document.getElementById("backBtn");
+let nextBtn = document.getElementById("nextBtn");
+
+// c'est un évènement sur la roulette de la souris
+scrollContainer.addEventListener("wheel", (evt) => {
+    evt.preventDefault();
+    scrollContainer.scrollLeft += evt.deltaY;
+    scrollContainer.style.scrollBehavior = 'auto';
+});
+// c'est l'évènement quand on veut aller à droite
+nextBtn.addEventListener("click", ()=>{
+    scrollContainer.style.scrollBehavior = 'smooth';
+    scrollContainer.scrollLeft += 1500;
+});
+// c'est l'évènement lorsque l'on veut aller à gauche
+backBtn.addEventListener("click", ()=>{
+    scrollContainer.style.scrollBehavior = 'smooth';
+    scrollContainer.scrollLeft -= 1500;
+});

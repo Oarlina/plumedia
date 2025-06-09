@@ -6,7 +6,7 @@
 :root{
     --myPink: #f7e7ed;
     --myPurple: #dcd8f3;
-    --myGrey: #e0e0e0; 
+    --myGrey: #f3f2f2; 
     --myWhite: #fefefe;
 
 }
@@ -136,6 +136,7 @@ header nav{
         }
         .right{
             width: 75%;
+            padding: 0 10px;
             nav{
                 border-bottom: dashed;
                 justify-content: space-around;
@@ -171,3 +172,30 @@ header nav{
 .alert-sucess{color:green;}
 .alert-error{color:red;}
 .alert-warning{color:orangered;}
+#gallery-wrap{width: 100%;}
+.gallery{
+    width:1500px;
+    overflow-x: scroll;
+}
+.gallery div{
+    width: 100%;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    flex: none;
+}
+.gallery div i {width: 100%;}
+.gallery::-webkit-scrollbar {display: none;}
+
+.gallery-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10% auto;
+}
+
+#backBtn, #nextBtn {cursor: pointer;}
+.populars, .popular .right{padding: 10px;}
+.popular{
+    img{width: 15%;}
+    .right{width: 85%;}
+}

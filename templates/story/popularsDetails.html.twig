@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Populaires
+{% endblock %}
+
+{% block body %}
+    <h1 class="textCenter">Histoires les plus populaires dans {{category.name}} : </h1>
+
+    {# ceci est pour ma navbar
+        j'affiche 5 catégories à la fois et permet de voir les autres via des flèches #}
+    {% set counter = 1 %}
+    {# c'est la liste des catégories #}
+    <section id="gallery-wrap" class="flex flexDirectionRow">
+            <i class="fa-solid fa-arrow-left" id="backBtn"></i>
+            <div class="gallery flex" >
+                <div>
+                    <a href="{{path('populars')}}" class="textBlack linkBtn">Tous</a> -
+                    {% set counter = 2 %}
+
+                    {% for cat in categories %}
+                        {% if counter <=5 %}
+                            {% set counter = counter + 1 %}
+                            {% if cat == category %}
+                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="textBlack larger bouton backgroundGrey"><b>{{cat.name}} </b></a>  -
+                            {% else %}
+                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="linkBtn textBlack">{{cat.name}} </a> -
+                            {% endif %}
+                        {% else %}
+                </div>
+                <div>
+                            {% set counter = 1 %}               
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <i class="fa-solid fa-arrow-right" id="nextBtn"></i>
+    </section>
+        
+    <main class="populars">
+        {% set counter = 1 %}
+        {% if stories %}
+            {% for story in stories %}
+                <h2>{{counter}}</h2>
+                <div class="popular flex">
+                    {% set counter = counter + 1 %}
+                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                    <div class="right backgroundGrey">
+                        <h3 class="textBlack">{{story.name}}</h3>
+                        <p><u>Genres :</u>
+                            {% for category in story.categories %}
+                                <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
+                            {% endfor %}
+                        </p>
+                        <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
+                        <p> Résumé: {{story.summary}}</p>
+                        <a href="{{path('detail_story', {'id': story.id})}}" class="textBlack bouton backgroundPurple">En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Cette catégorie n'a pas d'histoire !</p>
+        {% endif %}
+    </main>
+{% endblock %}

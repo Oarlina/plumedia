@@ -19,7 +19,7 @@
                 <a href="/.." class="logoSite backgroundPink"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
                 <a href="{{path('app_category')}}" class="linkBtn textBlack backgroundPink">Catégories</a>
                 <a href="/.." class="linkBtn textBlack backgroundPink">Calendrier</a>
-                <a href="/.." class="linkBtn textBlack backgroundPink">Populaires</a>
+                <a href="{{path('populars')}}" class="linkBtn textBlack backgroundPink">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
                         <a href="{{path('app_profil')}}" class="bouton textBlack backgroundWhite">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>

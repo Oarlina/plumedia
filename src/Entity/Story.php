@@ -186,7 +186,7 @@ class Story
     {
         if (!$this->usersLike->contains($usersLike)) {
             $this->usersLike->add($usersLike);
-            $usersLike->addLikeStory($this);
+            $usersLike->addLikedStory($this);
         }
 
         return $this;
@@ -195,7 +195,7 @@ class Story
     public function removeUsersLike(User $usersLike): static
     {
         if ($this->usersLike->removeElement($usersLike)) {
-            $usersLike->removeLikeStory($this);
+            $usersLike->removeLikedStory($this);
         }
 
         return $this;
@@ -213,7 +213,7 @@ class Story
     {
         if (!$this->usersFollow->contains($usersFollow)) {
             $this->usersFollow->add($usersFollow);
-            $usersFollow->addFollowStory($this);
+            $usersFollow->addFollowedStory($this);
         }
 
         return $this;
@@ -222,7 +222,7 @@ class Story
     public function removeUsersFollow(User $usersFollow): static
     {
         if ($this->usersFollow->removeElement($usersFollow)) {
-            $usersFollow->removeFollowStory($this);
+            $usersFollow->removeFollowedStory($this);
         }
 
         return $this;

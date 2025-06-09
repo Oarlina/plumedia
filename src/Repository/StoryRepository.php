@@ -15,9 +15,30 @@ class StoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Story::class);
     }
 
-    public function popularStory (int $limit): ?Story{
-        return $this->createQueryBuilder('s');
-        
+    public function nPopularStory (int $limit): ?array{
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.usersFollow', 'uf') // je récupère les userFollow
+            ->leftJoin('s.usersLike', 'ul') // je récupère les userLike
+            ->groupBy('s.id') // je regroupe les histoire par les id
+            ->orderBy('COUNT(uf)', 'DESC') // je trie d'abord par rapport au follow
+            ->orderBy('COUNT(ul)', 'DESC') // puis par les like s'il y a des follow égaux
+            ->setMaxResults($limit) // et je donne la limite car dans l'accueil j'aurait une limite de 10 alors que populars en aura 5
+            ->getQuery() // je récupère la requete
+            ->getResult(); // et je la transforme en résultat
+    }
+    public function nPopularStoryCategories (int $limit, int $category): ?array{
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.categories', 'c')
+            ->andWhere('c.id = :categoriesId')
+            ->setParameter('categoriesId', $category)
+            ->leftJoin('s.usersFollow', 'uf') // je récupère les userFollow
+            ->leftJoin('s.usersLike', 'ul') // je récupère les userLike
+            ->groupBy('s.id') // je regroupe les histoire par les id
+            ->orderBy('COUNT(uf)', 'DESC') // je trie d'abord par rapport au follow
+            ->orderBy('COUNT(ul)', 'DESC') // puis par les like s'il y a des follow égaux
+            ->setMaxResults($limit) // et je donne la limite car dans l'accueil j'aurait une limite de 10 alors que populars en aura 5
+            ->getQuery() // je récupère la requete
+            ->getResult(); // et je la transforme en résultat
     }
 
     // public function loadUserByIdentifier(string $identifier): ?User  {
