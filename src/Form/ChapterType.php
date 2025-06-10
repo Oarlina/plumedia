@@ -8,6 +8,7 @@ use App\Entity\Chapter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,9 +22,19 @@ class ChapterType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, [
+                'label' => 'Fichier du chapitre (PDF)',
+                'required' => false,
+                'data_class' => null,
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['application/pdf',],
+                        'mimeTypesMessage' => 'Merci d\'uploader un fichier valide (PDF).',
+                    ])]])
             ->add('isFree', CheckboxType::class, ['mapped' => false, 'label' => 'Voulez vous mettre le chapitre payant? Si oui cocher la case', 'required'=> false])
-            ->add('InSeason', IntegerType::class, ['attr' => ['min' => 1]])
+            ->add('inSeason', IntegerType::class, ['attr' => ['min' => 1]])
             ->add('Submit', SubmitType::class);
     }
 

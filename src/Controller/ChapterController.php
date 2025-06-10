@@ -13,30 +13,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 final class ChapterController extends AbstractController
 {
     public function __construct(
         private ChapterRepository $chapterRepository,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private FileSystem $fileSystem,
     ) {
     }
     #[Route('/chapitre/{idStory}', name: 'chapterForStory')]
     public function chapterForStory(Story $idStory): Response
     {
         $chapters = $this->chapterRepository->findBy(['story' => $idStory->getId()]);
+        // $file = $this->fileSystem->readFile('public/uploads/chapters/chapter-684828621e65a.pdf');
+        // $file = 'public/uploads/chapters/chapter-684828621e65a.pdf';
+        $file = 3;
 
         return $this->render('chapter/chapters.html.twig', [
-            'chapters' => $chapters, 'story' => $idStory
+            'chapters' => $chapters, 'story' => $idStory, 'file' =>$file
         ]);
     }
-    #[Route('/edit/{idStory}/{idChapter}', name: 'editChapter')]
+    #[Route('/edit/{idStory}/{chapter}', name: 'editChapter')]
     #[Route('/new/{idStory}', name: 'newChapter')]
-    public function new(Story $idStory, Chapter $chapter =null, Request $request): Response
+    public function new(Story $idStory, Chapter $chapter = null, Request $request): Response
     {
         if (! $chapter){
             $chapter = new Chapter();
+        }else {
+           $edit= true;
         }
         $user = $this->getUser();
+
 
         $form = $this->createForm(ChapterType::class, $chapter);
         $form->handleRequest($request);
@@ -62,15 +71,19 @@ final class ChapterController extends AbstractController
                 $newFile = 'chapter-'.uniqid().'.'.$file->guessExtension();
                 $file->move('uploads/chapters/', $newFile);
                 $chapter->setFile($newFile);
-            }else{
+            }elseif ( ! $edit){
                 return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
-
             }
 
             $this->entityManager->persist($chapter);
             $this->entityManager->flush();
     
-            $this->addFlash('sucess', 'Le chapitre à été publié');
+            if ($chapter->getId()) {
+                $this->addFlash('sucess', 'Le chapitre à été mis à jour !');
+            } else {
+                $this->addFlash('sucess', 'Le chapitre à été publié !');
+            }
+            
             return $this->redirectToRoute('chapterForStory', [ 'idStory' => $idStory->getId()]);
         }
         

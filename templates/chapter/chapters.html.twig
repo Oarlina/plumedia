@@ -38,7 +38,7 @@
                                 {% set counter = counter + 1 %}
                                 <div class="rightChapter">
                                     {% if app.user and app.user.id == chapter.user.id %}
-                                    <a href="{{path('editChapter', {'idStory': story.id, 'idChapter': chapter.id})}}" class="textBlack linkBtn"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="textBlack linkBtn"><i class="fa-solid fa-pen"></i></a>
                                         
                                     {% endif %}
                                 </div>
@@ -49,7 +49,8 @@
                     <p>Il n'y a pas encore de chapitres patienté ! </p>
                 {% endif %}
                 {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
-                {# <iframe src="{{ asset('uploads/chapters/tableau-question.pdf') }}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
+                {# <iframe src="{{file}}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
+                {{file}}
             
                 {# <object type="application/PDF" name="PDF" id="PDF" data="{{ asset('uploads/chapters/tableau-question.pdf') }}" width="700px" height="1000px"/> #}
                 {# </object> #} 

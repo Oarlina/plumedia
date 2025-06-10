@@ -15,7 +15,12 @@
         <h1>Créer un chapitre :</h1>
     {% endif %}
 
-{# {{dump(form.cover)}} #}
-    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-    {{ form_end(form) }} 
+     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+        {{ form_row(form.name) }}
+        {{form_row(form.file)}}
+        {{ form_row(form.isFree)}}
+        {{ form_row(form.inSeason) }}
+        
+        {{ form_row(form.Submit) }}
+        {{ form_end(form) }} 
 {% endblock %}
