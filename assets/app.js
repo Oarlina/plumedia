@@ -54,3 +54,28 @@ backBtn.addEventListener("click", ()=>{
     scrollContainer.style.scrollBehavior = 'smooth';
     scrollContainer.scrollLeft -= 1500;
 });
+function changeNbSlide(n, change){
+    if (change == 1) {
+        if (n == 3) {
+            return 1;
+        } else {
+          return n++;  
+        }
+    } else {
+        if (n==1) {
+           return 3;
+        } else {
+            return n--;
+        }
+        return n;
+    }
+}
+
+function changeSlide (n, nbSlide){
+    nbSlide = document.getElementsByClassName('slide-'.nbSlide);
+    nbSlide.classList.add('no-active');
+    // nbslide = changeNbSlide(nbSlide, n);
+    nbSlide = document.getElementsByClassName('slide'.changeNbSlide(nbSlide, n));
+    nbSlide.classList.remove('no-active');
+        
+}

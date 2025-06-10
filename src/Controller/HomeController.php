@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\StoryRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,6 +12,7 @@ final class HomeController extends AbstractController
 {
     public function __construct(
         private CategoryRepository $categoryRepository,
+        private StoryRepository $storyRepository,
     ){}
     #[Route('', name: 'app_home')]
     public function index(): Response
@@ -23,9 +25,11 @@ final class HomeController extends AbstractController
     #[Route('home', name: 'show_home')]
     public function home(): Response
     {
-        $categories = $this->categoryRepository->findBy([], [], 5);
+        $categories = $this->categoryRepository->findBy([], [], 5); // je limite à 5 catégories
+        $stories = $this->storyRepository->nPopularStory(9);
         return $this->render('home/home.html.twig', [
             'categories' => $categories,
+            'stories' => $stories
         ]);
     }
 }

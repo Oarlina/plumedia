@@ -146,7 +146,7 @@ header nav{
     }
 }
 
-.stories, .story p, .populars{margin: 0 auto;}
+.stories, .story p, .populars, .popular-home{margin: 0 auto;}
 .stories{
     flex-wrap: wrap;
     justify-content: center;
@@ -155,7 +155,8 @@ header nav{
         height: 400px;
         margin: 15px;
         img{
-            height: 75%;
+            /* height: 75%; */
+            width: 100%;
             border-radius: 5%;
         }
         .summary {
@@ -166,7 +167,8 @@ header nav{
             z-index: 10;
         }
     }
-    .story:hover .summary{opacity: 0.4; }
+    .story:hover{scale: 1.1; transition: ease-in-out 0.5s;}
+    .story:hover .summary{opacity: 0.8; }
 }
 .toggle-password-button{top: 0px !important; right: 100px !important;}
 /* gestion des messages d'alertes */
@@ -206,3 +208,8 @@ header nav{
     h3{font-size: larger;}
 
 }
+.popular-home{width: 50%;}
+.d-block{width: 33%;}
+
+.no-active{display: none;}
+.caroussel-home i {height: fit-content; margin: auto 10px;}
