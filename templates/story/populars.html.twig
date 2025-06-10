@@ -33,22 +33,23 @@
             <i class="fa-solid fa-arrow-right" id="nextBtn"></i>
     </section>
         
+        <p>Cette page met en avant les cinq histoires les plus suivies. Si la catégorie contient suffisamment d’histoires, les plus aimées sont également prises en compte en complément du classement par abonnés.</p>
     <main class="populars">
         {% set counter = 1 %}
         {% for story in stories %}
-            <h2>{{counter}}</h2>
+            <h2>{{counter}}</h2> 
             <div class="popular flex">
                 {% set counter = counter + 1 %}
                 <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
                 <div class="right backgroundGrey">
-                    <h3 class="textBlack">{{story.name}}</h3>
+                    <h3 class="textBlack">{{story.name}}</h3> <br>
                         <p><u>Genres :</u>
                         {% for category in story.categories %}
                             <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
                         {% endfor %}
                     </p>
                     <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
-                    <p> Résumé: {{story.summary}}</p>
+                    <p> <u>Résumé:</u> {{story.summary}}</p>
                     <a href="{{path('detail_story', {'id': story.id})}}" class="textBlack bouton backgroundPurple">En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
