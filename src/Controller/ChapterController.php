@@ -73,6 +73,9 @@ final class ChapterController extends AbstractController
                 $chapter->setFile($newFile);
             }elseif ( ! $edit){
                 return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
+            }else {
+                $this->addFlash('error', 'Le chapitre n\'a pas pu être mis à jour !');
+                return $this->redirectToRoute('chapterForStory', [ 'idStory' => $idStory->getId()]);
             }
 
             $this->entityManager->persist($chapter);

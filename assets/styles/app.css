@@ -172,8 +172,8 @@ header nav{
 }
 .toggle-password-button{top: 0px !important; right: 100px !important;}
 /* gestion des messages d'alertes */
-.alert-sucess{background-color:green;color: white; height: 100px; width: 100%; text-align: center;}
-.alert-error{color:red;}
+.alert-sucess{background-color:green;color: white; height: 100px; width: 100%; text-align: center; font-size: xx-large;}
+.alert-error{background-color:red;color: white; height: 100px; width: 100%; text-align: center; font-size: xx-large;}
 .alert-warning{color:orangered;}
 #gallery-wrap{width: 100%;}
 .gallery{
