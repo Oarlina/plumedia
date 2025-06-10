@@ -70,8 +70,9 @@ function changeNbSlide(n, change){
         return n;
     }
 }
-
-function changeSlide (n, nbSlide){
+// leftPopulars.addEventListener("click", changeSlide(n,nbSlide));
+// rightPopulars.addEventListener("click", changeSlide(n,nbSlide));
+window.changeSlide = function  (n, nbSlide){
     nbSlide = document.getElementsByClassName('slide-'.nbSlide);
     nbSlide.classList.add('no-active');
     // nbslide = changeNbSlide(nbSlide, n);

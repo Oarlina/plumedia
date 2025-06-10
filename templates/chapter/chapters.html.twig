@@ -18,41 +18,47 @@
             </nav>
             <div class="top">
                 {% if app.user and app.user.id == story.person.id %}
-                    <a href="" class="textBlack bouton backgroundPurple">Ajouter un chapitre</a>
+                    <a href="{{path('newChapter', {'idStory': story.id})}}" class="textBlack bouton backgroundPurple">Ajouter un chapitre</a>
                 {% endif %}
 
                 {# on verife qu'il y a des chapitres #}
                 {% if chapters %}
                     <div class="chapters">
+                        {% set counter = 1 %}
                         {% for chapter in chapters %}
-                            <div class="chapter">
-                                <p> {{chapter.name}} </p>
-                                <p>{{chapter.publish}}</p>
-                                <p>{{chapter.in_season}}</p>
-                                <p>{{chapter.isFree}}</p>
+                            <div class="chapter backgroundGrey">
+                                <h2><a href=""class='textBlack'><u>Chapitre {{counter}} :</u> {{chapter.name}} </a></h2>
+                                <p>{{chapter.publish | date("d/m/Y")}}</p>
+                                <p>Saison :{{chapter.inSeason}}</p>
+                                {% if chapter.isFree %}
+                                    <i class="fa-solid fa-unlock"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-lock"></i>
+                                {% endif %}
+                                {% set counter = counter + 1 %}
+                                <div class="rightChapter">
+                                    {% if app.user and app.user.id == chapter.user.id %}
+                                    <a href="{{path('editChapter', {'idStory': story.id, 'idChapter': chapter.id})}}" class="textBlack linkBtn"><i class="fa-solid fa-pen"></i></a>
+                                        
+                                    {% endif %}
+                                </div>
                             </div>
                         {% endfor %}
                     </div>
                 {% else %}
                     <p>Il n'y a pas encore de chapitres patienté ! </p>
                 {% endif %}
-
                 {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
                 {# <iframe src="{{ asset('uploads/chapters/tableau-question.pdf') }}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
             
                 {# <object type="application/PDF" name="PDF" id="PDF" data="{{ asset('uploads/chapters/tableau-question.pdf') }}" width="700px" height="1000px"/> #}
-                {# </object> #}
+                {# </object> #} 
 
-                
-            {# <object data="{{ asset('uploads/chapters/tableau-question.pdf') }}"  type="application/pdf" width="80%" height="500px">
-            <p>It appears your Web browser is not configured to display PDF files.
-                No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a>
-            </p>
- 
-            </object> #}
-            
-            
-            
+                {# <object data="{{ asset('uploads/chapters/tableau-question.pdf') }}"  type="application/pdf" width="80%" height="500px">
+                <p>It appears your Web browser is not configured to display PDF files.
+                    No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a>
+                </p>
+                </object> #}
             </div>
     </main>
 </section>

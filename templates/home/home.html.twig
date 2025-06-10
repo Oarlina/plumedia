@@ -6,9 +6,9 @@
 
     {# j'affiche les 3 plus populaire du moment (histoire qui a le plus d'abonner) #}
     {# {{dump(stories)}} #}
-    <h3>Les plus populaires : </h3>
+    <h3>Les histoires les plus populaires : </h3>
         <div class="caroussel-home popular-home flex stories">
-            <i class="fa-solid fa-arrow-left bouton backgroundPurple" onclick='changeSlide(-1, {nbslide})'></i>
+            <i class="fa-solid fa-arrow-left bouton backgroundPurple" id="leftPopulars" onclick='changeSlide(-1, {nbslide})'></i>
             {% set nbslide = 1 %}
             <div class="slide slide-{{nbslide}} flex">
 
@@ -34,18 +34,18 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <i class="fa-solid fa-arrow-right bouton backgroundPurple" onclick='changeSlide(1, {nbslide})'></i>
+            <i class="fa-solid fa-arrow-right bouton backgroundPurple" id="rightPopulars" onclick='changeSlide(1, {nbslide})'></i>
         </div>
     {# j'affiche 3 premieres sorties du jour #}
     <div class="day">
-        <h3>Sortie du jour : </h3>
+        <h3>Les chapitres du jour : </h3>
 
 
 
     </div>
     {# j'affiche les catégories avec le plus d'histoires #}
     <div class="categories">
-        <h3>Catégories : </h3>
+        <h3>Les catégories avec le plus d'histoires : </h3>
         {% for category in categories %}
             <p><a href="{{path('show_category', {'idCategory' : category.id})}}" class="textBlack">{{category.name}}</a></p>
         {% endfor %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit %}   
+        <h1>Modifier le chapitre : </h1>
+    {% else %}
+        <h1>Créer un chapitre :</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if edit %}
+        <h1>Modifier un chapitre :</h1>
+    {% else %}
+        <h1>Créer un chapitre :</h1>
+    {% endif %}
+
+{# {{dump(form.cover)}} #}
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    {{ form_end(form) }} 
+{% endblock %}

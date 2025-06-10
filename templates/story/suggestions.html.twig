@@ -21,35 +21,40 @@
             {% for category in story.categories %}
                 <h2> {{category.name}} :</h2>
                 {# si la catégories à plus de 5 histoire je limite au 5 première histoires #}
-                {% if category.stories | length >5 %}
+                {% if  category.stories and category.stories | length >5 %}
                     {% set counter = 1 %}
                     {% if counter >=5 %}
                         <div class="right stories flex flexDirectionRow">
 
-                            {% for story in category.stories %}
-                            <div class="story textCenter">
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
-                                <p class="textBlack">{{story.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                                <p class="summary backgroundWhite">{{story.summary}}</p>
-                            </div>
+                            {% for st in category.stories %}
+                            {% if story.id != st.id %}
+                                <div class="story textCenter">
+                                    <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}">
+                                    <p class="textBlack">{{st.name}}</p>
+                                    <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                    <p class="summary backgroundWhite">{{st.summary}}</p>
+                                </div>
+                            {% endif %}
                             {% set counter = counter + 1 %}
                             {% endfor %}
                         </div>
                     {% endif %}
                 {# sinon j'affiche tout #}
-                {% else %}
+                {% elseif category.stories and category.stories | length >= 2 %}
                     <div class="right stories flex flexDirectionRow">
-                        {% for story in category.stories %}
+                        {% for st in category.stories %}
+                            {% if story.id != st.id %}
                             <div class="story textCenter">
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
-                                <p class="textBlack">{{story.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                                <p class="summary backgroundWhite">{{story.summary}}</p>
-
+                                <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}">
+                                <p class="textBlack">{{st.name}}</p>
+                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="summary backgroundWhite">{{st.summary}}</p>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
+                {% elseif story in category.stories  %}
+                    <p>La catégorie n'a pas d'autre chapitre.</p>
                 {% endif %}
             {% endfor %}
     </main>
