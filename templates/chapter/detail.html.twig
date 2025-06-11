@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{chapter.name}}{% endblock %}
+
+{% block body %}
+    <h1>Chapitre {{num}} : {{chapter.name}}</h1>
+
+                {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
+                {# <iframe src="{{file}}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
+            
+                {# <object type="application/PDF" class="fileChapter" name="PDF" id="PDF" data="{{ asset('uploads/chapters/'~ chapter.file) }}" width="700px" height="1000px"/>
+                </object>  #}
+
+                {# <object data="{{ asset('uploads/chapters/tableau-question.pdf') }}"  type="application/pdf" width="80%" height="500px">
+                    <p>It appears your Web browser is not configured to display PDF files. 
+                    No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a></p>
+                </object> #}
+    <pre class="chapterText">
+        {{file}}
+    </pre>
+
+{% endblock %}

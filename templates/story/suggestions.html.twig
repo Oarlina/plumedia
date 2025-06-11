@@ -17,7 +17,7 @@
             {# c'est la navbar de droite #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack">Description</a>
-                <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
                 <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="textBlack"><b>Recommandations</b></a>
             </nav>
 

@@ -6,14 +6,16 @@ use Datetime;
 use App\Entity\Story;
 use App\Entity\Chapter;
 use App\Form\ChapterType;
+use Smalot\PdfParser\Parser;
 use App\Repository\ChapterRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class ChapterController extends AbstractController
 {
@@ -23,18 +25,19 @@ final class ChapterController extends AbstractController
         private FileSystem $fileSystem,
     ) {
     }
-    #[Route('/chapitre/{idStory}', name: 'chapterForStory')]
-    public function chapterForStory(Story $idStory): Response
+    
+    // c'est la page des chapitres d'une hsitoire
+    #[Route('/chapitre/{idStory}', name: 'app_chapter')]
+    public function index(Story $idStory): Response
     {
         $chapters = $this->chapterRepository->findBy(['story' => $idStory->getId()]);
-        // $file = $this->fileSystem->readFile('public/uploads/chapters/chapter-684828621e65a.pdf');
-        // $file = 'public/uploads/chapters/chapter-684828621e65a.pdf';
-        $file = 3;
-
-        return $this->render('chapter/chapters.html.twig', [
-            'chapters' => $chapters, 'story' => $idStory, 'file' =>$file
+        
+        return $this->render('chapter/index.html.twig', [
+            'chapters' => $chapters, 'story' => $idStory
         ]);
     }
+    
+    // pour la creation d'une histoire et sa modification
     #[Route('/edit/{idStory}/{chapter}', name: 'editChapter')]
     #[Route('/new/{idStory}', name: 'newChapter')]
     public function new(Story $idStory, Chapter $chapter = null, Request $request): Response
@@ -42,14 +45,14 @@ final class ChapterController extends AbstractController
         if (! $chapter){
             $chapter = new Chapter();
         }else {
-           $edit= true;
+            $edit= true;
         }
         $user = $this->getUser();
-
-
+        
+        
         $form = $this->createForm(ChapterType::class, $chapter);
         $form->handleRequest($request);
-
+        
         // si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //je récupère les informations
@@ -63,7 +66,7 @@ final class ChapterController extends AbstractController
             }else {
                 $chapter->setIsFree(1);
             }
-
+            
             // je fais la gestion de téléchargmeent du fichier
             $file = $form->get('file')->getData();
             if($file){
@@ -75,40 +78,47 @@ final class ChapterController extends AbstractController
                 return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
             }else {
                 $this->addFlash('error', 'Le chapitre n\'a pas pu être mis à jour !');
-                return $this->redirectToRoute('chapterForStory', [ 'idStory' => $idStory->getId()]);
+                return $this->redirectToRoute('app_chapter', [ 'idStory' => $idStory->getId()]);
             }
-
+            
             $this->entityManager->persist($chapter);
             $this->entityManager->flush();
-    
+            
             if ($chapter->getId()) {
                 $this->addFlash('sucess', 'Le chapitre à été mis à jour !');
             } else {
                 $this->addFlash('sucess', 'Le chapitre à été publié !');
             }
             
-            return $this->redirectToRoute('chapterForStory', [ 'idStory' => $idStory->getId()]);
+            return $this->redirectToRoute('app_chapter', [ 'idStory' => $idStory->getId()]);
         }
         
         return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
     }
-
+    
+    // pour la modification le like d'un chapitre ou si un chapitre a ete lu ou non
     #[Route(path:'/changeChapter/{chapter}/{fonction}', name:'changeChapter')]
     public function changeChapter(Chapter $chapter, string $fonction): Response {
         // dd($chapter, $fonction);
         if ($fonction != 'addUserHaveRead' and $fonction != 'removeUserHaveRead' and $fonction != 'addUsersLike' and $fonction != 'removeUsersLike'){
             $this->addFlash('error', 'Un problème est survenu, veuillez recommencez !');
-            return $this->redirectToRoute('chapterForStory', ['idStory' => $chapter->getStory()->getId()]);
+            return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
         }
         $user = $this->getUser();
         $chapter->$fonction($user);
         
         $this->entityManager->persist($chapter);
         $this->entityManager->flush();
-
-        return $this->redirectToRoute('chapterForStory', ['idStory' => $chapter->getStory()->getId()]);
+        
+        return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
     }
-
-
-
-}         
+    
+    #[Route('/chapitre/{chapter}/{num}/detail', name:'show_chapter')]
+    public function detail(Chapter $chapter, int $num): Response {
+        $parser = new Parser();
+        $pdf = $parser->parseFile( $this->getParameter('kernel.project_dir'). '/public/uploads/chapters/'. $chapter->getFile() );
+        $fileText = $pdf->getText();
+        
+        return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText]);
+    }
+}
