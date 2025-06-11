@@ -31,7 +31,7 @@
 .width100, .summary{width: 100%;}
 .noBorder, #profil .rightContainer input{border: none;}
 .larger{font-size: larger;}
-.follows, .follow, #registerContainer .left, #registerContainer .right, #loginContainer .right, #loginContainer .left{ width: 50%;}
+.width50{width: 50%;}
 .ConnectContainer, #home h1, #home h3 {margin: 10px auto;}
 .ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
 a{

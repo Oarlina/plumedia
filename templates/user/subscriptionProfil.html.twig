@@ -43,8 +43,8 @@
         </nav>
 
         <main class="flex ">
-            <div class="follows  alignCenter textCenter">
-                <section class="follow flex  flexDirectionCollumn">
+            <div class="follows  width50 alignCenter textCenter">
+                <section class="follow width50 flex  flexDirectionCollumn">
                     <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
@@ -54,8 +54,8 @@
                 </section>
             </div>
 
-            <div class="follows alignCenter  textCenter">
-                <section class="follow flex flexDirectionCollumn">
+            <div class="follows width50 alignCenter  textCenter">
+                <section class="follow width50 flex flexDirectionCollumn">
                     <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">

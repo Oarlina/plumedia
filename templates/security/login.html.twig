@@ -8,13 +8,13 @@
 {% endif %}
 
 <div id="loginContainer" class="loginContainer ConnectContainer flex">
-    <div class="left container textCenter backgroundPink">
+    <div class="left container textCenter backgroundPink width50">
         <h3>Bienvenue ! </h3>
         <p>Pas encore de compte ? </p>
         <a href="{{path('app_register')}}" class="bouton backgroundWhite textBlack">M'inscrire</a>
     </div>
 
-    <div class="right container alignCenter textCenter">
+    <div class="right container alignCenter textCenter width50">
         <h2>Connexion</h2>
         <form method="post" action="{{ path('app_login') }}">
 
