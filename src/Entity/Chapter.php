@@ -48,13 +48,13 @@ class Chapter
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likeChapter')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedChapters')]
     private Collection $usersLike;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'haveRead')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters')]
     private Collection $userHaveRead;
 
     public function __construct()
@@ -195,7 +195,7 @@ class Chapter
     {
         if (!$this->usersLike->contains($usersLike)) {
             $this->usersLike->add($usersLike);
-            $usersLike->addLikeChapter($this);
+            $usersLike->addLikedChapter($this);
         }
 
         return $this;
@@ -204,7 +204,7 @@ class Chapter
     public function removeUsersLike(User $usersLike): static
     {
         if ($this->usersLike->removeElement($usersLike)) {
-            $usersLike->removeLikeChapter($this);
+            $usersLike->removeLikedChapter($this);
         }
 
         return $this;
@@ -222,7 +222,7 @@ class Chapter
     {
         if (!$this->userHaveRead->contains($userHaveRead)) {
             $this->userHaveRead->add($userHaveRead);
-            $userHaveRead->addHaveRead($this);
+            $userHaveRead->addReadChapter($this);
         }
 
         return $this;
@@ -231,7 +231,7 @@ class Chapter
     public function removeUserHaveRead(User $userHaveRead): static
     {
         if ($this->userHaveRead->removeElement($userHaveRead)) {
-            $userHaveRead->removeHaveRead($this);
+            $userHaveRead->removeReadChapter($this);
         }
 
         return $this;

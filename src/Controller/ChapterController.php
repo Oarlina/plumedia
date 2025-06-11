@@ -92,4 +92,23 @@ final class ChapterController extends AbstractController
         
         return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
     }
+
+    #[Route(path:'/changeChapter/{chapter}/{fonction}', name:'changeChapter')]
+    public function changeChapter(Chapter $chapter, string $fonction): Response {
+        // dd($chapter, $fonction);
+        if ($fonction != 'addUserHaveRead' and $fonction != 'removeUserHaveRead' and $fonction != 'addUsersLike' and $fonction != 'removeUsersLike'){
+            $this->addFlash('error', 'Un problème est survenu, veuillez recommencez !');
+            return $this->redirectToRoute('chapterForStory', ['idStory' => $chapter->getStory()->getId()]);
+        }
+        $user = $this->getUser();
+        $chapter->$fonction($user);
+        
+        $this->entityManager->persist($chapter);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('chapterForStory', ['idStory' => $chapter->getStory()->getId()]);
+    }
+
+
+
 }         

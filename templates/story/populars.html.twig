@@ -40,7 +40,11 @@
             <h2>{{counter}}</h2> 
             <div class="popular flex">
                 {% set counter = counter + 1 %}
-                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                {% if story.cover %}
+                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                {% else %}
+                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                {% endif %}
                 <div class="right backgroundGrey">
                     <h3 class="textBlack">{{story.name}}</h3> <br>
                         <p><u>Genres :</u>

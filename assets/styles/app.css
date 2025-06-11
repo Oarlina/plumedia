@@ -213,3 +213,5 @@ header nav{
 
 .no-active{display: none;}
 .caroussel-home i {height: fit-content; margin: auto 10px;}
+.leftChapter{width: 95%;}
+.rightChapter{ width: 5%; margin: auto;}

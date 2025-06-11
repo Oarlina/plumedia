@@ -5,9 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    
-    <div id="profil">
-        
+    <div id="profil">  
         {% if user.avatar %}
             <picture>
                 <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
@@ -62,7 +60,11 @@
                     <div class="storiesAuthor stories flex">
                         {% for story in user.stories %}
                             <div class="story textCenter">
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                                {% endif %}
                                 <p>{{story.name}}</p>
                                 <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>
@@ -78,7 +80,11 @@
                     <div class="storiesAuthor stories flex">
                         {% for story in user.followedStories %}
                             <div class="story textCenter">
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                                {% endif %}
                                 <p>{{story.name}}</p>
                                 <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>
@@ -95,7 +101,11 @@
                     <div class="storiesAuthor stories flex">
                         {% for story in user.likedStories %}
                             <div class="story textCenter">
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                                {% endif %}
                                 <p>{{story.name}}</p>
                                 <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>

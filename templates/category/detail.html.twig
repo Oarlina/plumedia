@@ -11,9 +11,9 @@
                 <a href="{{path('app_category')}}" class="textBlack">Tous</a>
                 {% for cat in categories %}
                     {% if cat.name == category.name %}
-                    <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
+                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
                     {% else %}
-                    <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack">{{cat.name}} </a>
+                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack">{{cat.name}} </a>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -23,7 +23,11 @@
                 {% else %}
                     {% for story in category.stories %}
                         <div class="story textCenter">
-                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">
+                            {% if story.cover %}
+                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                            {% else %}
+                                <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                            {% endif %}
                             <p class="textBlack">{{story.name}}</p>
                             <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                             <p class="summary backgroundWhite">{{story.summary}}</p>

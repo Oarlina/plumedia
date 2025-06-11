@@ -7,7 +7,11 @@
 <section id="detailStory">
     <h1>{{story.name}}</h1>
     <main class="width100 flex flexDirectionRow">
-        <img src="{{ asset('uploads/story/' ~ story.cover) }}" class="cover" alt="image de couverture">
+        {% if story.cover %}
+            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+        {% else %}
+            <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+        {% endif %}
         
         <div class="right">
             {# c'est la navbar de droite #}

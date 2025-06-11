@@ -3,14 +3,18 @@
 {% block title %}Hello StoryController!{% endblock %}
 
 {% block body %}
-                {# {{dump(file)}} #}
-
 <section id="detailStory">
     <h1>{{story.name}}</h1>
     <main class="width100 flex flexDirectionRow">
-        <img src="{{ asset('uploads/story/' ~ story.cover) }}" class="cover" alt="image de couverture">
+        {# gestion le la couverture #}
+        {% if story.cover %}
+            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+        {% else %}
+            <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+        {% endif %}
         
         <div class="right">
+            {# on gere la navbar #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack">Description</a>
                 <a href="{{path('chapterForStory', {'idStory': story.id})}}" class="textBlack"><b>Chapitres</b></a>
@@ -23,27 +27,52 @@
 
                 {# on verife qu'il y a des chapitres #}
                 {% if chapters %}
+                    {# la liste des chapitres #}
                     <div class="chapters">
                         {% set counter = 1 %}
                         {% for chapter in chapters %}
-                            <div class="chapter backgroundGrey">
-                                <h2><a href=""class='textBlack'><u>Chapitre {{counter}} :</u> {{chapter.name}} </a></h2>
-                                <p>{{chapter.publish | date("d/m/Y")}}</p>
-                                <p>Saison :{{chapter.inSeason}}</p>
-                                {% if chapter.isFree %}
-                                    <i class="fa-solid fa-unlock"></i>
-                                {% else %}
-                                    <i class="fa-solid fa-lock"></i>
-                                {% endif %}
-                                {% set counter = counter + 1 %}
-                                <div class="rightChapter">
-                                    {% if app.user and app.user.id == chapter.user.id %}
-                                        <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="textBlack linkBtn"><i class="fa-solid fa-pen"></i></a>
+                            <div class="chapter backgroundGrey flex">
+                                <div class="leftChapter">
+                                    <h2><a href=""class='textBlack'><u>Chapitre {{counter}} :</u> {{chapter.name}} </a></h2>
+                                    <p>Date de publication : {{chapter.publish | date("d/m/Y")}}</p>
+                                    <p>Saison :{{chapter.inSeason}}</p>
+                                    {% set counter = counter + 1 %}
+                                </div>
+                                {# la partie droite du chapitre #}
+                                <div class="rightChapter flex flexDirectionCollumn textCenter">
+                                    
+                                    {# pour que l'auteur puisse modifier le chapitre #}
+                                    {% if app.user and app.user == chapter.user %}
+                                    <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="textBlack linkBtn"><i class="fa-solid fa-pen"></i></a>
                                     {% endif %}
-                                    {% if app.user and app.user.likedChapters %}
-                                        
+
+                                    {# si une histoire est gratuite ou non  #}
+                                    {% if chapter.isFree %}
+                                        <i class="fa-solid fa-unlock"></i>
                                     {% else %}
-                                        
+                                        <i class="fa-solid fa-lock"></i>
+                                    {% endif %}
+
+                                    {# la gestion de like #}
+                                    {% if app.user and app.user in chapter.usersLike %}
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike'})}}" class="textBlack">{{chapter.usersLike | length}}
+                                            <i class="fa-solid fa-heart"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUsersLike'})}}" class="textBlack">{{chapter.usersLike | length}}
+                                            <i class="fa-regular fa-heart"></i>
+                                        </a>
+                                    {% endif %}
+
+                                    {# si l'utilisateur a lu le chapitre #}
+                                    {% if app.user and app.user in chapter.userHaveRead %}
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUserHaveRead'})}}" class="textBlack">{{chapter.userHaveRead | length}}
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUserHaveRead'})}}" class="textBlack">{{chapter.userHaveRead | length}}
+                                            <i class="fa-regular fa-eye"></i>
+                                        </a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -54,15 +83,13 @@
                 {% endif %}
                 {# <img src="{{ asset('uploads/chapters/tableau-question.pdf') }}" alt=""> #}
                 {# <iframe src="{{file}}" class="noBorder" frameborder="0" height="500px" width="800px" allowfullscreen></iframe> #}
-                {{file}}
             
                 {# <object type="application/PDF" name="PDF" id="PDF" data="{{ asset('uploads/chapters/tableau-question.pdf') }}" width="700px" height="1000px"/> #}
                 {# </object> #} 
 
                 {# <object data="{{ asset('uploads/chapters/tableau-question.pdf') }}"  type="application/pdf" width="80%" height="500px">
-                <p>It appears your Web browser is not configured to display PDF files.
-                    No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a>
-                </p>
+                    <p>It appears your Web browser is not configured to display PDF files. 
+                    No worries, just <a href="{{ asset('uploads/chapters/tableau-question.pdf') }}">click here to download the PDF file.</a></p>
                 </object> #}
             </div>
     </main>
