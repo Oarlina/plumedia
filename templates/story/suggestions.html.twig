@@ -16,9 +16,9 @@
         <div class="right">
             {# c'est la navbar de droite #}
             <nav class="textCenter width100 flex flexDirectionRow">
-                <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack">Description</a>
-                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
-                <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="textBlack"><b>Recommandations</b></a>
+                <a href="{{path('detail_story', {'id' : story.id})}}" class="">Description</a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres</a>
+                <a href="{{path('suggestions_story', {'idStory': story.id})}}" class=""><b>Recommandations</b></a>
             </nav>
 
             {# je parcours les catégories de l'histoire #}
@@ -34,8 +34,8 @@
                             {% if story.id != st.id %}
                                 <div class="story textCenter">
                                     <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}">
-                                    <p class="textBlack">{{st.name}}</p>
-                                    <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                    <p class="">{{st.name}}</p>
+                                    <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                     <p class="summary backgroundWhite">{{st.summary}}</p>
                                 </div>
                             {% endif %}
@@ -50,8 +50,8 @@
                             {% if story.id != st.id %}
                             <div class="story textCenter">
                                 <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}">
-                                <p class="textBlack">{{st.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="">{{st.name}}</p>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{st.summary}}</p>
                             </div>
                             {% endif %}

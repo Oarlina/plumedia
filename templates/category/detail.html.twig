@@ -4,16 +4,16 @@
 
 {% block body %}
     <h1 class="textCenter">{{category.name}}</h1>
-        <a href="{{path('app_category')}}" class="textBlack"><i class="fa-solid fa-arrow-left"></i> Catégories</a>
+        <a href="{{path('app_category')}}" class=""><i class="fa-solid fa-arrow-left"></i> Catégories</a>
         
         <main class="flex flexDirectionRowcategories width100 ">
             <div class="left flex flexDirectionCollumn">
-                <a href="{{path('app_category')}}" class="textBlack">Tous</a>
+                <a href="{{path('app_category')}}" class="">Tous</a>
                 {% for cat in categories %}
                     {% if cat.name == category.name %}
-                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
+                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="larger bouton backgroundGrey"><b>{{cat.name}}</b> </a>
                     {% else %}
-                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="textBlack">{{cat.name}} </a>
+                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="">{{cat.name}} </a>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -28,8 +28,8 @@
                             {% else %}
                                 <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
                             {% endif %}
-                            <p class="textBlack">{{story.name}}</p>
-                            <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                            <p class="">{{story.name}}</p>
+                            <a class="bouton backgroundPurple" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                             <p class="summary backgroundWhite">{{story.summary}}</p>
 
                         </div>

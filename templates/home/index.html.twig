@@ -6,14 +6,14 @@
 
     <section id="home" class="textCenter">
         <video autoplay muted loop playsinline id="bg-video">
-        <source src="{{ asset('videos/radio.mp4') }}" type="video/mp4">
-            Votre navigateur ne supporte pas la lecture vidéo.
+            <source src="{{ asset('videos/radio.mp4') }}" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
         </video>
         <div class="content">
             <h1 class="textCenter">Publiez et lisez des histoires sur <span class="textPurple titleHome">Plumédia</span>.</h1>
             <h2 class="textCenter">Améliorer votre écriture en postant vos histoires.</h2>
                 <br><br>
-            <a class="backgroundPurple bouton textBlack" href="{{path('show_home')}}">Lire maintenant </a>
+            <a class="backgroundPurple bouton " href="{{path('show_home')}}">Lire maintenant </a>
             <br><br>
             
         </div>
@@ -25,11 +25,11 @@
 
     </section>
     <p>Comment utiliser et se repérer dans le site?</p>
-    <div class="newsletter">
-        <h2>Subscribe to Our Newsletter</h2>
+    <div class="newsletter textCenter">
+        <h2>S'inscrire à la newsletter</h2>
         <div class="newsletter-form">
-            <input class="newsletter-input" placeholder="Email here" />
-            <button class="newsletter-btn">Submit</button>
+            <input class="newsletter-input noBorder" placeholder="Votre email" />
+            <button class="newsletter-btn bouton">S'inscrire</button>
         </div>
     </div>
 {% endblock %}

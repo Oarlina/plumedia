@@ -16,20 +16,20 @@
     </head>
     <body>
         <header class="width100">
-            <nav class="backgroundPink width100 flex alignCenter">
+            <nav class="backgroundBrown width100 flex alignCenter">
                 {# je met le / devant pour forcer l'image à être récupérer à la racine car sinon il cherche juste dansle doosier avant #}
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
-                <a href="/.." class="logoSite backgroundPink"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
-                <a href="{{path('app_category')}}" class="linkBtn textBlack backgroundPink">Catégories</a>
-                <a href="/.." class="linkBtn textBlack backgroundPink">Calendrier</a>
-                <a href="{{path('populars')}}" class="linkBtn textBlack backgroundPink">Populaires</a>
+                <a href="/.." class="logoSite"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
+                <a href="{{path('app_category')}}" class="bouton">Catégories</a>
+                <a href="/.." class="bouton">Calendrier</a>
+                <a href="{{path('populars')}}" class="bouton">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
-                        <a href="{{path('app_profil')}}" class="bouton textBlack backgroundWhite">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
-                        <a href="{{ path('app_logout') }}" class="bouton textBlack backgroundWhite">Me déconnecter</a>
+                        <a href="{{path('app_profil')}}" class="bouton">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
+                        <a href="{{ path('app_logout') }}" class="bouton">Me déconnecter</a>
                     {% else %}
-                        <a href="{{ path('app_register') }}" class="bouton textBlack backgroundWhite">S'inscrire</a>
-                        <a href="{{ path('app_login')}}" class="bouton textBlack backgroundWhite">Se connecter</a>
+                        <a href="{{ path('app_register') }}" class="bouton">S'inscrire</a>
+                        <a href="{{ path('app_login')}}" class="bouton">Se connecter</a>
                     {% endif %}
             </nav>
         </header>
@@ -47,56 +47,38 @@
         {% endblock %}
 
         <footer>
-            <div class="footer-container">
-                <div class="footer">
-                    <div class="footer-content">
-                        <div class="footer-row">
-                            <div class="footer-column textCenter">
-                                <div class="footer-about">
-                                    <h3>About Us</h3>
-                                    <p>Plumédia, c’est le repaire des amoureux des mots. Ici, on lit, on écrit, on rêve — et parfois tout en même temps ! Rejoins une communauté créative où chaque histoire compte. ✨📚</p>
-                                </div>
-                            </div>
-                            <div class="footer-column textCenter">
-                                <div class="footer-links">
-                                    <h3>Liens utiles</h3>
-                                    <a href="/..">Home</a>
-                                    <a href="{{path('app_category')}}" class="textBlack">Catégories</a>
-                                    <a href="{{path('contact_form')}}" class="textBlack">Contact</a>
-                                </div>
-                            </div>
-                            <div class="footer-column textCenter">
-                                <div class="footer-contact">
-                                    <h3>Contact</h3>
-                                    <p> <i class="fa fa-envelope"></i> marquantrachel@gmail.com</p>
-                                    <div class="footer-social">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <section class="footer-content flex">
+                <div class="footer-column textCenter">
+                    <h3>About Us</h3>
+                    <p>Plumédia, c’est le repaire des amoureux des mots. Ici, on lit, on écrit, on rêve — et parfois tout en même temps ! Rejoins une communauté créative où chaque histoire compte. ✨📚</p>
                 </div>
-                <div class="footer-menu">
-                    <div class="f-menu">
-                        <a href="{{path('legal_mentions')}}" class="textBlack linkBtn">Mentions légales</a>
-                        <a href="{{path('legal_cgv')}}" class="textBlack linkBtn">Condition générale de vente</a>
-                        <a href="{{path('legal_privacy_policy')}}" class="textBlack linkBtn">Politique de confidentialité</a>
-                        <a href="{{path('legal_cookies')}}" class="textBlack linkBtn">Cookie</a>
-                        <a href="{{path('contact_form')}}" class="textBlack linkBtn">Contact</a>
-                        <a href="" class="textBlack linkBtn">FAQ</a>
-                    </div>
+                <div class="footer-column textCenter flex flexDirectionCollumn">
+                    <h3>Liens utiles</h3>
+                    <a href="/.." class="bouton">Home</a>
+                    <a href="{{path('app_category')}}" class="bouton">Catégories</a>
+                    <a href="{{path('contact_form')}}" class="bouton">Contact</a>
                 </div>
-                <div class="footer-copyright">
-                    <div class="footer-row">
-                        <div class="footer-column textCenter">
-                            <p> &copy; Plumédia </p>
-                        </div>
-                        <div class="footer-column textCenter">
-                            <p> Développer par Rachel Marquant</p>
-                        </div>
-                    </div>
+                <div class="footer-column textCenter">
+                    <h3>Contact</h3>
+                    <p> <i class="fa fa-envelope"></i> marquantrachel@gmail.com</p>
                 </div>
+            </section>
+            <section class="footer-menu textCenter">
+                <a href="{{path('legal_mentions')}}" class=" bouton">Mentions légales</a>
+                <a href="{{path('legal_cgv')}}" class=" bouton">Condition générale de vente</a>
+                <a href="{{path('legal_privacy_policy')}}" class=" bouton">Politique de confidentialité</a>
+                <a href="{{path('legal_cookies')}}" class=" bouton">Cookie</a>
+                <a href="{{path('contact_form')}}" class=" bouton">Contact</a>
+                <a href="" class=" bouton">FAQ</a>
+            </section>
+            <section class="footer-copyright textCenter flex ">
+                <div class="footer-column textCenter">
+                    <p> &copy; Plumédia </p>
                 </div>
-            </div>
+                <div class="footer-column textCenter">
+                    <p> Développer par Rachel Marquant</p>
+                </div>
+            </section>
         </footer>
     </body>
 </html>

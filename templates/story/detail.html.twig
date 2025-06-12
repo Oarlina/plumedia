@@ -24,50 +24,50 @@
         <div class="right">
             {# la nav du haut #}
             <nav class="textCenter width100 flex flexDirectionRow">
-                <a href="{{path('detail_story', {'id' : story.id})}}" class="textBlack"><b>Description</b></a>
-                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="textBlack">Chapitres</a>
-                <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="textBlack">Recommandations</a>
+                <a href="{{path('detail_story', {'id' : story.id})}}" class=""><b>Description</b></a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres</a>
+                <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="">Recommandations</a>
             </nav>
             {# la partie de like + follow #}
             <div class="top">
                 {# je fais la gestion de like d'une histoire #}
                 {% if app.user  in story.usersLike %}
-                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="textBlack">{{story.usersLike | length}} <i class="fa-solid fa-heart"></i></a>
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="">{{story.usersLike | length}} <i class="fa-solid fa-heart"></i></a>
                 {% else %}
-                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="textBlack">{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="">{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
                 {% endif %}
                 {# je fais la gestion de follow d'une histoire #}
                 {% if app.user  in story.usersFollow %}
-                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton backgroundPink textBlack">Se désabonner ({{story.usersFollow | length}})</a>
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton backgroundPink ">Se désabonner ({{story.usersFollow | length}})</a>
                 {% else %}
-                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink textBlack">S'abonner ({{story.usersFollow | length}})</a>
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink ">S'abonner ({{story.usersFollow | length}})</a>
                 {% endif %}
                 {# c'est la gestion de modification d'une histoire qui n'est visible que pour l'auteur #}
                 {% if app.user and app.user.id == story.person.id %}
-                    <a href="{{path('change_story', {'id': story.id})}}"  class="bouton backgroundPurple textBlack">
+                    <a href="{{path('change_story', {'id': story.id})}}"  class="bouton backgroundPurple ">
                         Modifier l'histoire <i class="fa-solid fa-pen-nib"></i>
                     </a>
-                    <a href="" class="textBlack">-</a>
+                    <a href="" class="">-</a>
                     {# gestion de l'histoire fini ou non pour auteur #}
                     {% if story.isFinish == 0 %}
-                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 1}) }}" class="bouton backgroundPurple textBlack">
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 1}) }}" class="bouton backgroundPurple ">
                             Marqué terminée 
                         </a>
-                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 2}) }}" class="bouton backgroundPurple textBlack">
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 2}) }}" class="bouton backgroundPurple ">
                             Marqué en pause
                         </a>
                         {% elseif story.isFinish == 1 or story.isFinish == 2 %}
-                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 0}) }}" class="bouton backgroundPurple textBlack">
+                        <a href="{{ path('changeIsFinish', {'id' : story.id, 'make' : 0}) }}" class="bouton backgroundPurple ">
                             Marqué en cours
                         </a>
                         {% endif %}
                 {% endif %}
             </div>
             {# les informations de l'histoire #}
-            <p><u>Auteur :</u> <a href="{{path('app_profile', {'id':story.person.id})}}" class="textBlack">{{story.person.pseudo}}</a></p>
+            <p><u>Auteur :</u> <a href="{{path('app_profile', {'id':story.person.id})}}" class="">{{story.person.pseudo}}</a></p>
             <p><u>Genres :</u>
                 {% for category in story.categories %}
-                    <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
+                    <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="">{{category.name }}</a> ,
                 {% endfor %}
             </p>
 

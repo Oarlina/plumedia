@@ -29,13 +29,13 @@
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
             <nav class="flex justifyContent">
-                <a href="{{path('app_profil')}}" class="textBlack"><b>Mes informations</b></a>
+                <a href="{{path('app_profil')}}" class=""><b>Mes informations</b></a>
                 <a href="">|</a>
-                <a href="{{path('app_subscriptionProfil')}}" class="textBlack">Mes abonnements</a>
+                <a href="{{path('app_subscriptionProfil')}}" class="">Mes abonnements</a>
                 <a href="">|</a>
-                <a href="{{path('app_libraryProfil')}}" class="textBlack">Ma blibliothèque</a>
+                <a href="{{path('app_libraryProfil')}}" class="">Ma blibliothèque</a>
                 <a href="">|</a>
-                <a href="{{path('app_storyProfil')}}" class="textBlack">Mes histoires</a>
+                <a href="{{path('app_storyProfil')}}" class="">Mes histoires</a>
             </nav>
         {% endif %}
         
@@ -43,14 +43,14 @@
         {% if app.user and user.id == app.user.id %}
             <main class="flex">
                 <section class="leftContainer">
-                    <a href="#infos" class="textBlack">Editer mes informations</a> <br>
-                    <a href="#lessFifteen" class="textBlack">J'ai plus de 15 ans</a><br>
-                    <a href="#modifierMdp" class="textBlack">Modifier mon mot de passe</a>
+                    <a href="#infos" class="">Editer mes informations</a> <br>
+                    <a href="#lessFifteen" class="">J'ai plus de 15 ans</a><br>
+                    <a href="#modifierMdp" class="">Modifier mon mot de passe</a>
                     <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
 
                     {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
-                        <a href="{{path('app_users')}}" class="textBlack">Liste des utilisateurs</a> <br>
-                        <a href="{{path('admin')}}" class="textBlack">Panneau admin</a>
+                        <a href="{{path('app_users')}}" class="">Liste des utilisateurs</a> <br>
+                        <a href="{{path('admin')}}" class="">Panneau admin</a>
                     {% endif %}
                 </section>
                 
@@ -67,7 +67,7 @@
                         <li>Toute vos données personnelles seront <b>anonymisées</b> de manière iréversible.</li>
                     </ol>
                     <p>Nous respectons votre vie privée. Si vous avez des questions n'hésitez pas à nous contactez.</p> <br>
-                    <a href="{{path('delete_account', {'user': user.id, 'bool': 1})}}" style="background-color:red" class="bouton textBlack">Supprimer mon compte</a>
+                    <a href="{{path('delete_account', {'user': user.id, 'bool': 1})}}" style="background-color:red" class="bouton ">Supprimer mon compte</a>
                 </section>
             </main>
         {% endif %}

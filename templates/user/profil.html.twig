@@ -24,13 +24,13 @@
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
             <nav class="flex justifyContent">
-                <a href="{{path('app_profil')}}" class="textBlack"><b>Mes informations</b></a>
+                <a href="{{path('app_profil')}}" class=""><b>Mes informations</b></a>
                 <p>|</p>
-                <a href="{{path('app_subscriptionProfil')}}" class="textBlack">Mes abonnements</a>
+                <a href="{{path('app_subscriptionProfil')}}" class="">Mes abonnements</a>
                 <p>|</p>
-                <a href="{{path('app_libraryProfil')}}" class="textBlack">Ma blibliothèque</a>
+                <a href="{{path('app_libraryProfil')}}" class="">Ma blibliothèque</a>
                 <p>|</p>
-                <a href="{{path('app_storyProfil')}}" class="textBlack">Mes histoires</a>
+                <a href="{{path('app_storyProfil')}}" class="">Mes histoires</a>
             </nav>
         {% endif %}
         {# ce que les autres utilisateur verront #}
@@ -48,9 +48,9 @@
                 {% endif %}
 
                 {% if estSuivi %}
-                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'removeFollow'}) }}" class="textBlack bouton"><i class="fa-solid fa-heart"></i>Ne plus suivre</a>
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'removeFollow'}) }}" class=" bouton"><i class="fa-solid fa-heart"></i>Ne plus suivre</a>
                 {% else %}
-                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'addFollow'}) }}" class="textBlack bouton"><i class="fa-regular fa-heart"></i>Suivre</a>
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'addFollow'}) }}" class=" bouton"><i class="fa-regular fa-heart"></i>Suivre</a>
 
                 {% endif %}
 
@@ -66,7 +66,7 @@
                                     <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
                                 {% endif %}
                                 <p>{{story.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>
                             </div>
                         {% endfor %}
@@ -86,7 +86,7 @@
                                     <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
                                 {% endif %}
                                 <p>{{story.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>
                             </div>
                         {% endfor %}
@@ -107,7 +107,7 @@
                                     <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
                                 {% endif %}
                                 <p>{{story.name}}</p>
-                                <a class="bouton backgroundPurple textBlack" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                                 <p class="summary backgroundWhite">{{story.summary}}</p>
                             </div>
                         {% endfor %}
@@ -121,14 +121,14 @@
         {% if app.user and user.id == app.user.id %}
             <main class="flex ">
                 <div class="leftContainer textCenter">
-                    <a href="#infos" class="textBlack">Editer mes informations</a> <br>
-                    <a href="#lessFifteen" class="textBlack">J'ai plus de 15 ans</a><br>
-                    <a href="#modifierMdp" class="textBlack">Modifier mon mot de passe</a>
+                    <a href="#infos" class="">Editer mes informations</a> <br>
+                    <a href="#lessFifteen" class="">J'ai plus de 15 ans</a><br>
+                    <a href="#modifierMdp" class="">Modifier mon mot de passe</a>
                     <a href="{{path('delete_account', {'user': user.id, 'bool': 0})}}" style="color:red">Supprimer mon compte</a> <br>
 
                     {% if "ROLE_MODERATOR" in user.roles %} {# je m'assure que seul le premier admin peut aller sur la page #}
-                        <a href="{{path('app_users')}}" class="textBlack">Liste des utilisateurs</a> <br>
-                        <a href="{{path('admin')}}" class="textBlack">Panneau admin</a>
+                        <a href="{{path('app_users')}}" class="">Liste des utilisateurs</a> <br>
+                        <a href="{{path('admin')}}" class="">Panneau admin</a>
                     {% endif %}
                 </div>
                 

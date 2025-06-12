@@ -41,12 +41,12 @@
                     </td>
                     <td>
                         {% if user.id !=1 %}
-                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}" class="textBlack">Changer le role</a>
+                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_ADMIN'}) }}" class="">Changer le role</a>
                         {% endif %}
                     </td> 
                     <td>
                         {% if user.id !=1 %}
-                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_AUTHOR'}) }}" class="textBlack">Changer le role</a>
+                            <a href="{{ path('change_role_user', {'user':user.id, 'role':'ROLE_AUTHOR'}) }}" class="">Changer le role</a>
                         {% endif %}
                     </td> 
                 </tr>

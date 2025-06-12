@@ -14,27 +14,27 @@
     {% set before = num -1 %}
     {% set after = num +1 %}
     {% if num > 1 %}
-        <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : before})}}" class="backgroundPurple bouton textBlack">Episode précédent</a>
+        <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : before})}}" class="backgroundPurple bouton ">Episode précédent</a>
     {% endif %}
     {# la gestion de like #}
     {% if app.user and app.user in chapter.usersLike %}
-        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="textBlack backgroundPink bouton">{{chapter.usersLike | length}}
+        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
             <i class="fa-solid fa-heart"></i>
         </a>
     {% else %}
-        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike', 'num' : num})}}" class="textBlack backgroundPink bouton">{{chapter.usersLike | length}}
+        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike', 'num' : num})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
             <i class="fa-regular fa-heart"></i>
         </a>
     {% endif %}
     {# gestion d'abonnement à l'histoire #}
 
     {% if app.user  in story.usersFollow %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink textBlack"> Se désabonner</a>
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink "> Se désabonner</a>
     {% else %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink textBlack"> S'abonner</a>
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink "> S'abonner</a>
     {% endif %}
     {% if story.chapters | length > num %}
-    <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : after})}}" class="backgroundPurple bouton textBlack">Episode suivant</a>
+    <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : after})}}" class="backgroundPurple bouton ">Episode suivant</a>
     {% endif %}
 </div>
 {# ce sont les commentaires  #}
@@ -45,10 +45,10 @@
     </div>
 
     <nav class="flex justifyContent">
-        <a href="" class="textBlack ">TOP</a>
-        <a href="" class="textBlack ">Le plus récent</a>
-        <a href="" class="textBlack ">Spoiler</a>
-        <a href="" class="textBlack ">Sans spoiler</a>
+        <a href="" class="">TOP</a>
+        <a href="" class="">Le plus récent</a>
+        <a href="" class="">Spoiler</a>
+        <a href="" class="">Sans spoiler</a>
     </nav>
     <hr>
     {% if chapter.comments | length > 0 %}

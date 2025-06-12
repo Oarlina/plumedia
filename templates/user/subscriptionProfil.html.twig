@@ -33,13 +33,13 @@
         {% endif %}
         {# la nav bar du haut #}
         <nav class="flex justifyContent">
-            <a href="{{path('app_profil')}}" class="textBlack">Mes informations</a>
+            <a href="{{path('app_profil')}}" class="">Mes informations</a>
             <a href="">|</a>
-            <a href="{{path('app_subscriptionProfil')}}" class="textBlack"><b>Mes abonnements</b></a>
+            <a href="{{path('app_subscriptionProfil')}}" class=""><b>Mes abonnements</b></a>
             <a href="">|</a>
-            <a href="{{path('app_libraryProfil')}}" class="textBlack">Ma blibliothèque</a>
+            <a href="{{path('app_libraryProfil')}}" class="">Ma blibliothèque</a>
             <a href="">|</a>
-            <a href="{{path('app_storyProfil')}}" class="textBlack">Mes histoires</a>
+            <a href="{{path('app_storyProfil')}}" class="">Mes histoires</a>
         </nav>
 
         <main class="flex ">
@@ -47,7 +47,7 @@
                 <section class="follow width50 flex  flexDirectionCollumn">
                     <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
-                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
                         </a>
                     {% endfor %}
@@ -58,7 +58,7 @@
                 <section class="follow width50 flex flexDirectionCollumn">
                     <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
-                        <a href="{{path('app_profile', {'id':folo.id})}}" class="textBlack">
+                        <a href="{{path('app_profile', {'id':folo.id})}}" class="">
                             <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
                         </a>
                     {% endfor %}

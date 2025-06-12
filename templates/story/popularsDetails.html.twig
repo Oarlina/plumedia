@@ -15,16 +15,16 @@
             <i class="fa-solid fa-arrow-left" id="backBtn"></i>
             <div class="gallery flex" >
                 <div>
-                    <a href="{{path('populars')}}" class="textBlack linkBtn">Tous</a> -
+                    <a href="{{path('populars')}}" class=" linkBtn">Tous</a> -
                     {% set counter = 2 %}
 
                     {% for cat in categories %}
                         {% if counter <=5 %}
                             {% set counter = counter + 1 %}
                             {% if cat == category %}
-                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="textBlack larger bouton backgroundGrey"><b>{{cat.name}} </b></a>  -
+                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class=" larger bouton backgroundGrey"><b>{{cat.name}} </b></a>  -
                             {% else %}
-                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="linkBtn textBlack">{{cat.name}} </a> -
+                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="linkBtn ">{{cat.name}} </a> -
                             {% endif %}
                         {% else %}
                 </div>
@@ -52,15 +52,15 @@
                         <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
                     {% endif %}
                     <div class="right backgroundGrey">
-                        <h3 class="textBlack">{{story.name}}</h3>
+                        <h3 class="">{{story.name}}</h3>
                         <p><u>Genres :</u>
                             {% for category in story.categories %}
-                                <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="textBlack">{{category.name }}</a> ,
+                                <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="">{{category.name }}</a> ,
                             {% endfor %}
                         </p>
                         <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
                         <p> <u>Résumé:</u> {{story.summary}}</p>
-                        <a href="{{path('detail_story', {'id': story.id})}}" class="textBlack bouton textCenter backgroundPurple">En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="{{path('detail_story', {'id': story.id})}}" class=" bouton textCenter backgroundPurple">En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             {% endfor %}
