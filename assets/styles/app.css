@@ -9,47 +9,29 @@
     --myGrey: #a89f94; 
     --myWhite: #f4f1eb;
 }
-
 /* Pour les titres */
 h1, h2, h3 {font-family: 'Playfair Display', serif;}
- 
 /* Pour le texte courant */
 body, p, li, a {
   font-family: 'Merriweather', serif;
   color: #3b2f2f;
 }
-/* pour les couleurs de textes*/
-.textPurple{color: var(--myGold);}
-.textPink{color: var(--myBrown);}
-.textGrey{color: var(--myGrey);}
-/* couleur de fonds */
-.backgroundBrown{background-color: var(--myBrown);}
-.backgroundGrey{background-color: var(--myGrey);}
-.backgroundWhite{background-color: var(--myWhite);}
-.backgroundPurple{background-color: var(--myGold);}
 
 /* pour les couleurs de textes*/
 .textGold{color: var(--myGold);}
 .textPink{color: var(--myBrown);}
 .textGrey{color: var(--myGrey);}
+.textWhite{color: var(--myWhite);}
 /* couleur de fonds */
 .backgroundBrown{background-color: var(--myBrown);}
 .backgroundGrey{background-color: var(--myGrey);}
 .backgroundWhite{background-color: var(--myWhite);}
 .backgroundGold{background-color: var(--myGold);}
-
-.bouton{
-    padding: 5px 10px;
-    border-radius: 10px;
-}
-
-.bouton:hover{
-    background-color: var(--myWhite);
-    box-shadow: 0 8px 8px var(--myGold);
-}
-
-
-
+/* gestion des messages d'alertes */
+.alert{height: 100px; font-size: xx-large;}
+.alert-sucess{background-color:green;}
+.alert-error{background-color:red;}
+.alert-warning{background-color:orangered;}
 /* display principaux */
 .flex{display: flex;}
 .alignCenter{align-items: center;}
@@ -62,8 +44,32 @@ body, p, li, a {
 .noBorder, #profil .rightContainer input{border: none;}
 .larger{font-size: larger;}
 .width50{width: 50%;}
-.ConnectContainer, #home h1, #home h2 {margin: 10px auto;}
+.ConnectContainer, #home h1, #home h2, #parallax h3 {margin: 10px auto;}
 .ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
+
+
+
+/* pour les couleurs de textes*/
+.textPurple{color: var(--myGold);}
+.textPink{color: var(--myBrown);}
+.textGrey{color: var(--myGrey);}
+/* couleur de fonds */
+.backgroundBrown{background-color: var(--myBrown);}
+.backgroundGrey{background-color: var(--myGrey);}
+.backgroundWhite{background-color: var(--myWhite);}
+.backgroundPurple{background-color: var(--myGold);}
+.bouton{
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.bouton:hover{
+    background-color: var(--myWhite);
+    box-shadow: 0 8px 8px var(--myGold);
+}
+
+
+
 a{
     display: inline-block; 
     text-decoration: none;
@@ -86,11 +92,11 @@ header nav{
 .ConnectContainer{
     .left, .right {padding: 10px;}
 }
-#registerContainer .right {border-radius: 0 15% 15% 0 ;}
-#loginContainer .left {border-radius:  15% 0 0 15%;}
+#registerContainer .right {border-radius: 0 15% 15% 0;}
+#loginContainer .left {border-radius: 15% 0 0 15%;}
 /* ceci est pour la page d'acceuil */
-#home h1,#home h2{
-    width: 20%;
+#home h1, #home h2{width: 20%;}
+#home h1,#home h2, #parallax h3{
     font-size: xx-large;
     backdrop-filter: blur(5px);
     border-radius: 50px;
@@ -205,10 +211,6 @@ header nav{
     .story:hover .summary{opacity: 0.8; }
 }
 .toggle-password-button{top: 0px !important; right: 100px !important;}
-/* gestion des messages d'alertes */
-.alert-sucess{background-color:green;color: white; height: 100px; width: 100%; text-align: center; font-size: xx-large;}
-.alert-error{background-color:red;color: white; height: 100px; width: 100%; text-align: center; font-size: xx-large;}
-.alert-warning{color:orangered;}
 #gallery-wrap{width: 100%;}
 .gallery{
     width:1500px;
@@ -270,7 +272,7 @@ header nav{
 
 
 
-
+/* rajouter le 12/06 */
 
 #home {
   position: relative;
