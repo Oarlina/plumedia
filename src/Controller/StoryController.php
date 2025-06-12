@@ -5,6 +5,7 @@ namespace App\Controller;
 use Datetime;
 use App\Entity\User;
 use App\Entity\Story;
+use App\Entity\Chapter;
 use App\Form\StoryType;
 use App\Entity\Category;
 use App\Repository\StoryRepository;
@@ -95,26 +96,35 @@ final class StoryController extends AbstractController
     
     // Si l'utilisateur veut aimer/ liker une histoire
     #[Route(path:'/add/{id}/{id2}/{name}', name:'add')]
-    public function add(Story $id, User $id2, string $name): Response{
+    #[Route(path:'/add/{id}/{id2}/{name}/{num}/{chapter}', name:'addIn')]
+    public function add(Story $id, User $id2, string $name, int $num = null, Chapter $chapter = null): Response{
         // j'utilise la fonction pour ajouter soit le like soit le follow 
-        $id->$name($id2);
-        // je met a jour la BDD
-        $this->entityManager->persist($id2);
-        $this->entityManager->flush();
-        // je retourne sur la page detail de l'histoire
+        $allowed = ['addUsersFollow', 'addUsersLike', 'removeUsersFollow', 'removeUsersLike'];
+        if (in_array($name, $allowed)) {
+            $id->$name($id2);
+            // je met a jour la BDD
+            $this->entityManager->persist($id2);
+            $this->entityManager->flush();
+            // je retourne sur la page detail de l'histoire
+        }else {
+            $this->addFlash('error', 'Un problème est survenu. Veuillez recommencer.');
+        }
+        if ($num and $chapter){
+            return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId(), 'num' => $num]);
+        }
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
-    // si l'utilisateur veut arreter d'aimer/ liker une histoire
-    #[Route(path:'/remove/{id}/{id2}/{name}', name:'remove')]
-    public function remove(Story $id, User $id2, string $name): Response{
-        // j'utilise la fonction pour retirer soit le like soit le follow
-        $id->$name($id2);
-        // je met a jour la BDD
-        $this->entityManager->persist($id2);
-        $this->entityManager->flush();
-        // je retourne sur la page detail de l'histoire
-        return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
-    }
+    // // si l'utilisateur veut arreter d'aimer/ liker une histoire
+    // #[Route(path:'/remove/{id}/{id2}/{name}', name:'remove')]
+    // public function remove(Story $id, User $id2, string $name): Response{
+    //     // j'utilise la fonction pour retirer soit le like soit le follow
+    //     $id->$name($id2);
+    //     // je met a jour la BDD
+    //     $this->entityManager->persist($id2);
+    //     $this->entityManager->flush();
+    //     // je retourne sur la page detail de l'histoire
+    //     return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
+    // }
 
     // si l'auteur veut marquer une histoire en cours, en pause, fini
     #[Route(path:'/changeFinish/{id}/{make}', name:'changeIsFinish')]

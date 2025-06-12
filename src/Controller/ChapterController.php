@@ -7,12 +7,13 @@ use App\Entity\Story;
 use App\Entity\Chapter;
 use App\Form\ChapterType;
 use Smalot\PdfParser\Parser;
+use App\Repository\StoryRepository;
 use App\Repository\ChapterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ final class ChapterController extends AbstractController
     public function __construct(
         private ChapterRepository $chapterRepository,
         private EntityManagerInterface $entityManager,
+        private StoryRepository $storyRepository,
         private FileSystem $fileSystem,
     ) {
     }
@@ -98,7 +100,8 @@ final class ChapterController extends AbstractController
     
     // pour la modification le like d'un chapitre ou si un chapitre a ete lu ou non
     #[Route(path:'/changeChapter/{chapter}/{fonction}', name:'changeChapter')]
-    public function changeChapter(Chapter $chapter, string $fonction): Response {
+    #[Route(path:'/changeChapter/{chapter}/{fonction}/{num}', name:'changeChapterIn')]
+    public function changeChapter(Chapter $chapter, string $fonction, int $num = null): Response {
         // dd($chapter, $fonction);
         if ($fonction != 'addUserHaveRead' and $fonction != 'removeUserHaveRead' and $fonction != 'addUsersLike' and $fonction != 'removeUsersLike'){
             $this->addFlash('error', 'Un problème est survenu, veuillez recommencez !');
@@ -109,16 +112,30 @@ final class ChapterController extends AbstractController
         
         $this->entityManager->persist($chapter);
         $this->entityManager->flush();
-        
+        if ($num){
+            return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId(), 'num' => $num]);
+        }
+        // je fais la gestion de message si reussite
+        if ($fonction == 'addUserHaveRead' ){
+            $this->addFlash('success', ' Le chapitre à été marqué lu/ouvert !');
+        }elseif ($fonction == 'removeUserHaveRead' ){
+            $this->addFlash('success', 'Le chapitre à été mis non lu/ouvert !');
+        }elseif($fonction == 'addUsersLike' ) {
+            $this->addFlash('success', 'Le chapitre à été aimé !');
+        }else{
+            $this->addFlash('success', 'Le chapitre n\'est plus aimé !');
+        }
         return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
     }
     
+    // ceci est la page d'un chapitre
     #[Route('/chapitre/{chapter}/{num}/detail', name:'show_chapter')]
     public function detail(Chapter $chapter, int $num): Response {
         $parser = new Parser();
         $pdf = $parser->parseFile( $this->getParameter('kernel.project_dir'). '/public/uploads/chapters/'. $chapter->getFile() );
         $fileText = $pdf->getText();
-        
-        return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText]);
+
+        $story = $this->storyRepository->findOneBy(['id' => $chapter->getStory()]);
+        return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story]);
     }
 }

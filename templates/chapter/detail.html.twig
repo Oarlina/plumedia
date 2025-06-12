@@ -3,39 +3,60 @@
 {% block title %}{{chapter.name}}{% endblock %}
 
 {% block body %}
-    <h1 class="textCenter">{{chapter.name}}</h1>
-    <h2 class="textCenter">Chapitre {{num}}</h2>
+<h1 class="textCenter">{{chapter.name}}</h1>
+<h2 class="textCenter">Chapitre {{num}}</h2>
 
-    <pre class="chapterText">
-        {{file}}
-    </pre>
-    {# ce sont les boutons en dessous du chapitre #}
-    <div class="boutons textCenter width50 flex justifyContent">
-        <a href="" class="backgroundPurple bouton textBlack">Episode précédent</a>
-        <a href="" class="backgroundPink bouton textBlack"><i class="fa-solid fa-heart"></i></a>
-        <a href="" class="backgroundPink bouton textBlack">S'abboner</a>
-        <a href="" class="backgroundPurple bouton textBlack">Episode suivant</a>
+<pre class="chapterText">
+    {{file}}
+</pre>
+{# ce sont les boutons en dessous du chapitre #}
+<div class="boutons textCenter width50 flex justifyContent">
+    {% set before = num -1 %}
+    {% set after = num +1 %}
+    {% if num > 1 %}
+        <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : before})}}" class="backgroundPurple bouton textBlack">Episode précédent</a>
+    {% endif %}
+    {# la gestion de like #}
+    {% if app.user and app.user in chapter.usersLike %}
+        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="textBlack backgroundPink bouton">{{chapter.usersLike | length}}
+            <i class="fa-solid fa-heart"></i>
+        </a>
+    {% else %}
+        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike', 'num' : num})}}" class="textBlack backgroundPink bouton">{{chapter.usersLike | length}}
+            <i class="fa-regular fa-heart"></i>
+        </a>
+    {% endif %}
+    {# gestion d'abonnement à l'histoire #}
+
+    {% if app.user  in story.usersFollow %}
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink textBlack"> Se désabonner</a>
+    {% else %}
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink textBlack"> S'abonner</a>
+    {% endif %}
+    {% if story.chapters | length > num %}
+    <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : after})}}" class="backgroundPurple bouton textBlack">Episode suivant</a>
+    {% endif %}
+</div>
+{# ce sont les commentaires  #}
+<dic class="comments">
+    <h2>Commentaires: ({{chapter.comments | length}})</h2>
+    <div>
+        <p>Il y aura un formulaire pour écrire un commentaire.</p>
     </div>
-    {# ce sont les commentaires  #}
-    <dic class="comments">
-        <h2>Commentaires: ({{chapter.comments | length}})</h2>
-        <div>
-            <p>Il y aura un formulaire pour écrire un commentaire.</p>
-        </div>
 
-        <nav class="flex justifyContent">
-            <a href="" class="textBlack ">TOP</a>
-            <a href="" class="textBlack ">Le plus récent</a>
-            <a href="" class="textBlack ">Spoiler</a>
-            <a href="" class="textBlack ">Sans spoiler</a>
-        </nav>
-        <hr>
-        {% if chapter.comments | length > 0 %}
-            {% for comments in chapter.comments %}
-                {{comments}}
-            {% endfor %}
-        {% else %}
-            <p>Il n'y a aucun commentaire.</p>
-        {% endif %}
-    </dic>
+    <nav class="flex justifyContent">
+        <a href="" class="textBlack ">TOP</a>
+        <a href="" class="textBlack ">Le plus récent</a>
+        <a href="" class="textBlack ">Spoiler</a>
+        <a href="" class="textBlack ">Sans spoiler</a>
+    </nav>
+    <hr>
+    {% if chapter.comments | length > 0 %}
+        {% for comments in chapter.comments %}
+            {{comments}}
+        {% endfor %}
+    {% else %}
+        <p>Il n'y a aucun commentaire.</p>
+    {% endif %}
+</dic>
 {% endblock %}

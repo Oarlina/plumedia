@@ -66,12 +66,10 @@
 
                                     {# si l'utilisateur a lu le chapitre #}
                                     {% if app.user and app.user in chapter.userHaveRead %}
-                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUserHaveRead'})}}" class="textBlack">{{chapter.userHaveRead | length}}
-                                            <i class="fa-solid fa-eye"></i>
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUserHaveRead'})}}" class="textBlack">Lu
                                         </a>
                                     {% else %}
-                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUserHaveRead'})}}" class="textBlack">{{chapter.userHaveRead | length}}
-                                            <i class="fa-regular fa-eye"></i>
+                                        <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUserHaveRead'})}}" class="textBlack">Non lu 
                                         </a>
                                     {% endif %}
                                 </div>

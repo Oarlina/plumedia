@@ -31,21 +31,17 @@
             {# la partie de like + follow #}
             <div class="top">
                 {# je fais la gestion de like d'une histoire #}
-                <a href="">{{story.usersLike | length}} 
-                    {% if app.user  in story.usersLike %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="textBlack"><i class="fa-solid fa-heart"></i></a>
-                    {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="textBlack"><i class="fa-regular fa-heart"></i></a>
-                    {% endif %}
-                </a>
+                {% if app.user  in story.usersLike %}
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}" class="textBlack">{{story.usersLike | length}} <i class="fa-solid fa-heart"></i></a>
+                {% else %}
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" class="textBlack">{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
+                {% endif %}
                 {# je fais la gestion de follow d'une histoire #}
-                <a href="">{{story.usersFollow | length}}
-                    {% if app.user  in story.usersFollow %}
-                        <a href="{{path('remove', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton backgroundPink textBlack">Se désabonner</a>
-                    {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink textBlack">S'abonner</a>
-                    {% endif %}
-                </a>
+                {% if app.user  in story.usersFollow %}
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton backgroundPink textBlack">Se désabonner ({{story.usersFollow | length}})</a>
+                {% else %}
+                    <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton backgroundPink textBlack">S'abonner ({{story.usersFollow | length}})</a>
+                {% endif %}
                 {# c'est la gestion de modification d'une histoire qui n'est visible que pour l'auteur #}
                 {% if app.user and app.user.id == story.person.id %}
                     <a href="{{path('change_story', {'id': story.id})}}"  class="bouton backgroundPurple textBlack">
