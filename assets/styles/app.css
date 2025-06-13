@@ -9,6 +9,7 @@
     --myGrey: #a89f94; 
     --myWhite: #f4f1eb;
 }
+.wrapper{min-height: 55vh;}
 /* Pour les titres */
 h1, h2, h3 {font-family: 'Playfair Display', serif;}
 /* Pour le texte courant */
@@ -57,8 +58,8 @@ body, p, li, a {
 .width50{width: 50%;}
 #home h1, #home h2, #parallax h3 {margin: 10px auto;}
 #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
-
-
+.firstTitle{margin: 5px 0 40px 0;}
+.secondTitle{font-size: 800;}
 
 /* pour les couleurs de textes*/
 .textPurple{color: var(--myGold);}
@@ -83,11 +84,14 @@ body, p, li, a {
 .story:hover .summary:hover{opacity: 0.8; }
 .summary{font-size: small; padding: 10% 5%; text-overflow: ellipsis; }
 .summary {
+    display: -webkit-box; /* Specify that we want to use webkit-box */
+    -webkit-box-orient: vertical; /* Indicate the text direction */
+    -webkit-line-clamp: 14; /* Set the desired number of lines */
+    overflow: hidden;
     left: 0; top: 0;
     height: 75%;
     opacity: 0;
-    overflow: hidden;
-    z-index: 10;
+    z-index: 10;word-wrap: break-word;
 }
 
 .cover{
@@ -249,13 +253,13 @@ header nav{
 #backBtn, #nextBtn {cursor: pointer;}
 .populars, .popular .right{padding: 10px;}
 .popular{
+    
     img{width: 20%;}
-    .right{width: 80%;}
+    .right{width: 80%; border-radius: 0 10% 10% 0;}
 }
 
 .populars {
     width: 70%;
-    h3{font-size: larger;}
 }
 
 .popular-home{width: 50%;}

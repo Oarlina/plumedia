@@ -10,7 +10,7 @@
                 Votre navigateur ne supporte pas la lecture vidéo.
         </video>
         <div class="content">
-            <h1 class="textCenter">Publiez et lisez des histoires sur <span class="textPurple titleHome">Plumédia</span>.</h1>
+            <h1 class="textCenter firstTitle">Publiez et lisez des histoires sur <span class="textPurple titleHome">Plumédia</span>.</h1>
             <h2 class="textCenter">Améliorer votre écriture en postant vos histoires.</h2>
                 <br><br>
             <a class="backgroundGold bouton boutonGold" href="{{path('show_home')}}">Lire maintenant </a>
@@ -19,12 +19,13 @@
         </div>
     </section>
     <section id="bento">
-        <p>Ici j'aurai mon bento</p>
+        <h2>Ici j'aurai mon bento</h2>
     </section>
     <section id="parallax">
         <h3 class="textCenter textWhite">Comment utiliser et se repérer dans le site?</h3>
         <div class="flex  justifyContent">
-            <video src="{{asset('videos/radio.mp4')}}" type="video/mp4" width="500" height="250">
+            <video width="500" height="250">
+                <source src="{{asset('videos/radio.mp4')}}"type="video/mp4">
                 Votre navigateur ne supporte pas la lecture vidéo.
             </video>
             <a href="" class="backgroundGold bouton marginAutoHeight boutonGold">Lancer le didacticiel</a>
@@ -33,7 +34,7 @@
     <div class="newsletter textCenter">
         <h2>S'inscrire à la newsletter</h2>
         <div class="newsletter-form">
-            <input class="newsletter-input noBorder" placeholder="Votre email" />
+            <input class="newsletter-input noBorder" placeholder="Votre email">
             <button class="newsletter-btn bouton boutonWhite">S'inscrire</button>
         </div>
     </div>

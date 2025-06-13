@@ -3,38 +3,37 @@
 {% block title %}{{category.name}}{% endblock %}
 
 {% block body %}
-    <h1 class="textCenter">{{category.name}}</h1>
-        <a href="{{path('app_category')}}" class=""><i class="fa-solid fa-arrow-left"></i> Catégories</a>
+    <h1 class="textCenter firstTitle">{{category.name}}</h1>
         
-        <main class="flex flexDirectionRowcategories width100 ">
-            <div class="left flex flexDirectionCollumn">
-                <a href="{{path('app_category')}}" class="textCenter boutonGold">Tous</a>
-                {% for cat in categories %}
-                    {% if cat.name == category.name %}
-                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="larger bouton backgroundGold textCenter boutonGold"><b>{{cat.name}}</b> </a>
-                    {% else %}
-                        <a href="{{path('show_category', {'idCategory': cat.id})}}" class="bouton textCenter boutonWhite">{{cat.name}} </a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {# ceci est le corps #}
-            <div class="right stories flex flexDirectionRow">
-                {% if category.stories |length <1 %}
-                    <p>Aucune histoire dans cette catégorie</p>
+    <main class="flex flexDirectionRowcategories width100 ">
+        <div class="left flex flexDirectionCollumn">
+            <a href="{{path('app_category')}}" class="textCenter boutonGold">Tous</a>
+            {% for cat in categories %}
+                {% if cat.name == category.name %}
+                    <a href="{{path('show_category', {'idCategory': cat.id})}}" class="larger bouton backgroundGold textCenter boutonGold"><b>{{cat.name}}</b> </a>
                 {% else %}
-                    {% for story in category.stories %}
-                        <div class="story textCenter">
-                            {% if story.cover %}
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
-                            {% else %}
-                                <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook">  
-                            {% endif %}
-                            <p>{{story.name}}</p>
-                            <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                            <p class="summary backgroundWhite width100">{{story.summary}}</p>
-                        </div>
-                    {% endfor %}
+                    <a href="{{path('show_category', {'idCategory': cat.id})}}" class="bouton textCenter boutonWhite">{{cat.name}} </a>
                 {% endif %}
-            </div>
-        </main>
+            {% endfor %}
+        </div>
+        {# ceci est le corps #}
+        <div class="right stories flex flexDirectionRow">
+            {% if category.stories |length <1 %}
+                <p class="textCenter">Aucune histoire dans cette catégorie</p>
+            {% else %}
+                {% for story in category.stories %}
+                    <div class="story textCenter">
+                        {% if story.cover %}
+                            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
+                        {% else %}
+                            <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook">  
+                        {% endif %}
+                        <p>{{story.name}}</p>
+                        <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                        <p class="summary backgroundWhite width100">{{story.summary}}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </main>
 {% endblock %}
