@@ -40,6 +40,8 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte
+                'hidden_label' => '', // c'est le texte pour l'oeil caché
+                'visible_label' => '', // c'est le texte pour l'oeil découvert
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -59,6 +61,8 @@ class RegistrationFormType extends AbstractType
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte 
+                'hidden_label' => '', // c'est le texte pour l'oeil caché
+                'visible_label' => '', // c'est le texte pour l'oeil découvert
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

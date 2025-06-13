@@ -56,7 +56,7 @@ body, p, li, a {
 .larger{font-size: larger;}
 .width50{width: 50%;}
 #home h1, #home h2, #parallax h3 {margin: 10px auto;}
-.ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
+#profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
 
 
 
@@ -79,15 +79,14 @@ body, p, li, a {
     object-fit: cover;
     border-radius: 5%;
 }
-.story:hover{scale: 1.1; transition: ease-in-out 0.5s;}
+.story:hover{scale: 1.1; transition: ease-in-out 0.2s;}
 .story:hover .summary:hover{opacity: 0.8; }
 .summary{font-size: small; padding: 10% 5%; text-overflow: ellipsis; }
 .summary {
     left: 0; top: 0;
     height: 75%;
-    overflow: hidden;
     opacity: 0;
-    -webkit-line-clamp: 10;
+    overflow: hidden;
     z-index: 10;
 }
 
@@ -98,16 +97,13 @@ body, p, li, a {
     border-radius: 5px;
 }
 /* gère la page d'inscription et de connexion */
-#registerContainer .right {border-radius: 0 15% 15% 0;}
-#loginContainer .left {border-radius: 15% 0 0 15%;}
-.containerGold{padding: 150px 0;}
-.ConnectContainer{margin: 5em auto;}
+#registerContainer .right, #loginContainer .right {border-radius: 0 15% 15% 0;}
+#loginContainer .left, #registerContainer .left {border-radius: 15% 0 0 15%;}
 
 
-
-
-
-
+#registerContainer .left, #loginContainer .right{ border: 1px solid rgb(247, 247, 247); padding: 0 50px ;}
+.containerGold{padding: 150px 35px;}
+.ConnectContainer{margin: 5em auto; width: 50%;}
 
 
 a{

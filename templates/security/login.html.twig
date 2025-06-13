@@ -7,11 +7,11 @@
     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<main id="loginContainer" class="loginContainer ConnectContainer flex">
+<main id="loginContainer" class="ConnectContainer flex">
     <section class="left containerGold textCenter backgroundGold width50">
         <h2>Bienvenue ! </h2>
         <p>Pas encore de compte ? </p>
-        <a href="{{path('app_register')}}" class="boutonWhite bouton backgroundWhite">M'inscrire</a>
+        <a href="{{path('app_register')}}" class="bouton boutonWhite backgroundWhite">M'inscrire</a>
     </section>
 
     <section class="right container textCenter width50">
