@@ -2,17 +2,9 @@
 
 {% block title %}Inscription{% endblock %}
 {% block body %}
-<section id="registerContainer" class=" ConnectContainer flex ">
-    {# pour la gestion d'erreur #}
-    {% for label, messages in app.flashes %}
-    {% for message in messages %}
-    <div class="alert alert-{{label}}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endfor %}
+<main id="registerContainer" class=" ConnectContainer flex">
     {{ form_errors(registrationForm) }}
-    <div class="left container textCenter  alignCenter ">
+    <section class="left container textCenter width50">
         <h2>Inscription</h2>
         {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm.email) }}
@@ -22,13 +14,13 @@
                     {{ form_row(registrationForm.avatar) }}
                     {{ form_row(registrationForm.agreeTerms) }}
                 {{ form_end(registrationForm) }}
-                <a href="/connect/google" class="bouton backgroundPink ">S'inscrire avec google</a>
-        </div>
-        <div class="right container textCenter backgroundPink">
-            <h3>Bienvenue ! </h3>
-            <p>Déjà un compte ?</p>
-            <p><a href="{{ path('app_login')}}" class="bouton backgroundWhite ">Me connecter</a></p>
-        </div>
+                <a href="/connect/google" class="bouton boutonWhite">S'inscrire avec google</a>
     </section>
+    <section class="right containerGold textCenter backgroundGold width50">
+        <h2>Bienvenue ! </h2>
+        <p>Déjà un compte ?</p>
+        <p><a href="{{ path('app_login')}}" class="bouton boutonWhite backgroundWhite">Me connecter</a></p>
+    </section>
+</main>
 
 {% endblock %}

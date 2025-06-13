@@ -8,6 +8,7 @@ use App\Entity\Story;
 use App\Entity\Chapter;
 use App\Form\StoryType;
 use App\Entity\Category;
+use App\Service\PictureService;
 use App\Repository\StoryRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,7 +36,7 @@ final class StoryController extends AbstractController
     // pour créer ou modifier une histoire
     #[Route(path:'/story/edit/{id}', name:'change_story')]
     #[Route(path:'/story/new/{user}', name:'create_story')]
-    public function createStory(User $user = null, Request $request, Story $id = null): Response {
+    public function createStory(User $user = null, Request $request, Story $id = null, PictureService $uploadService): Response {
         // je cree une nouvelle histoire et le formulaire
         if ($id === null){
             $story = new Story();
@@ -73,9 +74,8 @@ final class StoryController extends AbstractController
             // je recupere l'image du formulaire
             $picture = $form->get('cover')->getData();
             if($picture){
-                // ensuite je lui donne un nom unique, l'ajoute dans le dossier uploads/user puis met le nom du document dans avatar de l'histoire
-                $newFile = 'story-'.uniqid().'.'.$picture->guessExtension();
-                $picture->move('uploads/story/', $newFile);
+                // j'appelle le service picture afin qu'il télécharge l'image
+                $newFile = $uploadService->save($picture, 'story');
                 $story->setCover($newFile);
             }else {
                 $story->setCover($cover);

@@ -58,7 +58,7 @@ class RegistrationFormType extends AbstractType
             ->add('confirmPassword', PasswordType::class,[
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte
+                'toggle' => true, // pour pouvoir avoir l'oeil qui montre ou non le texte 
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -86,7 +86,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'Inscription',
                 'locale' => 'fr']) // pour la langue du recaptcha
-            ->add('Inscription', SubmitType::class, [ 'attr' => ['class' => 'backgroundPink bouton noBorder']])
+            ->add('Inscription', SubmitType::class, [ 'attr' => ['class' => 'Inscription bouton backgroundWhite boutonWhite noBorder']])
         ;
     }
 

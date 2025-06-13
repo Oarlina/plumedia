@@ -25,13 +25,14 @@ class PictureService {
     public function save(UploadedFile $picture, ?string $folder = ''):string{
         // je donne un nouveau nom a mon image en lui donnant un nom unique afin que deux user puisse avoir le meme et garanti l'uniciter entre les images
         // guessExtension permet de devinerl'extension de l'image afin que l'on n'ai pas a chercher son format plus tard
-        $newName = uniqid().'.'.$picture->guessExtension();
-        $picture->move('public/uploads/'.$folder, $newName);
+        
+        $newName = $folder.'-'.uniqid().'.'.$picture->guessExtension();
+        $picture->move('uploads/'.$folder.'/', $newName);
 
         return $newName;
     }
         
-    public function __toString(){
+    // public function __toString(){
 
-    }
+    // }
 }

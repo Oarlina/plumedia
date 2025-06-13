@@ -49,12 +49,13 @@ body, p, li, a {
 
 /* petit css */
 .textCenter{text-align: center;}
-.marginAutoHeight{ margin: auto 0;}
+.marginAutoHeight{margin: auto 0;}
+.marginAutoWidth{margin: 0 auto;}
 .width100, .summary{width: 100%;}
 .noBorder, #profil .rightContainer input{border: none;}
 .larger{font-size: larger;}
 .width50{width: 50%;}
-.ConnectContainer, #home h1, #home h2, #parallax h3 {margin: 10px auto;}
+#home h1, #home h2, #parallax h3 {margin: 10px auto;}
 .ConnectContainer, #profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
 
 
@@ -96,6 +97,19 @@ body, p, li, a {
     height: fit-content;
     border-radius: 5px;
 }
+/* gère la page d'inscription et de connexion */
+#registerContainer .right {border-radius: 0 15% 15% 0;}
+#loginContainer .left {border-radius: 15% 0 0 15%;}
+.containerGold{padding: 150px 0;}
+.ConnectContainer{margin: 5em auto;}
+
+
+
+
+
+
+
+
 a{
     display: inline-block; 
     text-decoration: none;
@@ -114,12 +128,7 @@ header nav{
 } */
 /* ceci est pour les liens qui ne seront pas des boutons */
 .linkBtn {font-size: large;}
-/* gère la page d'inscription et de connexion */
-.ConnectContainer{
-    .left, .right {padding: 10px;}
-}
-#registerContainer .right {border-radius: 0 15% 15% 0;}
-#loginContainer .left {border-radius: 15% 0 0 15%;}
+
 /* ceci est pour la page d'acceuil */
 #home h1, #home h2{width: 30%;}
 #home h1{font-size: 80px;}
@@ -219,7 +228,7 @@ header nav{
     }
     
 }
-.toggle-password-button{top: 0px !important; right: 100px !important;}
+/* .toggle-password-button{top: 0px !important; right: 100px !important;} */
 #gallery-wrap{width: 100%;}
 .gallery{
     width:1500px;

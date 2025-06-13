@@ -7,22 +7,24 @@
     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<div id="loginContainer" class="loginContainer ConnectContainer flex">
-    <div class="left container textCenter backgroundPink width50">
-        <h3>Bienvenue ! </h3>
+<main id="loginContainer" class="loginContainer ConnectContainer flex">
+    <section class="left containerGold textCenter backgroundGold width50">
+        <h2>Bienvenue ! </h2>
         <p>Pas encore de compte ? </p>
-        <a href="{{path('app_register')}}" class="bouton backgroundWhite ">M'inscrire</a>
-    </div>
+        <a href="{{path('app_register')}}" class="boutonWhite bouton backgroundWhite">M'inscrire</a>
+    </section>
 
-    <div class="right container alignCenter textCenter width50">
+    <section class="right container textCenter width50">
         <h2>Connexion</h2>
         <form method="post" action="{{ path('app_login') }}">
 
             <label for="inputEmail"></label>
             <input type="email" name="email" id="inputEmail" class="form-control" autocomplete="username" required autofocus> <br>
             <label for="inputPassword"></label>
-            <input type="password"  name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-            <i class="fa-solid fa-eye" onclick="changeInput('inputPassword')"></i> <br>
+            <div class="flex alignCenter">
+                <input type="password"  name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                <i class="fa-solid fa-eye" onclick="changeInput('inputPassword')"></i> <br>
+            </div>
         
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
         
@@ -31,11 +33,11 @@
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
-            <button class="bouton backgroundPink noBorder" type="submit">Me connecter</button> <br>
-            <a href="{{ path('app_forgot_password_request')}}" class="noBorder">Mot de passe oublié?</a> <br>
-            <a href="/connect/google" class="bouton backgroundPink noBorder">Se connecter avec google</a>
+            <button class="bouton boutonWhite backgroundWhite noBorder" type="submit">Me connecter</button> <br>
+            <a href="{{ path('app_forgot_password_request')}}" class="boutonWhite noBorder">Mot de passe oublié?</a> <br><br>
+            <a href="/connect/google" class="boutonWhite noBorder">Se connecter avec google</a>
         </form>
-    </div>
+    </section>
     
-</div>
+</main>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller\Security;
 
 use DateTime;
 use App\Entity\User;
+use App\Service\PictureService;
 use App\Form\UserBecomeAuthorType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,7 +60,7 @@ class SecurityController extends AbstractController
 
     // pour que l'utilisateur puisse changer ces informations
     #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
-    public function changeMailAvatar (Request $request, UserRepository $userRepository, Filesystem $filesystem, EntityManagerInterface $entityManager): Response{
+    public function changeMailAvatar (Request $request, UserRepository $userRepository, Filesystem $filesystem, EntityManagerInterface $entityManager, PictureService $uploadService): Response{
         $error = "non"; // pour la gestion de message si il y a une erreur
         // je recupere l'email, le pseudo et l'avatar du formulaire
         // je n'est pas a verifier les types car ils sont forcer dans l'entité User
@@ -86,8 +87,7 @@ class SecurityController extends AbstractController
             // si l'extension est jpg, jpeg, svg, png ou webp alors je l'enregistre sinon erreur
             if ($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" || $file->guessExtension() == "svg" || $file->guessExtension() == "png" || $file->guessExtension() == "webp"){
                 // je le renomme et recupere l'extension
-                $newFile = 'user-'.uniqid().'.avif';
-                $file->move('uploads/user/', $newFile);
+                $newFile = $uploadService->save($file, 'user');
 
                 // si l'utilisateur a un avatar alors je supprime le fichier du dossier uploads
                 if ($user->getAvatar()){
