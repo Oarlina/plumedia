@@ -22,24 +22,34 @@ body, p, li, a {
 .textPink{color: var(--myBrown);}
 .textGrey{color: var(--myGrey);}
 .textWhite{color: var(--myWhite);}
+
 /* couleur de fonds */
 .backgroundBrown{background-color: var(--myBrown);}
 .backgroundGrey{background-color: var(--myGrey);}
 .backgroundWhite{background-color: var(--myWhite);}
 .backgroundGold{background-color: var(--myGold);}
+
 /* gestion des messages d'alertes */
 .alert{height: 100px; font-size: xx-large;}
 .alert-sucess{background-color:green;}
-.alert-error{background-color:red;}
 .alert-warning{background-color:orangered;}
+.alert-error{background-color:red;}
+
 /* display principaux */
 .flex{display: flex;}
 .alignCenter{align-items: center;}
 .flexDirectionRow{flex-direction: row;}
 .flexDirectionCollumn{flex-direction: column;}
 .justifyContent {justify-content: space-around;}
+.justifyContentBetween {justify-content: space-between;}
+
+/* boutons */
+.boutonWhite:hover{color: var(--myGold);}
+.boutonGold:hover{color: var(--myWhite);}
+
 /* petit css */
 .textCenter{text-align: center;}
+.marginAutoHeight{ margin: auto 0;}
 .width100, .summary{width: 100%;}
 .noBorder, #profil .rightContainer input{border: none;}
 .larger{font-size: larger;}
@@ -62,14 +72,30 @@ body, p, li, a {
     padding: 5px 10px;
     border-radius: 10px;
 }
-
-.bouton:hover{
-    background-color: var(--myWhite);
-    box-shadow: 0 8px 8px var(--myGold);
+.coverBook{
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5%;
+}
+.story:hover{scale: 1.1; transition: ease-in-out 0.5s;}
+.story:hover .summary:hover{opacity: 0.8; }
+.summary{font-size: small; padding: 10% 5%; text-overflow: ellipsis; }
+.summary {
+    left: 0; top: 0;
+    height: 75%;
+    overflow: hidden;
+    opacity: 0;
+    -webkit-line-clamp: 10;
+    z-index: 10;
 }
 
-
-
+.cover{
+    margin: 30px 5px 0 5px;
+    width: 25%;
+    height: fit-content;
+    border-radius: 5px;
+}
 a{
     display: inline-block; 
     text-decoration: none;
@@ -95,14 +121,15 @@ header nav{
 #registerContainer .right {border-radius: 0 15% 15% 0;}
 #loginContainer .left {border-radius: 15% 0 0 15%;}
 /* ceci est pour la page d'acceuil */
-#home h1, #home h2{width: 20%;}
+#home h1, #home h2{width: 30%;}
+#home h1{font-size: 80px;}
+#home h2, #parallax h3{font-size: 40px;}
 #home h1,#home h2, #parallax h3{
-    font-size: xx-large;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
     border-radius: 50px;
 
 }
-.titleHome{text-shadow: 2px 2px 2px #8d7cf2;} /* pour que le nom du site soit plus lisible*/
+.titleHome{text-shadow: 2px 2px 2px #8f703d;} /* pour que le nom du site soit plus lisible*/
 #bigAvatar, .story {position: relative;}
 #littleAvatar, .summary {position: absolute;}
 #infos, #lessFifteen, #modifierMdp, input, button, .details {margin: 15px;}
@@ -168,12 +195,6 @@ header nav{
     h1 {margin: 10px 5px;}
     main{
         text-align: justify;
-        .cover{
-            margin: 30px 5px 0 5px;
-            width: 25%;
-            height: fit-content;
-            border-radius: 5px;
-        }
         .right{
             width: 75%;
             padding: 0 10px;
@@ -194,21 +215,9 @@ header nav{
         width: 200px;
         height: 400px;
         margin: 15px;
-        img{
-            /* height: 75%; */
-            width: 100%;
-            border-radius: 5%;
-        }
-        .summary {
-            left: 0; top: 0;
-            height: 75%;
-            overflow: hidden;
-            opacity: 0;
-            z-index: 10;
-        }
+        
     }
-    .story:hover{scale: 1.1; transition: ease-in-out 0.5s;}
-    .story:hover .summary{opacity: 0.8; }
+    
 }
 .toggle-password-button{top: 0px !important; right: 100px !important;}
 #gallery-wrap{width: 100%;}
@@ -318,6 +327,7 @@ header nav{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  h3{width: fit-content;}
 }
 
 
