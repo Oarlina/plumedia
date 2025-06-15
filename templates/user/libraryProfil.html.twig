@@ -39,12 +39,47 @@
             <a href="">|</a>
             <a href="{{path('app_storyProfil')}}" class="">Mes histoires</a>
         </nav>
-        <main class="flex">
-            {% if app.user.followedStories | length >1 %}
-                
-            {% else %}
-                <p>Vous ne suivez aucune histoires !!</p>
-            {% endif %}
+        <main class="">
+            <h2>Les histoires que vous suivez : </h2>
+            <div class="right stories flex flexDirectionRow">
+                {% if app.user.followedStories | length >1 %}
+                    {% for story in app.user.followedStories %}
+                        <div class="story textCenter">
+                            {% if story.cover %}
+                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                            {% else %}
+                                <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                            {% endif %}
+                            <p>{{story.name}}</p>
+                            <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                            <p class="summary backgroundWhite width100">{{story.summary}}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Vous ne suivez aucune histoires !</p>
+                    <a href="{{path('app_category')}}" class="boutonWhite">Déccouvrir des histoires</a>
+                {% endif %}
+            </div>
+            <h2>Les histoires que vous aimez : </h2>
+            <div class="right stories flex flexDirectionRow">
+                {% if app.user.likedStories | length >1 %}
+                    {% for story in app.user.likedStories %}
+                        <div class="story textCenter">
+                            {% if story.cover %}
+                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                            {% else %}
+                                <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                            {% endif %}
+                            <p>{{story.name}}</p>
+                            <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                            <p class="summary backgroundWhite width100">{{story.summary}}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Vous n'aimez aucune histoires !</p>
+                    <a href="{{path('app_category')}}" class="boutonWhite">Déccouvrir des histoires</a>
+                {% endif %}
+            </div>
         </main>
     </div>
 

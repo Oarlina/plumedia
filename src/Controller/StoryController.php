@@ -114,17 +114,6 @@ final class StoryController extends AbstractController
         }
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
-    // // si l'utilisateur veut arreter d'aimer/ liker une histoire
-    // #[Route(path:'/remove/{id}/{id2}/{name}', name:'remove')]
-    // public function remove(Story $id, User $id2, string $name): Response{
-    //     // j'utilise la fonction pour retirer soit le like soit le follow
-    //     $id->$name($id2);
-    //     // je met a jour la BDD
-    //     $this->entityManager->persist($id2);
-    //     $this->entityManager->flush();
-    //     // je retourne sur la page detail de l'histoire
-    //     return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
-    // }
 
     // si l'auteur veut marquer une histoire en cours, en pause, fini
     #[Route(path:'/changeFinish/{id}/{make}', name:'changeIsFinish')]

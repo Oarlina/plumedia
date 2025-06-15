@@ -22,7 +22,8 @@ final class CategoryController extends AbstractController
     public function index(): Response
     {
         $categories = $this->categoryRepository->findAll();
-        $stories = $this->storyRepository->findBy([], ['name' => 'ASC']);
+        // on trie les histoires comme les populaires
+        $stories = $this->storyRepository->nPopularStory(count($this->storyRepository->findAll()));
         return $this->render('category/index.html.twig', [
             'categories' => $categories, 'stories' => $stories
         ]);
@@ -32,9 +33,11 @@ final class CategoryController extends AbstractController
     public function detail(Category $idCategory): Response
     {
         $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
-        // dd($categories);
+        $stories = $this->storyRepository->nPopularStoryCategories(count($idCategory->getStories()), $idCategory->getId());
+
+        // dd($stories);
         return $this->render('category/detail.html.twig', [
-            'category' => $idCategory, 'categories' => $categories
+            'category' => $idCategory, 'categories' => $categories, 'stories' => $stories
         ]);
     }
 }

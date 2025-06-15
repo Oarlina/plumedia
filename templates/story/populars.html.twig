@@ -53,11 +53,11 @@
                     {# ceci est la gestion des genres #}
                         <p><u>Genres :</u>
                         {% if story.categories | length >0 %}
-                            {% set counter = 1 %}
+                            {% set c = 1 %}
                             {% for category in story.categories %}
                                 <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="">{{category.name }}</a> 
                                 {% if counter < (story.categories | length) %},{% endif %}
-                                {% set counter = counter + 1 %}
+                                {% set c = c + 1 %}
                             {% endfor %}
                         {% else %}
                             aucun

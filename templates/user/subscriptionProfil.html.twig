@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    {# pour la gestion d'erreur #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{label}}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
 
     <div id="profil">
         {# deux images du haut #}
@@ -48,7 +40,7 @@
                     <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="">
-                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                            <img src="uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
                         </a>
                     {% endfor %}
                 </section>
@@ -59,7 +51,7 @@
                     <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
                         <a href="{{path('app_profile', {'id':folo.id})}}" class="">
-                            <img src="uploads/user/{{user.avatar}}" alt="image avatar" class="otherAvatar">{{folo.pseudo}}
+                            <img src="uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
                         </a>
                     {% endfor %}
                 </section>

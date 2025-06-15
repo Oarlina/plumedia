@@ -8,9 +8,9 @@
     <main class="width100 flex flexDirectionRow">
         {# gestion le la couverture #}
         {% if story.cover %}
-            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+            <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
         {% else %}
-            <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+            <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook">  
         {% endif %}
         
         <div class="right">
@@ -22,7 +22,7 @@
             </nav>
             <div class="top">
                 {% if app.user and app.user.id == story.person.id %}
-                    <a href="{{path('newChapter', {'idStory': story.id})}}" class="bouton backgroundPurple">Ajouter un chapitre</a>
+                    <a href="{{path('newChapter', {'idStory': story.id})}}" class="bouton boutonWhite">Ajouter un chapitre</a>
                 {% endif %}
 
                 {# on verife qu'il y a des chapitres #}
@@ -31,7 +31,7 @@
                     <div class="chapters">
                         {% set counter = 1 %}
                         {% for chapter in chapters %}
-                            <div class="chapter backgroundGrey flex">
+                            <div class="chapter backgroundWhite flex">
                                 <div class="leftChapter">
                                     <h2><a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : counter})}}" class=''><u>Chapitre {{counter}} :</u> {{chapter.name}} </a></h2>
                                     <p>Date de publication : {{chapter.publish | date("d/m/Y")}}</p>

@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    {# pour la gestion d'erreur #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{label}}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
 
     <div id="profil">
         {% if user.avatar %}
@@ -41,10 +33,10 @@
         </nav>
         {# si le role autheur n'est pas dans les roles alors j'affiche  #}
         {% if app.user and 'ROLE_AUTHOR' not in app.user.roles %}
-            <a href="{{path('form_become_author', {'user' : app.user.id})}}" class=" bouton backgroundPink">Devenir écrivain</a>
+            <a href="{{path('form_become_author', {'user' : app.user.id})}}" class="bouton boutonWhite">Devenir écrivain</a>
         {% elseif app.user and 'ROLE_AUTHOR' in app.user.roles %}
         
-            <a href="{{path('create_story', {'user': app.user.id})}}" class=" bouton backgroundPink">Créer une histoire</a>
+            <a href="{{path('create_story', {'user': app.user.id})}}" class="bouton boutonWhite">Créer une histoire</a>
             <main class="flex">
                 {# si l'autheur a des histoires alors je les affiches #}
                 {% if stories | length > 0 %}
@@ -52,12 +44,12 @@
                         {% for story in stories %}
                             <div class="story textCenter">
                                 {% if story.cover %}
-                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook width100">  
                                 {% else %}
-                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook width100">  
                                 {% endif %}
                                 <h3>{{story.name}}  </h3>
-                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <a class="boutonWhite" href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
                             </div>
                         {% endfor %}
                     </section>

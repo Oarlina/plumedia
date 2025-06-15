@@ -9,7 +9,7 @@
     --myGrey: #a89f94; 
     --myWhite: #f4f1eb;
 }
-.wrapper{min-height: 55vh;}
+.wrapper{min-height: 55vh; margin-bottom: 150px; height: fit-content;}
 /* Pour les titres */
 h1, h2, h3 {font-family: 'Playfair Display', serif;}
 /* Pour le texte courant */
@@ -18,7 +18,7 @@ body, p, li, a {
   color: #3b2f2f;
 }
 
-/* pour les couleurs de textes*/
+/* pour les couhleurs de textes*/
 .textGold{color: var(--myGold);}
 .textPink{color: var(--myBrown);}
 .textGrey{color: var(--myGrey);}

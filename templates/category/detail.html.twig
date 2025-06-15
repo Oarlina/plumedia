@@ -18,10 +18,10 @@
         </div>
         {# ceci est le corps #}
         <div class="right stories flex flexDirectionRow">
-            {% if category.stories |length <1 %}
+            {% if stories |length <1 %}
                 <p class="textCenter">Aucune histoire dans cette catégorie</p>
             {% else %}
-                {% for story in category.stories %}
+                {% for story in stories %}
                     <div class="story textCenter">
                         {% if story.cover %}
                             <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
