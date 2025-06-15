@@ -23,13 +23,13 @@
             </picture>
         {% endif %}
         <nav class="flex justifyContent">
-            <a href="{{path('app_profil')}}" class="">Mes informations</a>
+            <a href="{{path('app_profil')}}">Mes informations</a>
             <a href="">|</a>
-            <a href="{{path('app_subscriptionProfil')}}" class="">Mes abonnements</a>
+            <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
             <a href="">|</a>
-            <a href="{{path('app_libraryProfil')}}" class="">Ma blibliothèque</a>
+            <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
             <a href="">|</a>
-            <a href="{{path('app_storyProfil')}}" class=""><b>Mes histoires</b></a>
+            <a href="{{path('app_storyProfil')}}" class="linkBtn"><b>Mes histoires</b></a>
         </nav>
         {# si le role autheur n'est pas dans les roles alors j'affiche  #}
         {% if app.user and 'ROLE_AUTHOR' not in app.user.roles %}
