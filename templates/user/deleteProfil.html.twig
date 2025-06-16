@@ -28,7 +28,7 @@
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
-            <nav class="flex justifyContent">
+            <nav class="flex alignCenter justifyContent backgroundGrey">
                 <a href="{{path('app_profil')}}" class=""><b>Mes informations</b></a>
                 <a href="">|</a>
                 <a href="{{path('app_subscriptionProfil')}}" class="">Mes abonnements</a>
