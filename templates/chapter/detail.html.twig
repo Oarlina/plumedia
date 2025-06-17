@@ -2,11 +2,27 @@
 
 {% block title %}{{chapter.name}}{% endblock %}
 
+{% block meta %}
+    {% block og_type %}<meta property="og:type" content="article">{% endblock %}
+    {% block og_title %}<meta property="og:title" content="{{ story.name }}">{% endblock %}
+    {% block og_description %}<meta property="og:description" content="{{ story.summary|striptags|slice(0, 150) }}">{% endblock %}
+    {% block og_image %}
+        {% if story.cover %}
+            <meta property="og:image" content="{{ absolute_url (asset('uploads/story/' ~ story.cover)) }}">
+        {% else %}
+            <meta property="og:image" content="{{ absolute_url (asset('img/forNoCover.png') ) }}">
+        {% endif %}
+    {% endblock %}
+    {% block og_url %}<meta property="og:url" content="{{ app.request.uri }}">{% endblock %}
+{% endblock %}
+
 {% block body %}
 <h1 class="textCenter">{{chapter.name}}</h1>
 <h2 class="textCenter">Chapitre {{num}}</h2>
 
 <pre class="chapterText">
+    {# le bouton qui permet de partager sur Facebook #}
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}))}}" target="_blank" class="marginAutoWidth"> <i class="fa-brands fa-facebook"></i> </a>
     {{file}}
 </pre>
 {# ce sont les boutons en dessous du chapitre #}

@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
-            ->add('avatar', FileType::class, ['constraints' => [
+            ->add('avatar', FileType::class, ['required' => false, 'constraints' => [
                 new File(['maxSize' => '1024k',
                             'mimeTypes' => [
                                             'image/jpg',

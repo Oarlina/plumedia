@@ -63,10 +63,12 @@ class RegistrationController extends AbstractController
             $picture = $form->get('avatar')->getData();
             // ensuite je lui donne un nom unique, l'ajoute dans le dossier uploads/user puis met le nom du document dans avatar de l'utilisateur
 
-            $newFile = $pictureService->save($picture, 'user');
-            // $newFile = 'user-'.uniqid().'.'.$picture->guessExtension();
-            // $picture->move('uploads/user/', $newFile);
-            $user->setAvatar($newFile);
+            if ($picture){
+                $newFile = $pictureService->save($picture, 'user');
+                // $newFile = 'user-'.uniqid().'.'.$picture->guessExtension();
+                // $picture->move('uploads/user/', $newFile);
+                $user->setAvatar($newFile);
+            }
 
             // j'enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);
