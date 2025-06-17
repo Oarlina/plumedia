@@ -80,3 +80,24 @@ window.changeSlide = function  (n, nbSlide){
     nbSlide.classList.remove('no-active');
         
 }
+
+// je fais la gestion du bouton qui me fait remonter la page en haut
+
+const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+// si je suis à une certaine distance dsu haut de la page, le bouton il s'affiche
+window.onscroll = function (){
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50)
+    {
+        scrollToTopBtn.classList.add('show');
+    } else 
+    {
+        scrollToTopBtn.classList.remove('show');
+    }
+};
+// si je clique sur le bouton sa me retroune sur le haut de la page de façon réguliere
+scrollToTopBtn.addEventListener('click',function(){
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});

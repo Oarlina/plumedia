@@ -282,9 +282,34 @@ header nav{
 
 
 
+/* bouton de scroll */
 
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--myGrey);
+    color: var(--myWhite);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    /* centre verticalement et horizontalement  */
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+  
+#scrollToTopBtn:hover {
+background-color: var(--orange);
+transform: translateY(-5px);
+}
 
-
+#scrollToTopBtn.show {
+display: flex;
+}
 
 
 

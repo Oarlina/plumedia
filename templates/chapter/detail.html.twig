@@ -20,11 +20,34 @@
 <h1 class="textCenter">{{chapter.name}}</h1>
 <h2 class="textCenter">Chapitre {{num}}</h2>
 
-<pre class="chapterText">
     {# le bouton qui permet de partager sur Facebook #}
+    
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}))}}" target="_blank" class="marginAutoWidth"> <i class="fa-brands fa-facebook"></i> </a>
-    {{file}}
-</pre>
+    {# <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas itaque culpa, velit rerum earum laborum quia nesciunt accusantium perspiciatis expedita eaque pariatur eligendi quibusdam libero suscipit eius fugit veritatis nisi.
+        Dolorum et iure ullam esse fugit omnis id! Accusantium neque eius dicta accusamus totam necessitatibus maiores adipisci praesentium sed eligendi veritatis eaque porro ullam in, consequatur tempora. Eos, quibusdam tempora.
+        Iste, deleniti in. Cum nemo laudantium possimus earum totam vitae laborum ad reiciendis, voluptate veniam numquam molestias ex perferendis sunt non! Odio consequatur veniam saepe praesentium est, nostrum harum consectetur!
+        At alias veritatis ex ullam pariatur! Reprehenderit quod distinctio a ipsa optio. Praesentium obcaecati suscipit id nam in officiis harum aliquam, libero enim, officia tempora nesciunt, aut optio deleniti necessitatibus!
+        Accusamus voluptas consequatur voluptatem. Quasi, et numquam molestias eligendi illo aut dolore sunt expedita pariatur, necessitatibus nobis dolores? Officia quisquam quod repellendus nam praesentium voluptatibus eius illo eos incidunt illum.
+        Dolorem nam corporis quam! Expedita sint, voluptatum nam cumque sapiente ab in non modi qui quibusdam voluptates ducimus repellendus, dolorem ipsum veritatis? Porro eius commodi nam molestiae rem deleniti placeat.
+        Iusto vitae esse doloremque adipisci voluptates numquam ullam temporibus eos est ipsum! Velit aliquid non laboriosam minus consectetur, asperiores, ipsum incidunt est enim, voluptatem atque vero itaque. Ea, rem dicta.
+        Porro alias exercitationem dignissimos! Voluptates qui ipsum nemo! Veniam eligendi consectetur consequatur recusandae! Reprehenderit error consequatur fugiat in assumenda est adipisci architecto dolorum, quas laboriosam provident dolores officia debitis voluptatum.
+        Dolore cupiditate, eveniet quo sint at dicta quam expedita adipisci delectus quos quis corporis explicabo tempore cum odit animi porro ipsam numquam veritatis eaque perspiciatis possimus tenetur libero? Sapiente, dolore.
+        Impedit, veritatis nesciunt. Soluta, magni! Nisi eos veniam quia laborum facere sit alias itaque laudantium ut numquam. Hic, velit unde debitis exercitationem magni repellendus accusamus adipisci ut tempore quaerat eaque.
+        Eveniet corrupti officiis explicabo nesciunt, sint tempora minima? Suscipit accusamus nesciunt at? Cumque neque ullam impedit placeat quam numquam ipsum? Nostrum inventore, ipsam maxime ad et in hic explicabo impedit.
+        Quis tempore, possimus eaque culpa incidunt natus consequuntur adipisci vitae inventore ullam alias odit illo quo ab nihil molestiae atque esse fugiat. Velit aliquam, minus nulla temporibus consequatur labore recusandae.
+        Dignissimos nemo optio ratione perspiciatis ad ea iste delectus voluptatem deleniti beatae pariatur, eius itaque id soluta nam. Doloremque recusandae, perferendis eius aliquid nesciunt neque blanditiis autem facere molestias quasi?
+        Ab ea dignissimos similique temporibus. Perspiciatis rerum sint aperiam officia sunt harum odit quia quidem quas modi iure necessitatibus, exercitationem nihil sit consectetur? Porro nemo ea expedita quae reprehenderit veritatis?
+        Expedita obcaecati natus accusantium sed optio eaque iste esse eum et libero quo voluptatem harum aliquid praesentium quibusdam, modi pariatur sunt cumque, architecto delectus. Voluptates commodi enim porro ad sapiente.
+        Perspiciatis nemo nulla exercitationem consectetur. Quisquam, ratione non, laboriosam cumque, aut illo temporibus esse iure veritatis similique quos possimus autem numquam repellendus rerum! Ipsa dolore a quae. Officiis, dignissimos at.
+        Porro rerum odio facilis laboriosam magnam deleniti esse sapiente veniam quidem, nisi at, velit natus amet fugit eveniet ut quae. Facilis, maiores reprehenderit asperiores et unde reiciendis ullam eius sapiente.
+        Enim rem illo sapiente ex iste minima voluptas autem molestiae blanditiis eum. Assumenda, nam ipsam eum suscipit earum maxime commodi libero fugit! Deleniti quis explicabo molestiae nobis commodi voluptatum voluptates.
+        Animi iure officiis provident reiciendis. Atque tenetur dignissimos ullam, eos aspernatur earum distinctio consequatur obcaecati repudiandae nesciunt iste perferendis nobis esse excepturi adipisci magni necessitatibus eum sunt laborum praesentium a.
+        Cum neque cupiditate laborum, incidunt reprehenderit nostrum similique sunt possimus a asperiores dicta necessitatibus! Optio accusantium obcaecati pariatur perspiciatis mollitia recusandae aliquid expedita? Dolores tempore minus id amet laborum molestiae!</p>
+</div> #}
+<pre class="chapterText">
+     {{file}}
+</pre> 
 {# ce sont les boutons en dessous du chapitre #}
 <div class="boutons textCenter width50 flex justifyContent">
     {% set before = num -1 %}
@@ -35,9 +58,9 @@
     {# la gestion de like #}
     {% if app.user and app.user in chapter.usersLike %}
         <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
-            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-heart textRed"></i>
         </a>
-    {% else %}
+    {% elseif app.user %}
         <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike', 'num' : num})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
             <i class="fa-regular fa-heart"></i>
         </a>
@@ -45,9 +68,9 @@
     {# gestion d'abonnement à l'histoire #}
 
     {% if app.user  in story.usersFollow %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink "> Se désabonner</a>
-    {% else %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton backgroundPink "> S'abonner</a>
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
+    {% elseif app.user %}
+        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton textGreen"> S'abonner</a>
     {% endif %}
     {% if story.chapters | length > num %}
     <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : after})}}" class="backgroundPurple bouton ">Episode suivant</a>
