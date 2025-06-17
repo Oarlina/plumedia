@@ -23,6 +23,8 @@ body, p, li, a {
 .textPink{color: var(--myBrown);}
 .textGrey{color: var(--myGrey);}
 .textWhite{color: var(--myWhite);}
+.textRed{color: red;}
+.textGreen{color: green;}
 
 /* couleur de fonds */
 .backgroundBrown{background-color: var(--myBrown);}
