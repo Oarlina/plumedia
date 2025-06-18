@@ -110,8 +110,11 @@ body, p, li, a {
 #registerContainer .left, #loginContainer .right{ border: 1px solid rgb(247, 247, 247); padding: 0 50px ;}
 .containerGold{padding: 150px 35px;}
 .ConnectContainer{margin: 5em auto; width: 50%;}
-
-
+/* c'est pour les formulaaires ou j'ai besoin d'un élément alors j'ai l'étoile rouge */
+label.required:after {
+    content: " * ";
+    color: red;
+}
 a{
     display: inline-block; 
     text-decoration: none;

@@ -1,20 +1,77 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+        <script src="/tarteaucitron/tarteaucitron.js"></script>
+
+        <script>
+            tarteaucitron.init({
+                "privacyUrl": "", /* URL de la politique de confidentialité */
+                "bodyPosition": "bottom", /* ou "top" pour placer l'élément en premier pour l'accessibilité */
+
+                "hashtag": "#tarteaucitron", /* Ouvre le panneau avec ce hashtag */
+                "cookieName": "tarteaucitron", /* Nom du cookie */
+
+                "orientation": "middle", /* Position de la bannière (top - bottom - middle - popup) */
+
+                "groupServices": false, /* Grouper les services par catégorie */
+                "showDetailsOnClick": true, /* Cliquez pour développer la description */
+                "serviceDefaultState": "wait", /* État par défaut (true - wait - false) */
+
+                "showAlertSmall": false, /* Afficher la petite bannière en bas à droite */
+                "cookieslist": false, /* Afficher la liste des cookies */
+                
+                "showIcon": true, /* Afficher l'icône de gestion des cookies */
+                // "iconSrc": "", /* Optionnel : URL ou image encodée en base64 */
+                "iconPosition": "BottomRight", /* Position de l’icône : BottomRight, BottomLeft, TopRight ou TopLeft */
+
+                "adblocker": false, /* Afficher un avertissement si un bloqueur de pub est détecté */
+
+                "DenyAllCta" : true, /* Afficher le bouton "Tout refuser" */
+                "AcceptAllCta" : true, /* Afficher le bouton "Tout accepter" lorsque highPrivacy est activé */
+                "highPrivacy": true, /* FORTEMENT RECOMMANDÉ : désactiver le consentement automatique */
+                "alwaysNeedConsent": false, /* Demander le consentement pour les services en "Privacy by design" */
+                
+                "handleBrowserDNTRequest": false, /* Si Do Not Track == 1, tout refuser */
+
+                "removeCredit": false, /* Supprimer le lien de crédit */
+                "moreInfoLink": true, /* Afficher le lien "En savoir plus" */
+                "useExternalCss": false, /* Si false, le fichier tarteaucitron.css sera chargé */
+                "useExternalJs": false, /* Si false, le fichier tarteaucitron.services.js sera chargé */
+
+                // "cookieDomain": ".mon-domaine-multisite.fr", /* Cookie partagé entre les sous-domaines */
+
+                "readmoreLink": "", /* Modifier le lien "en savoir plus" par défaut pointant vers tarteaucitron.io */
+                
+                "mandatory": true, /* Afficher un message concernant les cookies obligatoires */
+                "mandatoryCta": true, /* Afficher le bouton d’acceptation désactivé quand "mandatory" est activé */
+                
+                // "customCloserId": "", /* Optionnel a11y : ID d’un élément personnalisé pour ouvrir le panneau */
+
+                "googleConsentMode": true, /* Activer Google Consent Mode v2 pour les publicités Google et GA4 */
+                "bingConsentMode": true, /* Activer Bing Consent Mode pour Clarity et Bing Ads */
+                "softConsentMode": false, /* Mode de consentement souple (le consentement est requis pour charger les services) */
+
+                "dataLayer": false, /* Envoyer un événement à dataLayer avec l’état des services */
+                "serverSide": false, /* Côté serveur uniquement, les balises ne sont pas chargées côté client */
+                
+                "partnersList": false /* Affiche le nombre de partenaires dans le popup et la bannière du milieu */
+            });
+        </script>
+
         <meta charset="UTF-8">
         <title>{% block title %}Home{% endblock %}</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
         {% block stylesheets %}
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display&display=swap" rel="stylesheet">
-            {% endblock %}
+        {% endblock %}
 
             {# {% if meta %} #}
-            {% block meta %}
-                {% block og_type %}{% endblock %}
-                {% block og_title %}{% endblock %}
-                {% block og_description %}{% endblock %}
-                {% block og_image %}{% endblock %}
+        {% block meta %}
+            {% block og_type %}{% endblock %}
+            {% block og_title %}{% endblock %}
+            {% block og_description %}{% endblock %}
+            {% block og_image %}{% endblock %}
             {% block og_url %}{% endblock %}
         {% endblock %}
             {# {% endif %} #}
@@ -23,6 +80,7 @@
             {% block importmap %}{{ importmap('app') |raw }}{% endblock %}
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
         {% endblock %}
+
     </head>
     <body>
         <header class="width100">

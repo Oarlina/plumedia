@@ -6,15 +6,16 @@
     {{ form_errors(registrationForm) }}
     <section class="left container textCenter width50">
         <h2>Inscription</h2>
+        <p> <span class="textRed">*</span> Champ obligatoire</p>
         {{ form_start(registrationForm) }}
-                    {{ form_row(registrationForm.email) }}
-                    {{ form_row(registrationForm.pseudo) }}
-                    {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }} 
-                    {{ form_row(registrationForm.confirmPassword, {label: 'Comfirmer le mot de passe'}) }} 
-                    {{ form_row(registrationForm.avatar) }}
-                    {{ form_row(registrationForm.agreeTerms) }}
-                {{ form_end(registrationForm) }}
-                <a href="/connect/google" class="bouton boutonWhite">S'inscrire avec google</a>
+            {{ form_row(registrationForm.email) }} 
+            {{ form_row(registrationForm.pseudo) }}
+            {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe :'}) }} 
+            {{ form_row(registrationForm.confirmPassword, {label: 'Comfirmer le mot de passe :'}) }} 
+            {{ form_row(registrationForm.avatar) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_end(registrationForm) }}
+        <a href="/connect/google" class="bouton boutonWhite">S'inscrire avec google</a>
     </section>
     <section class="right containerGold textCenter backgroundGold width50">
         <h2>Bienvenue ! </h2>
