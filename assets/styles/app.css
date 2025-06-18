@@ -289,7 +289,7 @@ header nav{
 
 #scrollToTopBtn {
     position: fixed;
-    bottom: 30px;
+    bottom: 50px;
     right: 30px;
     width: 50px;
     height: 50px;
@@ -306,7 +306,7 @@ header nav{
 }
   
 #scrollToTopBtn:hover {
-background-color: var(--orange);
+background-color: var(--myGold);
 transform: translateY(-5px);
 }
 

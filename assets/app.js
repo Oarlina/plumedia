@@ -39,21 +39,21 @@ let backBtn = document.getElementById("backBtn");
 let nextBtn = document.getElementById("nextBtn");
 
 // c'est un évènement sur la roulette de la souris
-scrollContainer.addEventListener("wheel", (evt) => {
+window.scrollContainer = function () {
     evt.preventDefault();
     scrollContainer.scrollLeft += evt.deltaY;
     scrollContainer.style.scrollBehavior = 'auto';
-});
+};
 // c'est l'évènement quand on veut aller à droite
-nextBtn.addEventListener("click", ()=>{
+window.nextBtn = function (){
     scrollContainer.style.scrollBehavior = 'smooth';
     scrollContainer.scrollLeft += 1500;
-});
+};
 // c'est l'évènement lorsque l'on veut aller à gauche
-backBtn.addEventListener("click", ()=>{
+window.backBtn = function (){
     scrollContainer.style.scrollBehavior = 'smooth';
     scrollContainer.scrollLeft -= 1500;
-});
+};
 function changeNbSlide(n, change){
     if (change == 1) {
         if (n == 3) {
@@ -95,9 +95,6 @@ window.onscroll = function (){
     }
 };
 // si je clique sur le bouton sa me retroune sur le haut de la page de façon réguliere
-scrollToTopBtn.addEventListener('click',function(){
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
