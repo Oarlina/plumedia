@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if edit %}   
+        <h1>Modifier les genres :</h1>
+    {% else %}
+        <h1>Ajouter les genres :</h1>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if edit %}
+        <h1>Modifier les genres :</h1>
+    {% else %}
+        <h1>Ajouter les genres :</h1>
+    {% endif %}
+
+{# {{dump(form.cover)}} #}
+     {{ form_start(form) }}
+        {{ form_row(form.categories) }}
+        {{ form_row(form.Submit) }}
+        {{ form_end(form) }} 
+    {# render_rest permet de sortir tout ce qui n'a pas encore été sortie #}
+{% endblock %}

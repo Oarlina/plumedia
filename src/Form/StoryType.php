@@ -8,11 +8,12 @@ use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\File as FileConstraint;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\File as FileConstraint;
 
 class StoryType extends AbstractType
 {
@@ -29,13 +30,13 @@ class StoryType extends AbstractType
                                             'image/png',
                                             'image/webp'],
                             'mimeTypesMessage' => 'Le document doit être en JPG, PNG, JPEG, SVG, WEBP',])]])
-            ->add('summary', TextType::class, ['label' => 'Résumé'])
-            ->add('categories', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'label' => 'Catégorie(s)'
-            ])
+            ->add('summary', TextareaType::class, ['label' => 'Résumé'])
+            // ->add('categories', EntityType::class, [
+            //     'class' => Category::class,
+            //     'choice_label' => 'name',
+            //     'multiple' => true,
+            //     'label' => 'Catégorie(s)'
+            // ])
             ->add('Submit', SubmitType::class, ['label' => 'Envoyer'])
         ;
     }

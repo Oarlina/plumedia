@@ -54,22 +54,6 @@ final class StoryController extends AbstractController
             $story->setCreateStory(new Datetime());
             $story->setPerson($user);
             $story->setIsFinish(0);
-
-            // je fais la gestion des catégories
-            $formCategories = $form->get('categories')->getData(); 
-            $storyCategories = $story->getCategories(); 
-            // si l'histoire a une categorie qui ne se trouve pas dans le formulaire je supprime
-            foreach($storyCategories as $sc){
-                if (! $formCategories->contains($sc)) {
-                    $story->removeCategory($sc);
-                }
-            }
-            //  si l'histoire n'a pas la categorie mais qu'elle est dans le formulaire je l'ajoute
-            foreach($formCategories as $fc){
-                if ( $storyCategories->contains($fc)){
-                    $story->addCategory($fc);
-                }
-            }
             
             // je recupere l'image du formulaire
             $picture = $form->get('cover')->getData();
@@ -84,7 +68,7 @@ final class StoryController extends AbstractController
             $this->entityManager->persist($story);
             $this->entityManager->flush();
             $this->addFlash('sucess', 'L\'histoire à été publié');
-            return $this->redirectToRoute('detail_story', ["id" => $story->getId()]);
+            return $this->redirectToRoute('new_category', ['idStory' => $story->getId()]);
         }
         return $this->render('story/new.html.twig', ['form' => $form, 'edit' => $id]);
     }

@@ -3,6 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+    <div class="g-recaptcha alert" data-sitekey="site_key"></div>
 
     <section id="home" class="textCenter">
         <video autoplay muted loop playsinline id="bg-video">
@@ -38,4 +39,14 @@
             <button class="newsletter-btn bouton boutonWhite">S'inscrire</button>
         </div>
     </div>
+  
+    <script>
+        // je donne l'accces pour le recaptcha
+        tarteaucitron.user.recaptchaapi = '{{recaptcha_key}}';
+        (tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');
+        // je donne l'acces pour googled
+        tarteaucitron.user.gajsUa = '{{google_key}}';
+        tarteaucitron.user.gajsMore = function () { /* add here your optionnal _ga.push() */ };
+        (tarteaucitron.job = tarteaucitron.job || []).push('gajs');
+    </script>
 {% endblock %}

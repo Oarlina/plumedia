@@ -151,5 +151,15 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            document.addEventListener("tac.loaded", () => {
+                if (typeof grecaptcha !== "undefined") {
+                    grecaptcha.ready(() => {
+                        // Ici tu peux appeler grecaptcha.execute() ou ton traitement custom
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

@@ -18,7 +18,7 @@ final class HomeController extends AbstractController
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'HomeController','recaptcha_key' => $_ENV['RECAPTCHA3_KEY'], 'google_key' => $_ENV['OAUTH_GOOGLE_ID']
         ]);
     }
 
