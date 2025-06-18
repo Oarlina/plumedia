@@ -67,7 +67,7 @@ final class StoryController extends AbstractController
             
             $this->entityManager->persist($story);
             $this->entityManager->flush();
-            $this->addFlash('sucess', 'L\'histoire à été publié');
+            // $this->addFlash('sucess', 'L\'histoire à été publié');
             return $this->redirectToRoute('new_category', ['idStory' => $story->getId()]);
         }
         return $this->render('story/new.html.twig', ['form' => $form, 'edit' => $id]);

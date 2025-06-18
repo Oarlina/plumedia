@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Story;
 use App\Entity\Category;
+use App\Form\CategoryForStoryType;
 use App\Repository\StoryRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,8 +46,11 @@ final class CategoryController extends AbstractController
 
     #[Route(path:'/categories/edit/{story}', name:'change_category')]
     #[Route('/new/{idStory}', name:'new_category')]
-    public function new(Story $idStory  = null, Story $story = null): Response{
-
+    public function new(Story $idStory  = null, Story $story = null, Request $request): Response{
+        if(! $story){
+            $edit = false;
+            $story = $idStory;
+        }
         $form = $this->createForm(CategoryForStoryType::class, $story);
         $form->handleRequest($request);
     
@@ -53,11 +58,14 @@ final class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // je fais la gestion des catégories
             $formCategories = $form->get('categories')->getData(); 
-            $storyCategories = $story->getCategories(); 
-            // si l'histoire a une categorie qui ne se trouve pas dans le formulaire je supprime
-            foreach($storyCategories as $sc){
-                if (! $formCategories->contains($sc)) {
-                    $story->removeCategory($sc);
+            // si je suis en edit je fais la gestion de pouvoir suppruimer des catégories
+            if ($story !=null){
+                $storyCategories = $story->getCategories(); 
+                // si l'histoire a une categorie qui ne se trouve pas dans le formulaire je supprime
+                foreach($storyCategories as $sc){
+                    if (! $formCategories->contains($sc)) {
+                        $story->removeCategory($sc);
+                    }
                 }
             }
             //  si l'histoire n'a pas la categorie mais qu'elle est dans le formulaire je l'ajoute
@@ -69,6 +77,8 @@ final class CategoryController extends AbstractController
             $this->entityManager->persist($story);
             $this->entityManager->flush();
             $this->addFlash('sucess', 'L\'histoire à été publié');
+            return $this->redirectToRoute('detail_story', ['id' => $story->getId()]);
         }
+        return $this->render('category/new.html.twig', ['form' => $form, 'edit' => $story]);
     }
 }
