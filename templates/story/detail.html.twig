@@ -25,7 +25,7 @@
             {# la nav du haut #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class=""><b>Description</b></a>
-                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres</a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres ({{story.chapters | length}})</a>
                 <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="">Recommandations</a>
             </nav>
             {# la partie de like + follow #}
@@ -57,7 +57,7 @@
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" >{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
                     {% endif %}
                     {# je fais la gestion de follow d'une histoire #}
-                    {% if app. app.user  in story.usersFollow %}
+                    {% if app.user  in story.usersFollow %}
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton textRed ">Se désabonner ({{story.usersFollow | length}})</a>
                     {% else %}
                         <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton textGreen ">S'abonner ({{story.usersFollow | length}})</a>

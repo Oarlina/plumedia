@@ -17,7 +17,7 @@
             {# on gere la navbar #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="">Description</a>
-                <a href="{{path('app_chapter', {'idStory': story.id})}}" class=""><b>Chapitres</b></a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class=""><b>Chapitres ({{story.chapters | length}})</b></a>
                 <a href="{{path('suggestions_story', {'idStory': story.id})}}" class="">Recommandations</a>
             </nav>
             <div class="top">

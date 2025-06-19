@@ -17,64 +17,49 @@
             {# c'est la navbar de droite #}
             <nav class="textCenter width100 flex flexDirectionRow">
                 <a href="{{path('detail_story', {'id' : story.id})}}" class="">Description</a>
-                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres</a>
+                <a href="{{path('app_chapter', {'idStory': story.id})}}" class="">Chapitres ({{story.chapters | length}})</a>
                 <a href="{{path('suggestions_story', {'idStory': story.id})}}" class=""><b>Recommandations</b></a>
             </nav>
 
-            {# je parcours les catégories de l'histoire #}
-            {% if story.categories | length > 0 %}
-                    {% for category in story.categories %}
+            {# si l'histoire a des categories #}
+            {% if story.categories %}
+                {# je parcours ces categories #}
+                {% for category in story.categories %}
                     <h2> {{category.name}} :</h2>
-                    {# si la catégories à plus de 5 histoire je limite au 5 première histoires #}
-                    {% if  category.stories and category.stories | length >=5 %}
+                    {# si la catégorie a au moins 2 histoire je l'affiche #}
+                    {% if category.stories | length >= 2 %}
                         {% set counter = 1 %}
+                        {# j'afficher ces histoires #}
                         <div class="right stories flex flexDirectionRow">
                             {# je parcours toutes les categories de l'histoire #}
                             {% for st in category.stories %}
                                 {# je vérifie que je n'affiche pas l'histoire sur laquelle on fait les recommendations #}
                                 {% if story.id != st.id %}
                                     <div class="story textCenter">
-                                        {% if story.cover %}
-                                            <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
-                                        {% else %}
-                                            <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
-                                        {% endif %}
-                                        <p class="">{{st.name}}</p>
-                                        <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                                        <p class="summary backgroundWhite">{{st.summary}}</p>
+                                        <a href="{{path('detail_story', {'id' : st.id})}}">
+                                            {# je faisd la gestion de la couverture de l'histoire #}
+                                            {% if story.cover %}
+                                                <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
+                                            {% else %}
+                                                <img src="{{ asset('img\forNoCover.png') }}" alt="couverture de {{st.name}}" class="coverBook">
+                                            {% endif %}
+                                            <p class="">{{st.name}}</p>
+                                            <p class="bouton boutonWhite">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
+                                            <p class="summary backgroundWhite">{{st.summary}}</p>
+                                        </a>
                                     </div>
                                 {% endif %}
                                 {% set counter = counter + 1 %}
                             {% endfor %}
                         </div>
-                    {# sinon j'affiche tout #}
-                    {% elseif category.stories and category.stories | length >= 1 %}
-                        <div class="right stories flex flexDirectionRow">
-                            {# je parcours toutes les categories de l'histoire #}
-                            {% for st in category.stories %}
-                                {# je vérifie que je n'affiche pas l'histoire sur laquelle on fait les recommendations #}
-                                {% if story.id != st.id %}
-                                    <div class="story textCenter">
-                                        {% if story.cover %}
-                                            <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
-                                        {% else %}
-                                            <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
-                                        {% endif %}
-                                        <p class="">{{st.name}}</p>
-                                        <a class="bouton boutonWhite" href="{{path('detail_story', {'id' : st.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                                        <p class="summary backgroundWhite">{{st.summary}}</p>
-                                    </div>
-                                {% endif %}
-                                {% set counter = counter + 1 %}
-                            {% endfor %}
-                        </div>
-                    {% elseif story in category.stories  %}
-                        <p>La catégorie n'a pas d'autre chapitre.</p>
+                    {% else %}
+                        <p>Cette catégorie n'a pas d'autres histoire !</p>
                     {% endif %}
                 {% endfor %}
             {% else %}
-            <p>Cette histoire n'a pas de catégorie !</p>
+                <p> Cette histoire n'a pas de catégorie. Ainsi elle n'a aucune recommendations.</p>
             {% endif %}
+        </div>
     </main>
 </section>
 {% endblock %}
