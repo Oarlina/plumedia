@@ -21,14 +21,16 @@
                     {% else %}
                         {% set counter = counter +1 %}
                         <div class="story textCenter">
-                            {% if story.cover %}
-                                <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
-                            {% else %}
-                                <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
-                            {% endif %}
-                            <p>{{story.name}}</p>
-                            <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
-                            <p class="summary backgroundWhite">{{story.summary}}</p>
+                            <a href="{{path('detail_story', {'id' : story.id})}}">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook width100">  
+                                {% endif %}
+                                <h3>{{story.name}}  </h3>
+                                <p class="summary backgroundWhite width100">{{story.summary}}</p>
+                                <p class="boutonWhite bouton">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
+                            </a>
                         </div>
                     {% endif %}
                 {% endfor %}

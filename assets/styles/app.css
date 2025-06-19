@@ -226,7 +226,7 @@ header nav{
     justify-content: center;
     .story{
         width: 200px;
-        height: 400px;
+        min-height: 400px;
         margin: 15px;
         
     }

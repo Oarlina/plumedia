@@ -144,6 +144,7 @@ final class StoryController extends AbstractController
         return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory]);
     }
 
+    // suppression d'une histoire
     #[Route(path:'delete/{idStory}/{idUser}', name:'delete_story')]
     public function delete(Story $idStory, User $idUser): Response {
         // si ce n'est pas l'utilisateur je le resort dirtectement

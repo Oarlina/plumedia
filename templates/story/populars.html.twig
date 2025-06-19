@@ -38,36 +38,38 @@
      <main class="populars">
         {% set counter = 1 %}
         {% for story in stories %}
-            <h2>{{counter}}</h2> 
-            {# ceci est un seul populaire #}
-            <div class="popular flex">
-                {% set counter = counter + 1 %}
-                {% if story.cover %}
-                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
-                {% else %}
-                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
-                {% endif %}
-                {# c'est la partie de droite #}
-                <div class="right backgroundWhite">
-                    <h3 class="secondTitle">{{story.name}}</h3> <br>
-                    {# ceci est la gestion des genres #}
-                        <p><u>Genres :</u>
-                        {% if story.categories | length >0 %}
-                            {% set c = 1 %}
-                            {% for category in story.categories %}
-                                <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="">{{category.name }}</a> 
-                                {% if counter < (story.categories | length) %},{% endif %}
-                                {% set c = c + 1 %}
-                            {% endfor %}
-                        {% else %}
-                            aucun
-                        {% endif %}
-                    </p>
-                    <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
-                    <p> <u>Résumé:</u> {{story.summary}}</p>
-                    <a href="{{path('detail_story', {'id': story.id})}}" class="boutonWhite">En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{{path('detail_story', {'id': story.id})}}">
+                <h2>{{counter}}</h2> 
+                {# ceci est un seul populaire #}
+                <div class="popular flex">
+                    {% set counter = counter + 1 %}
+                    {% if story.cover %}
+                        <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}">  
+                    {% else %}
+                        <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}">  
+                    {% endif %}
+                    {# c'est la partie de droite #}
+                    <div class="right backgroundWhite">
+                        <h3 class="secondTitle">{{story.name}}</h3> <br>
+                        {# ceci est la gestion des genres #}
+                            <p><u>Genres :</u>
+                            {% if story.categories | length > 0 %}
+                                {% set c = 1 %}
+                                {% for category in story.categories %}
+                                    {{category.name }}
+                                    {% if c < (story.categories | length) %},{% endif %}
+                                    {% set c = c + 1 %}
+                                {% endfor %}
+                            {% else %}
+                                aucun
+                            {% endif %}
+                        </p>
+                        <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
+                        <p> <u>Résumé:</u> {{story.summary}}</p>
+                        <p  class="boutonWhite">En savoir plus <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
                 </div>
-            </div>
+            </a>
         {% endfor %}
     </main>
 {% endblock %}
