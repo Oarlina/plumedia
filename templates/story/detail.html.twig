@@ -30,6 +30,9 @@
             </nav>
             {# la partie de like + follow #}
             <div class="top">
+                {% if app.user and app.user.id == story.person.id %}
+                    <a href="{{path('delete_story', {'idStory': story.id, 'idUser': app.user.id})}}"><i class="fa-solid fa-trash"></i></a>
+                {% endif %}
                 {# c'est la gestion de modification d'une histoire qui n'est visible que pour l'auteur #}
                 {% if app.user and app.user.id == story.person.id %}
                     <a href="{{path('change_story', {'id': story.id})}}"  class="bouton boutonWhite">

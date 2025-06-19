@@ -44,19 +44,19 @@ class Story
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedStories')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedStories', orphanRemoval: true)]
     private Collection $usersLike;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followedStories')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'followedStories', orphanRemoval: true)]
     private Collection $usersFollow;
 
     /**
      * @var Collection<int, Category>
      */
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'Stories')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'Stories', orphanRemoval: true)]
     private Collection $categories;
 
     public function __construct()

@@ -12,6 +12,7 @@ use App\Service\PictureService;
 use App\Repository\StoryRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,6 +24,7 @@ final class StoryController extends AbstractController
         private EntityManagerInterface $entityManager,
         private CategoryRepository $categoryRepository,
         private StoryRepository $storyRepository,
+        private Filesystem $filesystem,
     ) {
     }
     // la liste des histoires
@@ -140,6 +142,24 @@ final class StoryController extends AbstractController
         }
         $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
         return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory]);
+    }
+
+    #[Route(path:'delete/{idStory}/{idUser}', name:'delete_story')]
+    public function delete(Story $idStory, User $idUser): Response {
+        // si ce n'est pas l'utilisateur je le resort dirtectement
+        if ($idStory->getPerson()->getId() != $idUser->getId()){
+            $this->addFlash('error', 'Vous n\'avez pas l\'autorisation pour supprimer');
+            return $this->redirectToRoute('app_home');
+        }
+        // si l'histoire a une couverture alors on la supprime de uploads/user
+        if ($idStory->getCover()){
+            $this->filesystem->remove('uploads/story/'.$idStory->getCover());
+        }
+        $this->entityManager->remove($idStory);
+        $this->entityManager->flush();
+
+        $this->addFlash('sucess', 'Suppression de l\'histoire réussie');
+        return $this->redirectToRoute('app_storyProfil');
     }
     
 }

@@ -20,7 +20,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
-    public function __construct() {
+    public function __construct(
+        private Filesystem $filesystem,
+    ) {
     }
 
 
@@ -49,6 +51,10 @@ class SecurityController extends AbstractController
             // je met la date du jour, si l'utilisateur veut supprimer son compte
             $date = new DateTime();
             $user->setDeleteAccount($date);
+            // je supprime l'avatar du dossier uploads/users
+            if ($user->getAvatar()){
+                $filesystem->remove('uploads/user/'.$user->getAvatar());
+            }
             // je met à jour la BDD
             $entityManager->persist($user);
             $entityManager->flush();
@@ -60,7 +66,7 @@ class SecurityController extends AbstractController
 
     // pour que l'utilisateur puisse changer ces informations
     #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
-    public function changeMailAvatar (Request $request, UserRepository $userRepository, Filesystem $filesystem, EntityManagerInterface $entityManager, PictureService $uploadService): Response{
+    public function changeMailAvatar (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, PictureService $uploadService): Response{
         $error = "non"; // pour la gestion de message si il y a une erreur
         // je recupere l'email, le pseudo et l'avatar du formulaire
         // je n'est pas a verifier les types car ils sont forcer dans l'entité User
@@ -91,7 +97,7 @@ class SecurityController extends AbstractController
 
                 // si l'utilisateur a un avatar alors je supprime le fichier du dossier uploads
                 if ($user->getAvatar()){
-                    $filesystem->remove('uploads/user/'.$user->getAvatar());
+                    $this->filesystem->remove('uploads/user/'.$user->getAvatar());
                 }
                 $user->setAvatar($newFile);
             } else {

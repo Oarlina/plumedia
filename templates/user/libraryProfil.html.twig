@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block body %}
-    {# pour la gestion d'erreur #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{label}}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
 
     <div id="profil">
         {% if user.avatar %}
@@ -31,7 +23,6 @@
             </picture>
         {% endif %}
         <nav class="flex alignCenter justifyContent backgroundGrey">
-symfony serve -d
             <a href="{{path('app_profil')}}">Mes informations</a>
             <a href="">|</a>
             <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
