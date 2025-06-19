@@ -50,19 +50,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, self>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'isFollow')]
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'isFollow', orphanRemoval: true)]
     private Collection $follow;
 
     /**
      * @var Collection<int, self>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follow')]
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follow', orphanRemoval: true)]
     private Collection $isFollow;
 
     /**
      * @var Collection<int, Story>
      */
-    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Story::class)]
+    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Story::class, orphanRemoval: true)]
     private Collection $stories;
 
     /**
