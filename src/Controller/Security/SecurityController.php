@@ -55,6 +55,7 @@ class SecurityController extends AbstractController
             if ($user->getAvatar()){
                 $filesystem->remove('uploads/user/'.$user->getAvatar());
             }
+            $user->setPseudo('delete_user'.uniqid());
             // je met à jour la BDD
             $entityManager->persist($user);
             $entityManager->flush();
@@ -67,7 +68,6 @@ class SecurityController extends AbstractController
     // pour que l'utilisateur puisse changer ces informations
     #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
     public function changeMailAvatar (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, PictureService $uploadService): Response{
-        $error = "non"; // pour la gestion de message si il y a une erreur
         // je recupere l'email, le pseudo et l'avatar du formulaire
         // je n'est pas a verifier les types car ils sont forcer dans l'entité User
         $email = $request->request->get('email');
@@ -78,13 +78,13 @@ class SecurityController extends AbstractController
 
         // on verifie que le mail est different et  dans la BDD
         if ($email != $user->getEmail() && ($userRepository->findBy(['email'=> $email]) != null)){
-            $error = "oui";
+            $this->addFlash('error', 'Cette adresse mail ne peut pas être utlisé.');
         }else{
             $user = $user->setEmail($email);
         }
-        // on verifie que le pseudo est different et dans la BDD
-        if ($pseudo !=  $user->getPseudo() && ($userRepository->findBy(['pseudo'=> $pseudo]) != null)) {
-            $error = "oui";
+        // on verifie que le pseudo ne contient pas 'delete_user' et que le pseudo n'est pas déjà utilisé
+        if (str_contains($pseudo,'delete_user') or ($userRepository->findBy(['pseudo'=> $pseudo]) != null)) {
+            $this->addFlash('error', 'Le pseudo est déjà utilisé.');
         }else{
             $user = $user->setPseudo($pseudo);
         }
@@ -108,9 +108,6 @@ class SecurityController extends AbstractController
         // je met a jour la base de données, je faais la gestion d'erreur puis retourne sur la page de profil
         $entityManager->persist($user);
         $entityManager->flush();
-        if ($error == "oui"){
-            $this->addFlash('error', 'Problème lors de la modification des informations.');
-        }
         return $this->redirectToRoute('app_profil');
     }
 

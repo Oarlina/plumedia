@@ -23,7 +23,11 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{user.pseudo}}</td>
+                    <td>{% if 'delete_user' in user.pseudo %}
+                        Compte supprimé
+                    {% else %}
+                        {{user.pseudo}}
+                    {% endif %}</td>
                     <td>
                         {% if 'ROLE_MODERATOR' in user.roles %}
                             X

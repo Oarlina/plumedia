@@ -39,9 +39,11 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$form->isValid()) {
-                dd($form->getErrors(true, false));
-            } 
+            // on verifie que le pseudo ne contient pas 'delete_user' et que le pseudo n'est pas déjà utilisé
+            if (str_contains($pseudo,'delete_user')) {
+                $this->addFlash('error', 'Le pseudo est déjà utilisé.');
+                return $this->redirectToRoute('app_login');
+            }
             // je donne directement le role user a l'utilisateur
             $user->setRoles(['ROLE_USER']);
             $user->setCreateAccount(new DatetimeImmutable());
@@ -65,8 +67,6 @@ class RegistrationController extends AbstractController
 
             if ($picture){
                 $newFile = $pictureService->save($picture, 'user');
-                // $newFile = 'user-'.uniqid().'.'.$picture->guessExtension();
-                // $picture->move('uploads/user/', $newFile);
                 $user->setAvatar($newFile);
             }
 

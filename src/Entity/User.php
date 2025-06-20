@@ -68,28 +68,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Story>
      */
-    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersLike')]
+    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersLike', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'likestory')] // cette ligne permet de renommer le nom de la table 
     private Collection $likedStories;
 
     /**
      * @var Collection<int, Story>
      */
-    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersFollow')]
+    #[ORM\ManyToMany(targetEntity: Story::class, inversedBy: 'usersFollow', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'followstory')] // cette ligne permet de renommer le nom de la table 
     private Collection $followedStories;
 
     /**
      * @var Collection<int, Chapter>
      */
-    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'usersLike')]
+    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'usersLike', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'likechapter')] // cette ligne permet de renommer le nom de la table 
     private Collection $likedChapters;
 
     /**
      * @var Collection<int, Chapter>
      */
-    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'userHaveRead')]
+    #[ORM\ManyToMany(targetEntity: Chapter::class, inversedBy: 'userHaveRead', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'haveread')] // cette ligne permet de renommer le nom de la table 
     private Collection $readChapters;
 

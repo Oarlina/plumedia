@@ -45,7 +45,6 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
             // si cela fait plus de 30 jours j'anonimise le compte et refuse la connexion 
             if ($diff > 30){
                 $user->setEmail('anonymous_'.uniqid().'@gmail.com');
-                $user->setPseudo('anonymous_'.uniqid());
 
                 $this->addFlash('error', 'Ce compte n\'existe pas');
                 return $this->redirectToRoute('app_login');
