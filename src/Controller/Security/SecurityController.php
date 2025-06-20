@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\ResetPasswordRequestRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -22,6 +23,7 @@ class SecurityController extends AbstractController
 {
     public function __construct(
         private Filesystem $filesystem,
+        private ResetPasswordRequestRepository $resetPasswordRequest,
     ) {
     }
 
@@ -42,20 +44,29 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
     // pour la suppression d'un compte
     #[Route(path:'/delete_account/{user}/{bool}', name:"delete_account")]
     public function delete(User $user, $bool = null, EntityManagerInterface $entityManager): Response {
         // si bool n'est pas égale à 1 alors l'utilisateur confirme la suppression du comte sinon je le renvoie sur la page de suppression du compte
         if ($bool == 1 ){
             // je met la date du jour, si l'utilisateur veut supprimer son compte
-            $date = new DateTime();
-            $user->setDeleteAccount($date);
+            $resetPassword = $this->resetPasswordRequest->findBy(['user' => $user->getId()]) ;
+
             // je supprime l'avatar du dossier uploads/users
             if ($user->getAvatar()){
-                $filesystem->remove('uploads/user/'.$user->getAvatar());
+                $this->filesystem->remove('uploads/user/'.$user->getAvatar());
             }
-            $user->setPseudo('delete_user'.uniqid());
+            // je verifie que l'utilisateur na pas de demande de modification de mot de passe sinon je les supprimes
+            if($resetPassword){
+                for($i=0; $i< count($resetPassword); $i++){
+                    $entityManager->remove($resetPassword[$i]);
+                    $entityManager->flush();
+                }
+            }
+            $user->setPseudo('delete_user'.uniqid()); // je pseudomise le pseudo pour éviter de mette l'id du user en nullable sur les commentaires
+            $user->setEmail('anonymous_'.uniqid().'@gmail.com');
+            $user->setAvatar(null);
+            $user->setPassword('password_'.uniqid());
             // je met à jour la BDD
             $entityManager->persist($user);
             $entityManager->flush();
