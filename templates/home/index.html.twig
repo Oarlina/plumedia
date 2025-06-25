@@ -2,6 +2,16 @@
 
 {% block title %}Home{% endblock %}
 
+
+{% block meta %}
+    {% block description %}
+        <meta name="description" content="Plumédia est une plateforme immersive pour lire, écrire et partager des histoires.
+ Rejoignez une communauté passionnée et donnez vie à vos récits en toute liberté.">
+    {% endblock %}
+    {% block keywords %}
+        <meta name="keywords" content="histoire lire écrire">
+    {% endblock %}
+{% endblock %}
 {% block body %}
     <div class="g-recaptcha alert" data-sitekey="site_key"></div>
 

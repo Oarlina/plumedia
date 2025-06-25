@@ -96,6 +96,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createAccount = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $biobiography = null;
+
 
 
     public function __construct()
@@ -346,6 +349,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFollowedStories($followedStories): static
     {
         $this->followedStories = $followedStories;
+        return $this;
+    }
+
+    public function getBiobiography(): ?string
+    {
+        return $this->biobiography;
+    }
+
+    public function setBiobiography(?string $biobiography): static
+    {
+        $this->biobiography = $biobiography;
+
         return $this;
     }
 }

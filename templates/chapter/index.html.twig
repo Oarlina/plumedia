@@ -33,6 +33,7 @@
                         {% for chapter in chapters %}
                             {# ceci est un chapitre si le chapitre est gratuit je laisse l'accès au chapitre #}
                             {% if chapter.isFree %}
+                            {% if chapter.isPublic %}
                                 <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : counter})}}" class="width100">
                                     <div class="chapter backgroundWhite flex">
                                         <div class="leftChapter">
@@ -43,40 +44,51 @@
                                         </div>
                                         {# la partie droite du chapitre #}
                                         <div class="rightChapter flex flexDirectionCollumn textCenter">
-                                            {# pour que l'auteur puisse modifier le chapitre #}
-                                            {% if app.user and app.user == chapter.user %}
-                                                <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="linkBtn"><i class="fa-solid fa-pen"></i></a>
-                                            {% endif %}
-        
-                                            {# si une histoire est gratuite ou non  #}
-                                            {% if chapter.isFree %}
-                                                <i class="fa-solid fa-unlock"></i>
-                                            {% else %}
-                                                <i class="fa-solid fa-lock"></i>
-                                            {% endif %}
-        
-                                            {# la gestion de like #}
-                                            {% if app.user and app.user in chapter.usersLike %}
-                                                <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike'})}}" class="">{{chapter.usersLike | length}}
-                                                    <i class="fa-solid fa-heart"></i>
-                                                </a>
-                                            {% elseif app.user %}
-                                                <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUsersLike'})}}" class="">{{chapter.usersLike | length}}
-                                                    <i class="fa-regular fa-heart"></i>
-                                                </a>
-                                            {% endif %}
-        
-                                            {# si l'utilisateur a lu le chapitre #}
-                                            {% if app.user and app.user in chapter.userHaveRead %}
-                                                <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUserHaveRead'})}}" class="">Lu
-                                                </a>
-                                            {% elseif app.user %}
-                                                <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUserHaveRead'})}}" class="">Non lu 
-                                                </a>
-                                            {% endif %}
+                                        {# pour que l'auteur puisse modifier le chapitre #}
+                                        {% if app.user and app.user == chapter.user %}
+                                            <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="linkBtn"><i class="fa-solid fa-pen"></i></a>
+                                        {% endif %}
+    
+                                        {# si une histoire est gratuite ou non  #}
+                                        {% if chapter.isFree %}
+                                            <i class="fa-solid fa-unlock"></i>
+                                        {% else %}
+                                            <i class="fa-solid fa-lock"></i>
+                                        {% endif %}
+    
+                                        {# la gestion de like #}
+                                        {% if app.user and app.user in chapter.usersLike %}
+                                            <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike'})}}" class="">{{chapter.usersLike | length}}
+                                                <i class="fa-solid fa-heart"></i>
+                                            </a>
+                                        {% elseif app.user %}
+                                            <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUsersLike'})}}" class="">{{chapter.usersLike | length}}
+                                                <i class="fa-regular fa-heart"></i>
+                                            </a>
+                                        {% endif %}
+    
+                                        {# si l'utilisateur a lu le chapitre #}
+                                        {% if app.user and app.user in chapter.userHaveRead %}
+                                            <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'removeUserHaveRead'})}}" class="">Lu
+                                            </a>
+                                        {% elseif app.user %}
+                                            <a href="{{path('changeChapter', {'chapter' : chapter.id, 'fonction' : 'addUserHaveRead'})}}" class="">Non lu 
+                                            </a>
+                                        {% endif %}
                                         </div>
                                     </div>
                                 </a>
+                            {% else %}
+                                <div class="chapter backgroundGrey flex opacity50">
+                                    <div class="leftChapter">
+                                            <h2><u>Chapitre {{counter}} :</u> {{chapter.name}}</h2>
+                                            <p>Date de publication :  aucune</p>
+                                            <p>Saison :{{chapter.inSeason}}</p>
+                                            {% set counter = counter + 1 %}
+                                        </div>
+                                    </div>
+                            {% endif %}
+                                
                             {% endif %}
                         {% endfor %}
                     </div>

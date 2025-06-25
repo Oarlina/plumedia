@@ -2,6 +2,16 @@
 
 {% block title %}Acceuil{% endblock %}
 
+{% block meta %}
+    {% block description %}
+        <meta name="description" content="Plumédia est une plateforme immersive pour lire, écrire et partager des histoires.
+ Rejoignez une communauté passionnée et donnez vie à vos récits en toute liberté.">
+    {% endblock %}
+    {% block keywords %}
+        <meta name="keywords" content="histoire lire écrire">
+    {% endblock %}
+{% endblock %}
+
 {% block body %}
     {# j'affiche les 3 plus populaire du moment (histoire qui a le plus d'abonner) #}
     {# {{dump(stories)}} #}

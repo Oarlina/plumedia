@@ -57,6 +57,9 @@ class Chapter
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters')]
     private Collection $userHaveRead;
 
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -233,6 +236,18 @@ class Chapter
         if ($this->userHaveRead->removeElement($userHaveRead)) {
             $userHaveRead->removeReadChapter($this);
         }
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }
