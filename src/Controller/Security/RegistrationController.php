@@ -47,7 +47,6 @@ class RegistrationController extends AbstractController
             // je donne directement le role user a l'utilisateur
             $user->setRoles(['ROLE_USER']);
             $user->setCreateAccount(new DatetimeImmutable());
-            // dd($user->getCreateAccount());
 
             // je récupère les mots de passes 
             $plainPassword = $form->get('plainPassword')->getData();
@@ -58,6 +57,8 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('app_register');
             }
             
+            // je faais la gestion des roles
+            $user->setSocialMedia(['Instagram'=> null, 'Snapchat' =>null, 'Facebook' => null, 'Youtube' => null]);
 
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 

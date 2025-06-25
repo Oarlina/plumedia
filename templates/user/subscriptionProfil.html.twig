@@ -39,8 +39,16 @@
                 <section class="follow width50 flex  flexDirectionCollumn">
                     <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
-                        <a href="{{path('app_profile', {'id':folo.id})}}" class="">
-                            <img src="uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
+                        <a href="{{path('app_profile', {'user':folo.id})}}" class="">
+                            {% if folo.avatar %}
+                                <picture>
+                                    <img src="/uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
+                                </picture>
+                            {% else %}
+                                <picture>
+                                    <img src="/img/avatar_base.png" alt="image faux avatar" class="otherAvatar"> {{folo.pseudo}}
+                                </picture>
+                            {% endif %}
                         </a>
                     {% endfor %}
                 </section>
@@ -50,8 +58,22 @@
                 <section class="follow width50 flex flexDirectionCollumn">
                     <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
-                        <a href="{{path('app_profile', {'id':folo.id})}}" class="">
-                            <img src="uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
+                        <a href="{{path('app_profile', {'user':folo.id})}}" class="">
+                            {% if user.avatar %}
+            <picture>
+                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
+            </picture>
+        {% else %}
+            <picture>
+                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
+            </picture>
+            <picture>
+                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
+            </picture>
+        {% endif %}
                         </a>
                     {% endfor %}
                 </section>

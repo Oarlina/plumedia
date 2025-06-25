@@ -50,13 +50,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, self>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'isFollow', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'isFollow')]
     private Collection $follow;
 
     /**
      * @var Collection<int, self>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follow', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'follow')]
     private Collection $isFollow;
 
     /**
@@ -97,7 +97,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $createAccount = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $biobiography = null;
+    private ?string $biography = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $socialMedia = null;
 
 
 
@@ -352,14 +355,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBiobiography(): ?string
+    public function getbiography(): ?string
     {
-        return $this->biobiography;
+        return $this->biography;
     }
 
-    public function setBiobiography(?string $biobiography): static
+    public function setbiography(?string $biography): static
     {
-        $this->biobiography = $biobiography;
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getSocialMedia(): ?array
+    {
+        return $this->socialMedia;
+    }
+
+    public function setSocialMedia(?array $socialMedia): static
+    {
+        $this->socialMedia = $socialMedia;
 
         return $this;
     }

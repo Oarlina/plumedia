@@ -25,13 +25,13 @@ final class UserController extends AbstractController
     ) {
     }
     // c'est la page d'information du profil
-    #[Route(path:'/compte/{id}', name:'app_profile')]
+    #[Route(path:'/compte/{user}', name:'app_profile')]
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(User $user = null): Response{
         if ($this->getUser()){
             if(!$user){
             $user = $this->getUser();
-        }
+            }
         return $this->render('user/profil.html.twig', ['user' => $user]);
         }
         return $this->redirectToRoute('app_login');
@@ -67,15 +67,20 @@ final class UserController extends AbstractController
     // gestion de follow ou unfollow
     #[Route(path:'/follow/{pseudo}/{name}', name:'follow_or_not')]
     public function follow($pseudo, string $name): Response{
+        $action = ['addFollow', 'removeFollow'];
         if ($this->getUser()){
             $user = $this->getUser();
             $user2 = $this->userRepository->findOneBy(["pseudo" => $pseudo]);
+            // si le nom de la ccommande n'est pas dans le tableau alors je retourne sur la page de l'utilisateur
+            if (! in_array($name, $action)){
+                return $this->redirectToRoute('app_profile', ['user' => $user2->getId()]);
+            }
             $user->$name($user2);
             
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_profile', ['id' => $user2->getId()]);
+            return $this->redirectToRoute('app_profile', ['user' => $user2->getId()]);
         }
         return $this->redirectToRoute('app_login');
         

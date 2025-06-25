@@ -84,17 +84,18 @@ class SecurityController extends AbstractController
         $email = $request->request->get('email');
         $pseudo = $request->request->get('pseudo');
         $file = $request->files->get('avatar');
+        $biography = $request->request->get('biography');
         // je recupere les infos de l'utilisateur connecter 
         $user = $this->getUser();
-
-        // on verifie que le mail est different et  dans la BDD
+        // on verifie que le mail est different et non dans la BDD
         if ($email != $user->getEmail() && ($userRepository->findBy(['email'=> $email]) != null)){
             $this->addFlash('error', 'Cette adresse mail ne peut pas être utlisé.');
         }else{
             $user = $user->setEmail($email);
         }
-        // on verifie que le pseudo ne contient pas 'delete_user' et que le pseudo n'est pas déjà utilisé
-        if (str_contains($pseudo,'delete_user') or ($userRepository->findBy(['pseudo'=> $pseudo]) != null)) {
+        // dd($email != $user->getEmail());
+        // on verifie que le pseudo est changé puis si le pseudo ne contient pas 'delete_user' et que le pseudo n'est pas déjà utilisé
+        if (($user->getPseudo() != $pseudo && ($userRepository->findBy(['pseudo'=> $pseudo]) != null)) or str_contains($pseudo,'delete_user')) {
             $this->addFlash('error', 'Le pseudo est déjà utilisé.');
         }else{
             $user = $user->setPseudo($pseudo);
@@ -115,7 +116,10 @@ class SecurityController extends AbstractController
                 $this->addFlash('error', 'Le format du fichier n\'est pas le bon.');
             }
         }
-        
+        // je rverifie que l'utilisaateur a mis une biographie
+        if($biography){
+            $user->setBiography($biography);
+        }
         // je met a jour la base de données, je faais la gestion d'erreur puis retourne sur la page de profil
         $entityManager->persist($user);
         $entityManager->flush();

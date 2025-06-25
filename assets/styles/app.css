@@ -13,7 +13,7 @@
 /* Pour les titres */
 h1, h2, h3 {font-family: 'Playfair Display', serif;}
 /* Pour le texte courant */
-body, p, li, a {
+body, p, li, a, pre {
   font-family: 'Merriweather', serif;
   color: #3b2f2f;
 }
