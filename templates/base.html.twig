@@ -75,6 +75,9 @@
             {% block description %}{% endblock %}
             {% block keywords %}{% endblock %}
             {% block author %}<meta name="author" content="John Doe">{% endblock %}
+            {% block iccon %}
+                <link rel="icon" href="{{asset('img/avatar_base.png')}}" type="image/x-icon">
+            {% endblock %}
         {% endblock %}
             {# {% endif %} #}
 
@@ -91,7 +94,7 @@
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logoSite"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
                 <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
-                <a href="/.." class="bouton boutonWhite">Calendrier</a>
+                <a href="{{path('calendar_year')}}" class="bouton boutonWhite">Calendrier</a>
                 <a href="{{path('populars')}}" class="bouton boutonWhite">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}

@@ -128,7 +128,11 @@ final class ChapterController extends AbstractController
         return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
     }
 
-    #[Route(path:'/calendrier/annuel', name:'calender_year')]
+    #[Route(path:'/calendrier/annuel', name:'calendar_year')]
+    public function calendar_year() : Response {
+
+        return $this->render('calendar/year.html.twig');
+    }
     
     // ceci est la page d'un chapitre
     #[Route('/chapitre/{chapter}/{num}/detail', name:'show_chapter')]
