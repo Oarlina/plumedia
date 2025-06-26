@@ -233,6 +233,11 @@ header nav{
     }
     
 }
+
+#calendar-holder{
+    width: 80%;
+    height: fit-content;}
+
 /* .toggle-password-button{top: 0px !important; right: 100px !important;} */
 #gallery-wrap{width: 100%;}
 .gallery{
