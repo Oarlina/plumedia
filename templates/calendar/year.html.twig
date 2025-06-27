@@ -4,11 +4,49 @@
 
 {% block body %}
 <h1 class="textCenter firstTitle">Calendrier : </h1>
-
+    {# {{dump(publish)}} #}
     {# ceci est pour ma navbar#}
     <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
     <hr>
     <main>
         <div id="calendar-holder"></div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarEl = document.getElementById('calendar-holder');
+        
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: false,
+                locale: 'fr',
+                buttonText: {
+                            today: 'Aujourd\'hui',
+                            week: 'Semaine',
+                            month: 'Mois',
+                            year: 'Année',
+                            },
+                eventSources: [
+                    {
+                        url: '/fc-load-events',
+                        method: 'POST',
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                            // alert('Il y a eu une erreur dans le chargement du calendrier!');
+                        },
+                    },
+                ],
+                headerToolbar: {
+                    start: 'prev,next',
+                    center: 'title',
+                    end: 'today,timeGridWeek,dayGridMonth,multiMonthYear'
+                },
+                timeZone: 'Europe/Paris',
+            });
+        
+            calendar.render();
+        });
+    </script>
 {% endblock %}

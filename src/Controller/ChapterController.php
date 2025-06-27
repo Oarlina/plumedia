@@ -11,8 +11,8 @@ use App\Repository\StoryRepository;
 use App\Repository\ChapterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -130,6 +130,7 @@ final class ChapterController extends AbstractController
 
     #[Route(path:'/calendrier/annuel', name:'calendar_year')]
     public function calendar_year() : Response {
+        $chapters = $this->chapterRepository->findAll();
 
         return $this->render('calendar/year.html.twig');
     }
