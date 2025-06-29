@@ -18,7 +18,9 @@
 
 {% block body %}
 <h1 class="textCenter">{{chapter.name}}</h1>
-<h2 class="textCenter">Chapitre {{num}}</h2>
+<h2 class="textCenter">Chapitre {% if num != 0 %}
+    {{num}}
+{% endif %}</h2>
 
     {# le bouton qui permet de partager sur Facebook #}
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}) ) }}" target="_blank" class="marginAutoWidth">

@@ -130,8 +130,6 @@ final class ChapterController extends AbstractController
 
     #[Route(path:'/calendrier/annuel', name:'calendar_year')]
     public function calendar_year() : Response {
-        $chapters = $this->chapterRepository->findAll();
-
         return $this->render('calendar/year.html.twig');
     }
     
@@ -144,5 +142,31 @@ final class ChapterController extends AbstractController
 
         $story = $this->storyRepository->findOneBy(['id' => $chapter->getStory()]);
         return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story]);
+    }
+
+    #[Route('/fc-load-events', name: 'fc_load_events', methods: ['GET', 'POST'])]
+    public function loadEvents(): JsonResponse
+    {
+        $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
+
+        $events = [];
+
+        foreach ($chapters as $chapter) {
+            $publishDate = $chapter->getPublish();
+
+            // On vérifie bien que la date de publication est un objet DateTime
+            if ($publishDate instanceof \DateTimeInterface) {
+                $events[] = [
+                    'title' => $chapter->getName(),
+                    'start' => $publishDate->format('Y-m-d'),
+                    'url' => $this->generateUrl('show_chapter', [
+                        'chapter' => $chapter->getId(),
+                        'num' => 0,
+                    ]),
+                ];
+            }
+        }
+
+        return new JsonResponse($events);
     }
 }

@@ -18,7 +18,6 @@
         
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
-                editable: false,
                 locale: 'fr',
                 buttonText: {
                             today: 'Aujourd\'hui',
@@ -26,18 +25,13 @@
                             month: 'Mois',
                             year: 'Année',
                             },
-                eventSources: [
-                    {
-                        url: '/fc-load-events',
-                        method: 'POST',
-                        extraParams: {
-                            filters: JSON.stringify({})
-                        },
-                        failure: () => {
-                            // alert('Il y a eu une erreur dans le chargement du calendrier!');
-                        },
-                    },
-                ],
+                events: {
+                    url: '/fc-load-events',
+                    method: 'GET', // 👈 OBLIGATOIRE : forcer GET !
+                    failure: function () {
+                        alert('Erreur lors du chargement des événements.');
+                    }
+                },
                 headerToolbar: {
                     start: 'prev,next',
                     center: 'title',
