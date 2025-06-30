@@ -128,7 +128,7 @@ class SecurityController extends AbstractController
             $user->setBiography($biography);
         }
 
-        
+        dd($request->request);
 
 
         // je met a jour la base de données, je faais la gestion d'erreur puis retourne sur la page de profil

@@ -58,8 +58,8 @@
                     <h2>Bio :</h2>
                     <p>{{user.biography}}</p>
                     {% for sm, link in user.socialMedia %}
-                        {% if link != null %}
-                            <a href="{{link}}" target="_blank">{{sm}}</a> <br>
+                        {% if link != null  %}
+                        <a href="{{link}}" target="_blank"><i class="fa-brands fa-{{sm}}"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                         {% endif %}
                     {% endfor %}
                 </section>
@@ -149,22 +149,34 @@
                         <hr>
                         <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>
                         <form action="{{path('changeMailAvatar')}}" method="post" enctype="multipart/form-data">
-                            <label for="pseudo">Pseudo :</label>
-                            <input type="text" name="pseudo" id="pseudo" value="{{user.pseudo}}"> <br>
-
-                            <label for="email">Email (facultatif):</label>
-                            <input type="email" name="email" id="email" value="{{user.email}}"> <br>
-
-                            <label for="email">Biographie:</label>
-                            <textarea name="biography" id="biography">{{user.biography}}</textarea>  <br>
-                            <label for="">Réseaux sociaux</label>
-                            <label for="avatar">Avatar :</label>
-                            <input type="file" id="avatar"  name="avatar">
-                            <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> <br>
-
+                            <div class="flex flexDirectionRow justifyContent alignCenter">
+                                <section class="textCenter">
+                                    <h3>Données du compte :</h3>
+                                    <label for="pseudo">Pseudo :</label>
+                                    <input type="text" name="pseudo" id="pseudo" value="{{user.pseudo}}"> <br>
+    
+                                    <label for="email">Email:</label>
+                                    <input type="email" name="email" id="email" value="{{user.email}}"> <br>
+    
+                                    <label for="email">Biographie:</label>
+                                    <textarea name="biography" id="biography">{{user.biography}}</textarea>  <br>
+                                    
+                                    <label for="avatar">Avatar :</label>
+                                    <input type="file" id="avatar"  name="avatar">
+                                    <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> <br>
+                                </section>
+                                <section class="textCenter">
+                                    <h3>Réseaux sociaux : </h3> <br>
+                                    {% for sm in socialMedia %}
+                                        <label for="{{sm}}">{{sm}}</label>
+                                        <input type="text" name="{{sm}}" id="{{sm}}"> <br>
+                                    {% endfor %}
+                                </section>
+                            </div>
                             {# <input type="button" class="submit backgroundPurple" value="Enregistrer"> #}
                             <button  class="submit backgroundGold boutonGold noBorder bouton" >Enregistrer</button>
                         </form>
+                        {{dump(user.socialMedia)}}
                     </section>
                     <section id="lessFifteen" class="backgroundWhite">
                         <h2>J'ai moins de 15 ans </h2>

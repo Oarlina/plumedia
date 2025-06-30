@@ -28,13 +28,14 @@ final class UserController extends AbstractController
     #[Route(path:'/compte/{user}', name:'app_profile')]
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(User $user = null): Response{
-        if ($this->getUser()){
-            if(!$user){
-            $user = $this->getUser();
-            }
-        return $this->render('user/profil.html.twig', ['user' => $user]);
+        if ( ! $this->getUser()){
+            return $this->redirectToRoute('app_login');
         }
-        return $this->redirectToRoute('app_login');
+        if(!$user){
+            $user = $this->getUser();
+        }
+        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram',];
+    return $this->render('user/profil.html.twig', ['user' => $user, 'socialMedia' => $socialMedia]);
     }
     
     // c'est la page d'abonnement du profil
