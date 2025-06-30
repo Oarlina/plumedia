@@ -7,19 +7,11 @@
 {% block body %}
     <div id="profil">  
         {% if user.avatar %}
-            <picture>
-                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
-            </picture>
-            <picture>
-                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
-            </picture>
+            <picture><img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100"></picture>
+            <picture><img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> </picture>
         {% else %}
-            <picture>
-                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
-            </picture>
-            <picture>
-                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
-            </picture>
+            <picture><img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100"></picture>
+            <picture><img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> </picture>
         {% endif %}
         {# nav du haut #}
         {% if app.user and user.id == app.user.id %}
@@ -168,7 +160,7 @@
                                 <section class="textCenter">
                                     <h3>Réseaux sociaux : </h3> <br>
                                     {% for sm in socialMedia %}
-                                        <label for="{{sm}}">{{sm}}</label>
+                                        <label for="{{sm}}">{{sm | capitalize }} :</label>
                                         <input type="text" name="{{sm}}" id="{{sm}}"> <br>
                                     {% endfor %}
                                 </section>
@@ -204,13 +196,13 @@
                         <hr>
                         <form action="{{path('changePassword')}}" method="post">
                             <label for="oldPassword">Ancien mot de passe : </label>
-                            <input type="password" id="oldPassword" name="oldPassword"> <br>
+                            <input type="password" id="oldPassword" name="oldPassword" vlaue=""> <br>
 
                             <label for="newPassword">Nouveau mot de passe : </label>
-                            <input type="password" id="newPassword" name="newPassword"> <br>
+                            <input type="password" id="newPassword" name="newPassword" vlaue=""> <br>
 
                             <label for="confirmPassword">Confirmer le nouveau mot de passe : </label>
-                            <input type="password" id="confirmPassword" name="confirmPassword"><br>
+                            <input type="password" id="confirmPassword" name="confirmPassword" vlaue=""><br>
 
                             <button  class="submit backgroundGold boutonGold noBorder bouton" >Enregistrer </button>
                         </form>

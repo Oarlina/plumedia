@@ -3,13 +3,6 @@
 {% block title %}Calendrier{% endblock %}
 
 {% block body %}
-<h1 class="textCenter firstTitle">Calendrier : </h1>
-    <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
-    <hr>
-    <main>
-        <div id="calendar-holder"></div>
-    </main>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const calendarEl = document.getElementById('calendar-holder');
@@ -42,4 +35,11 @@
             calendar.render();
         });
     </script>
+    <h1 class="textCenter firstTitle">Calendrier : </h1>
+    <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
+    <hr>
+    <main>
+        <div id="calendar-holder"></div>
+    </main>
+
 {% endblock %}

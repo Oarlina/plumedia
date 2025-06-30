@@ -9,7 +9,6 @@ import './styles/app.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
-
 // ceci est un timer
 setTimeout(() => {
     // je recupere la classe alert, j'en fais un tableau et mais une transition ou au bout de 5 secondes le message s'efface en 1seconde puis se supprimer au bout d'une seconde
@@ -98,7 +97,3 @@ window.onscroll = function (){
 scrollToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
-
-
-
-
