@@ -15,6 +15,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -130,7 +131,9 @@ final class ChapterController extends AbstractController
 
     #[Route(path:'/calendrier/annuel', name:'calendar_year')]
     public function calendar_year() : Response {
-        return $this->render('calendar/year.html.twig');
+        // je récupère les chapitres que je veux afficher sur le calendrier
+        $chapters = $this->loadEvents();
+        return $this->render('calendar/index.html.twig', ['chapters' => $chapters]);
     }
     
     // ceci est la page d'un chapitre
@@ -144,29 +147,29 @@ final class ChapterController extends AbstractController
         return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story]);
     }
 
-    #[Route('/fc-load-events', name: 'fc_load_events', methods: ['GET', 'POST'])]
+    #[Route('/fcloadevents', name:'fcloadevents', methods: ['GET', 'POST'])]
     public function loadEvents(): JsonResponse
     {
         $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
 
         $events = [];
-
+        // je parcours les chapitres pour les mettre en JSON et leur assigner leur URL
         foreach ($chapters as $chapter) {
             $publishDate = $chapter->getPublish();
 
             // On vérifie bien que la date de publication est un objet DateTime
             if ($publishDate instanceof \DateTimeInterface) {
                 $events[] = [
-                    'title' => $chapter->getName(),
-                    'start' => $publishDate->format('Y-m-d'),
-                    'url' => $this->generateUrl('show_chapter', [
+                    "title" => $chapter->getName(),
+                    "start" => $publishDate->format('Y-m-d'),
+                    "url" => $this->generateUrl('show_chapter', [
                         'chapter' => $chapter->getId(),
                         'num' => 0,
                     ]),
                 ];
             }
         }
-
+        // dd($events);
         return new JsonResponse($events);
     }
 }
