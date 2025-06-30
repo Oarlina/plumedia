@@ -17,7 +17,7 @@ setTimeout(() => {
         el.style.opacity = '0';
         setTimeout(() => el.remove(), 3000); // supprime après le fondu
     });
-}, 10000); // 10000ms = 10 secondes
+}, 7000); // 7000ms = 7 secondes
 
 // je met mindow.variable pour qu'elle soit accessible dans l'HTML
 // pour rendre visible ou non les mots de passe lors de l'inscription et de la connexion d'un utilisateur 

@@ -39,7 +39,7 @@
                 <section class="follow width50 flex  flexDirectionCollumn">
                     <h2>Vous suivez ({{user.follow | length}}):</h2>
                     {% for folo in user.follow %}
-                        <a href="{{path('app_profile', {'user':folo.id})}}" class="">
+                        <a href="{{path('other_profil', {'user':folo.id})}}" class="">
                             {% if folo.avatar %}
                                 <picture>
                                     <img src="/uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> 
@@ -59,7 +59,7 @@
                 <section class="follow width50 flex flexDirectionCollumn">
                     <h2>Vos abonnés ({{user.isFollow | length}}):</h2>
                     {% for folo in user.isFollow %}
-                        <a href="{{path('app_profile', {'user':folo.id})}}" class="">
+                        <a href="{{path('other_profil', {'user':folo.id})}}" class="">
                             {% if user.avatar %}
                                 <picture>
                                     <img src="{{ asset('uploads/user/' ~ folo.avatar) }}" alt="image avatar" class="otherAvatar"> 

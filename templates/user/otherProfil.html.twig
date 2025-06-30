@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mon compte
+{% endblock %}
+
+{% block body %}
+    <div id="profil">  
+        {% if user.avatar %}
+            <picture><img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100"></picture>
+            <picture><img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> </picture>
+        {% else %}
+            <picture><img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100"></picture>
+            <picture><img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> </picture>
+        {% endif %}
+        {# nav du haut #}
+        {% if app.user and user.id == app.user.id %}
+            <nav class="flex alignCenter justifyContent backgroundGrey">
+                <a href="{{path('app_profil')}}" class="linkBtn"><b>Mes informations</b></a>
+                <p>|</p>
+                <a href="{{path('app_subscriptionProfil')}}">Mes abonnements</a>
+                <p>|</p>
+                <a href="{{path('app_libraryProfil')}}">Ma blibliothèque</a>
+                <p>|</p>
+                <a href="{{path('app_storyProfil')}}">Mes histoires</a>
+            </nav>
+        {% endif %}
+        <h1 class="textCenter"> {{user.pseudo}} </h1>
+        <div class="flex"> 
+            <section class="leftContainer textCenter width20">
+                {# gestion de si l'utilisateur connecter suit la personne ou non #}
+                {% set estSuivi = false %}  
+                {% if app.user %}
+                    {% for u in user.isFollow %}
+                        {% if estSuivi == false and u.id == app.user.id %}
+                            {% set estSuivi = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if estSuivi %}
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'removeFollow'}) }}" class=" bouton"><i class="fa-solid fa-heart"></i>Ne plus suivre</a>
+                {% else %}
+                    <a href="{{ path('follow_or_not', {'pseudo': user.pseudo, 'name' : 'addFollow'}) }}" class=" bouton"><i class="fa-regular fa-heart"></i>Suivre</a>
+                {% endif %}
+                {# C'est la bio de l'utilisateur #}
+                {% if user.biography %}
+                    <h2>Bio :</h2>
+                    <p>{{user.biography}}</p><br>
+                    {% for sm, link in user.socialMedia %}
+                        {% if link != null  %}
+                        <a href="{{link}}" target="_blank"><i class="fa-brands fa-{{sm}}"></i></a><br>
+                        {# {{dump(sm,link)}} #}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {# {% for sm, link in user.socialMedia %}
+                    {% if sm  %}
+                        <label for="{{sm}}">{{sm | capitalize }}, {{link}} :</label>
+                        <input type="text" name="{{sm}}" id="{{sm}}"> <br>
+                    {% endif %}
+                {% endfor %} #}
+
+
+
+            </section>
+
+            <section class="rightContainer width80 width80">
+
+                {# ce sont les histoires de l'auteur #}
+                {% if "ROLE_AUTHOR" in user.roles and user.stories | length >0 %}
+                    <h2>Histoire de {{user.pseudo}}  : </h2>
+                    <div class="storiesAuthor stories flex">
+                        {% for story in user.stories %}
+                            <div class="story textCenter">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook">  
+                                {% endif %}
+                                <p>{{story.name}}</p>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="summary backgroundWhite">{{story.summary}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% elseif "ROLE_AUTHOR" in user.roles %}
+                    <h2>Histoire de {{user.pseudo}}  : </h2>
+                    <p>{{user.pseudo}}  n'a pas encore publié d'histoire.</p>
+                {% endif %} 
+                {# ce sont les histoire que suit l'utilisateur #}
+                <h2>Histoire suivi par {{user.pseudo}} : </h2>
+                {% if user.followedStories | length >1 %}
+                    <div class="storiesAuthor stories flex">
+                        {% for story in user.followedStories %}
+                            <div class="story textCenter">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="coverBook">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook">  
+                                {% endif %}
+                                <p>{{story.name}}</p>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="summary backgroundWhite">{{story.summary}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>{{user.pseudo}} ne suit pas encore d'histoire.</p>
+                {% endif %}
+
+                {# ce sont les histoires qu'a aimé l'utilisateur #}
+                <h2>Histoire aimé par {{user.pseudo}} : </h2>
+                {% if user.followedStories | length >1 %}
+                    <div class="storiesAuthor stories flex">
+                        {% for story in user.likedStories %}
+                            <div class="story textCenter">
+                                {% if story.cover %}
+                                    <img src="{{ asset('uploads/story/' ~ story.cover) }}" alt="couverture de {{story.name}}" class="ccoverBook">  
+                                {% else %}
+                                    <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="ccoverBook">  
+                                {% endif %}
+                                <p>{{story.name}}</p>
+                                <a class="bouton backgroundPurple " href="{{path('detail_story', {'id' : story.id})}}">Voir plus <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="summary backgroundWhite">{{story.summary}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>{{user.pseudo}} n'a pas encore aimé d'histoire.</p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+
+{% endblock %}

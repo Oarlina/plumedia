@@ -169,7 +169,6 @@ final class ChapterController extends AbstractController
                 ];
             }
         }
-        // dd($events);
         return new JsonResponse($events);
     }
 }

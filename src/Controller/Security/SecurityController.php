@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ResetPasswordRequestRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -128,8 +129,15 @@ class SecurityController extends AbstractController
             $user->setBiography($biography);
         }
 
-        dd($request->request);
-
+        // jke fais la gestion des liens des réseaux sociaux
+        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram',];
+        $socials = [];
+        foreach($socialMedia as $sm) {
+            if ($request->request->get($sm)){
+                $socials[$sm] = $request->request->get($sm);
+            }
+        }
+        $user->setSocialMedia( $socials);
 
         // je met a jour la base de données, je faais la gestion d'erreur puis retourne sur la page de profil
         $entityManager->persist($user);

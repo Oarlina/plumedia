@@ -59,7 +59,8 @@ body, p, li, a, pre {
 .larger{font-size: larger;}
 .width50{width: 50%;}
 #home h1, #home h2, #parallax h3 {margin: 10px auto;}
-#profil .stories, #profil .rightContainer, .categories .right {width: 80%;}
+#profil .stories, #profil .rightContainer, .categories .right, .width80 {width: 80%;}
+.width20{width: 20%;}
 .firstTitle{margin: 5px 0 40px 0;}
 .secondTitle{font-size: 800;}
 .opacity50{opacity: 80%;}
@@ -164,7 +165,6 @@ header nav{
     }
     main{
         .leftContainer{
-            width: 20%;
             a {line-height: 35px;}
         }
         .rightContainer{
