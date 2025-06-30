@@ -8,6 +8,7 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display&display=swap" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/main.min.css" rel="stylesheet" />
         {% endblock %}
 
         {% block meta %}
@@ -101,7 +102,7 @@
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logoSite"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
                 <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
-                <a href="{{path('calendar_year')}}" class="bouton boutonWhite">Calendrier</a>
+                <a href="{{path('calendar_year')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
                 <a href="{{path('populars')}}" class="bouton boutonWhite">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
