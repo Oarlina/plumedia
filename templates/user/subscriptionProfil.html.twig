@@ -42,13 +42,14 @@
                         <a href="{{path('app_profile', {'user':folo.id})}}" class="">
                             {% if folo.avatar %}
                                 <picture>
-                                    <img src="/uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> {{folo.pseudo}}
+                                    <img src="/uploads/user/{{folo.avatar}}" alt="image avatar" class="otherAvatar"> 
                                 </picture>
                             {% else %}
                                 <picture>
-                                    <img src="/img/avatar_base.png" alt="image faux avatar" class="otherAvatar"> {{folo.pseudo}}
+                                    <img src="/img/avatar_base.png" alt="image faux avatar" class="otherAvatar"> 
                                 </picture>
                             {% endif %}
+                            {{folo.pseudo}}
                         </a>
                     {% endfor %}
                 </section>
@@ -60,20 +61,15 @@
                     {% for folo in user.isFollow %}
                         <a href="{{path('app_profile', {'user':folo.id})}}" class="">
                             {% if user.avatar %}
-            <picture>
-                <img src="{{ asset('uploads/user/' ~ user.avatar) }}" alt="image avatar" id="bigAvatar" class="width100">
-            </picture>
-            <picture>
-                <img src="/uploads/user/{{user.avatar}}" alt="image avatar" id="littleAvatar"> 
-            </picture>
-        {% else %}
-            <picture>
-                <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" id="bigAvatar" class="width100">
-            </picture>
-            <picture>
-                <img src="/img/avatar_base.png" alt="image faux avatar" id="littleAvatar"> 
-            </picture>
-        {% endif %}
+                                <picture>
+                                    <img src="{{ asset('uploads/user/' ~ folo.avatar) }}" alt="image avatar" class="otherAvatar"> 
+                                </picture>
+                            {% else %}
+                                <picture>
+                                    <img src="{{ asset('img/avatar_base.png') }}" alt="image faux avatar" class="otherAvatar"> 
+                                </picture>
+                            {% endif %}
+                            {{folo.pseudo}}
                         </a>
                     {% endfor %}
                 </section>
