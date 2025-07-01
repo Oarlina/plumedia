@@ -71,6 +71,9 @@ class RegistrationController extends AbstractController
                 $user->setAvatar($newFile);
             }
 
+            // je met les réseaux sociaux à null pour éviter que le JSON soit null
+            $user->setSocialMedia(['twitch' => null, 'discord' => null, 'twitter' => null, 'youtube' => null, 'facebook' => null, 'instagram' => null]);
+
             // j'enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();

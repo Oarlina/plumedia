@@ -105,7 +105,6 @@ class SecurityController extends AbstractController
             $user = $user->setPseudo($pseudo);
         }
 
-
         // on verifie que le fichier est envoyé 
         if ($file){
             // si l'extension est jpg, jpeg, svg, png ou webp alors je l'enregistre sinon erreur
@@ -123,18 +122,19 @@ class SecurityController extends AbstractController
             }
         }
 
-
         // je rverifie que l'utilisaateur a mis une biographie
         if($biography){
             $user->setBiography($biography);
         }
 
-        // jke fais la gestion des liens des réseaux sociaux
-        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram',];
+        // je fais la gestion des liens des réseaux sociaux
+        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram'];
         $socials = [];
         foreach($socialMedia as $sm) {
             if ($request->request->get($sm)){
                 $socials[$sm] = $request->request->get($sm);
+            }else {
+                $socials[$sm] = null;
             }
         }
         $user->setSocialMedia( $socials);
