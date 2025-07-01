@@ -68,7 +68,7 @@
                 {% endif %}
             </div>
             {# les informations de l'histoire #}
-            <p><u>Auteur :</u> <a href="{{path('app_profile', {'id':story.person.id})}}" class="boutonWhite">{{story.person.pseudo}}</a></p>
+            <p><u>Auteur :</u> <a href="{{path('app_profil', {'id':story.person.id})}}" class="boutonWhite">{{story.person.pseudo}}</a></p>
             <p><u>Genres :</u>
                 {% set count = 1 %}
                 {% for category in story.categories %}

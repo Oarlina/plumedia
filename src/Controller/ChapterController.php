@@ -129,6 +129,7 @@ final class ChapterController extends AbstractController
         return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
     }
 
+    // pour la page de calendrier
     #[Route(path:'/calendrier/annuel', name:'calendar_year')]
     public function calendar_year() : Response {
         // je récupère les chapitres que je veux afficher sur le calendrier
@@ -147,10 +148,16 @@ final class ChapterController extends AbstractController
         return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story]);
     }
 
+    // cette méthode me permet de récupérer les chapitres à afficher
     #[Route('/fcloadevents', name:'fcloadevents', methods: ['GET', 'POST'])]
     public function loadEvents(): JsonResponse
     {
-        $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
+        if ($this->getUser()){
+            // je dois faire une requete DQl qui recupere les chapitres lu (en gris), non lu (en bleu) des hsitoires que l'utilisateur suit ou aime
+            $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
+        }else {
+            $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
+        }
 
         $events = [];
         // je parcours les chapitres pour les mettre en JSON et leur assigner leur URL
