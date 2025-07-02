@@ -18,7 +18,7 @@
             {% block og_image %}{% endblock %}
             {% block description %}{% endblock %}
             {% block keywords %}{% endblock %}
-            {% block author %}<meta name="author" content="John Doe">{% endblock %}
+            {% block author %}<meta name="author" content="Oarlina">{% endblock %}
             {% block icon %} <link rel="icon" href="{{asset('img/avatar_base.png')}}" type="image/x-icon"> {% endblock %}
         {% endblock %}
 
@@ -98,7 +98,7 @@
     <body>
         <header class="width100">
             <nav class="backgroundBrown width100 flex alignCenter">
-                {# je met le / devant pour forcer l'image à être récupérer à la racine car sinon il cherche juste dansle doosier avant #}
+                {# je met le / devant pour forcer l'image à être récupérer à la racine car sinon il cherche juste dans le doosier avant #}
                 {# si je suis dans la page compte/2 il cherchera l'image dans compte/img/plumeida.png #}
                 <a href="/.." class="logoSite"> <img src="/img/plumedia.png" alt="Plumedia logo" class="logoSite"></a>
                 <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
@@ -106,6 +106,7 @@
                 <a href="{{path('populars')}}" class="bouton boutonWhite">Populaires</a>
                 {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                     {% if app.user %}
+                        <a href=""><i class="fa-solid fa-bell"></i><mark>5</mark></a>
                         <a href="{{path('app_profil')}}" class="bouton boutonWhite">{{app.user.pseudo}} <i class="fa-solid fa-user"></i></a>
                         <a href="{{ path('app_logout') }}" class="bouton boutonWhite">Me déconnecter</a>
                     {% else %}

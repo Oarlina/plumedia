@@ -49,7 +49,11 @@
                             <div class="flex flexDirectionRow justifyContent alignCenter">
                                 <section class="textCenter">
                                     <h3>Données du compte :</h3>
+<<<<<<< HEAD
                                     <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>    
+=======
+                                    <p>Seuleument le mail n'est pas visible des autres utilisateurs.</p>
+>>>>>>> af5182da59f6f7b183e21635b3c080df28bbc4fb
                                     <label for="pseudo">Pseudo :</label>
                                     <input type="text" name="pseudo" id="pseudo" value="{{user.pseudo}}"> <br>
     
@@ -64,6 +68,7 @@
                                     <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> 
                                 </section>
                                 <section class="textCenter">
+<<<<<<< HEAD
                                     <h3>Réseaux sociaux : </h3> <br>
                                     <p>Vous pouvez ajouter vos liens de réseaux sociaux qui seront accessible pour tous:</p> 
                                     {# {{dump(user.socialMedia)}} #}
@@ -77,13 +82,18 @@
 
                                         <label for="{{ sm }}">{{ sm|capitalize }} :</label>
                                         <input type="text" name="{{ sm }}" id="{{ sm }}" value="{{ link }}"> {{sm}} <br>
+=======
+                                    <h3>Réseaux sociaux : </h3>
+                                    <p>Vous pouvez ajouter vos liens de réseaux sociaux qui seront accessible pour tous:</p>
+                                    
+                                    {% for sm, link in user.socialMedia %}
+                                        <label for="{{ sm }}">{{ sm|capitalize }} :</label>
+                                        <input type="text" name="{{ sm }}" id="{{ sm }}" value="{{ link }}"> <br>
                                     {% endfor %}
                                 </section>
                             </div>
-                            {# <input type="button" class="submit backgroundPurple" value="Enregistrer"> #}
                             <button  class="submit backgroundGold boutonGold noBorder bouton" >Enregistrer</button>
                         </form>
-                        {# {{dump(user.socialMedia)}} #}
                     </section>
                     <section id="lessFifteen" class="backgroundWhite">
                         <h2>J'ai moins de 15 ans </h2>

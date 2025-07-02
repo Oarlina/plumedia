@@ -105,11 +105,10 @@ class SecurityController extends AbstractController
             $user = $user->setPseudo($pseudo);
         }
 
-
         // on verifie que le fichier est envoyé 
         if ($file){
             // si l'extension est jpg, jpeg, svg, png ou webp alors je l'enregistre sinon erreur
-            if ($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" || $file->guessExtension() == "svg" || $file->guessExtension() == "png" || $file->guessExtension() == "webp"){
+            if (($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" || $file->guessExtension() == "svg" || $file->guessExtension() == "png" || $file->guessExtension() == "webp") && $file->getimagesize() < '1024k'){
                 // je le renomme et recupere l'extension
                 $newFile = $uploadService->save($file, 'user');
 
@@ -123,18 +122,19 @@ class SecurityController extends AbstractController
             }
         }
 
-
         // je rverifie que l'utilisaateur a mis une biographie
         if($biography){
             $user->setBiography($biography);
         }
 
-        // jke fais la gestion des liens des réseaux sociaux
-        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram',];
+        // je fais la gestion des liens des réseaux sociaux
+        $socialMedia = ['twitch', 'discord', 'twitter', 'youtube', 'facebook', 'instagram'];
         $socials = [];
         foreach($socialMedia as $sm) {
             if ($request->request->get($sm)){
                 $socials[$sm] = $request->request->get($sm);
+            }else {
+                $socials[$sm] = null;
             }
         }
         $user->setSocialMedia( $socials);
@@ -149,11 +149,14 @@ class SecurityController extends AbstractController
     #[Route(path:'/changePassword', name:'changePassword', methods:['POST'])]
     public function changePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response {
         $user = $this->getUser();
-
+        if (! $user){
+            return $this->redirectToRoute('app_login');
+        }
+        ;
         // je recupere les mot de passes du formulaire
-        $oldPassword = $request->request->get('oldPassword');
-        $newPassword = $request->request->get('newPassword');
-        $confirmPassword = $request->request->get('confirmPassword');
+        $oldPassword = filter_var($request->request->get('oldPassword'), FILTER_SANITIZE_STRING);
+        $newPassword = filter_var($request->request->get('newPassword'), FILTER_SANITIZE_STRING);
+        $confirmPassword = filter_var($request->request->get('confirmPassword'), FILTER_SANITIZE_STRING);
         
         // je vérifié que l'ancien mot de passe n'a pas la meme empreinte numerique de celui dans la BDD (pour retourner une erreur)
         // isPasswordValid il hashe et verifie que l'empreinte numerique est la meme que celui dans la bdd du user connecter
