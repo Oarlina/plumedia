@@ -42,19 +42,19 @@ class Chapter
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'chapter')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'chapter', orphanRemoval: true)]
     private Collection $comments;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedChapters')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedChapters', orphanRemoval: true)]
     private Collection $usersLike;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters', orphanRemoval: true)]
     private Collection $userHaveRead;
 
     #[ORM\Column]

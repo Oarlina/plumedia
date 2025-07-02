@@ -31,7 +31,12 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         $user = $this->getUser();
-        $socialMedia = ['twitch'=> 'twitch', 'discord'=> 'twitch', 'twitter'=> 'twitch', 'youtube'=> 'twitch', 'facebook'=> 'twitch', 'instagram'=> 'twitch'];
+        $socialMedia = [];
+        foreach ($user->getSocialMedia() as $sm){
+            $socialMedia [$sm[0]] = $sm[1];
+        }
+        // $socialMedia = $user->getSocialMedia();
+        dd($user->getSocialMedia(), $socialMedia);
     return $this->render('user/profil.html.twig', ['user' => $user, 'socialMedia' => $socialMedia]);
     }
     // c'est la page d'information du profil d'un autre utlisateur

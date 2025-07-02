@@ -26,16 +26,12 @@
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}) ) }}" target="_blank" class="marginAutoWidth">
         <i class="fa-brands fa-facebook"></i>
     </a>
-    {# ceci renvoie le lien click up de mon site #}
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://app.clickup.com/t/86c41q5kb" target="_blank" class="marginAutoWidth">
-        <i class="fa-brands fa-facebook"></i>
-    </a>
 
 <pre class="chapterText">
      {{file}}
 </pre> 
 {# ce sont les boutons en dessous du chapitre #}
-<div class="boutons textCenter width50 flex justifyContent">
+<div class="width100 flex justifyContent">
     {% set before = num -1 %}
     {% set after = num +1 %}
     {% if num > 1 %}
@@ -43,7 +39,7 @@
     {% endif %}
     {# la gestion de like #}
     {% if app.user and app.user in chapter.usersLike %}
-        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
+        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike', 'num' : num})}}" class="boutonWhite">{{chapter.usersLike | length}}
             <i class="fa-solid fa-heart textRed"></i>
         </a>
     {% elseif app.user %}

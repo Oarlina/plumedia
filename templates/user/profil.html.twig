@@ -45,11 +45,11 @@
                     <section id="infos" class="backgroundWhite">
                         <h2>Mes informations</h2>
                         <hr>
-                        <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>
                         <form action="{{path('changeMailAvatar')}}" method="post" enctype="multipart/form-data">
                             <div class="flex flexDirectionRow justifyContent alignCenter">
                                 <section class="textCenter">
                                     <h3>Données du compte :</h3>
+                                    <p>Inscription le {{user.createAccount | date("d/m/Y")}}</p>    
                                     <label for="pseudo">Pseudo :</label>
                                     <input type="text" name="pseudo" id="pseudo" value="{{user.pseudo}}"> <br>
     
@@ -61,22 +61,22 @@
                                     
                                     <label for="avatar">Avatar :</label>
                                     <input type="file" id="avatar"  name="avatar">
-                                    <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> <br>
+                                    <p class="details">2Mo maximum. Taille max: 1024k. Format jpg, png, jpeg, svg, ou webp.</p> 
                                 </section>
                                 <section class="textCenter">
                                     <h3>Réseaux sociaux : </h3> <br>
-                                    <p>Vous pouvez ajouter vos liens de réseaux sociaux qui seront accessible pour tous:</p> <br>
+                                    <p>Vous pouvez ajouter vos liens de réseaux sociaux qui seront accessible pour tous:</p> 
                                     {# {{dump(user.socialMedia)}} #}
-                                    {% for sm in socialMedia %}
-                                        {% set value = '' %}
+                                    {% for sm, link in socialMedia %}
+                                        {# {% set value = '' %}
                                         {% for entry in user.socialMedia %}
-                                            {% if entry == sm %}
+                                            {% if entry == sm %}c
                                                 {% set value = entry.url %}
                                             {% endif %}
-                                        {% endfor %}
+                                        {% endfor %} #}
 
                                         <label for="{{ sm }}">{{ sm|capitalize }} :</label>
-                                        <input type="text" name="{{ sm }}" id="{{ sm }}" value="{{ value }}"> <br>
+                                        <input type="text" name="{{ sm }}" id="{{ sm }}" value="{{ link }}"> {{sm}} <br>
                                     {% endfor %}
                                 </section>
                             </div>
