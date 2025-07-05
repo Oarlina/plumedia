@@ -7,11 +7,12 @@ use App\Entity\Story;
 use App\Entity\Chapter;
 use App\Form\ChapterType;
 use Smalot\PdfParser\Parser;
+use App\Repository\UserRepository;
 use App\Repository\StoryRepository;
 use App\Repository\ChapterRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,6 +26,7 @@ final class ChapterController extends AbstractController
         private ChapterRepository $chapterRepository,
         private EntityManagerInterface $entityManager,
         private StoryRepository $storyRepository,
+        private UserRepository $userRepository,
         private FileSystem $fileSystem,
     ) {
     }
@@ -133,7 +135,14 @@ final class ChapterController extends AbstractController
     #[Route(path:'/calendrier/annuel', name:'calendar_year')]
     public function calendar_year() : Response {
         // je récupère les chapitres que je veux afficher sur le calendrier
-        $chapters = $this->loadEvents();
+        if ($this->getUser()){
+            $chaptersRead = $this->chapterRepository->findChaptersReadByUser($this->getUser());
+            $chapters = $this->loadEvents($chaptersRead);
+        }else {
+            $chapters = $this->loadEvents();
+        }
+        // dd( $this->getUser()->getReadChapters() );
+        // dd();
         return $this->render('calendar/index.html.twig', ['chapters' => $chapters]);
     }
     
@@ -154,26 +163,38 @@ final class ChapterController extends AbstractController
     {
         if ($this->getUser()){
             // je dois faire une requete DQl qui recupere les chapitres lu (en gris), non lu (en bleu) des hsitoires que l'utilisateur suit ou aime
-            $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
+            $chapters = $this->chapterRepository->findChaptersReadByUser($this->getUser());
         }else {
             $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
         }
 
         $events = [];
+        // dd($read);
         // je parcours les chapitres pour les mettre en JSON et leur assigner leur URL
         foreach ($chapters as $chapter) {
             $publishDate = $chapter->getPublish();
 
             // On vérifie bien que la date de publication est un objet DateTime
             if ($publishDate instanceof \DateTimeInterface) {
-                $events[] = [
-                    "title" => $chapter->getName(),
-                    "start" => $publishDate->format('Y-m-d'),
-                    "url" => $this->generateUrl('show_chapter', [
-                        'chapter' => $chapter->getId(),
-                        'num' => 0,
-                    ]),
-                ];
+                if ($this->getUser()){
+                    $events[] = [
+                        "title" => $chapter->getName(),
+                        "start" => $publishDate->format('Y-m-d'),
+                        "backgroundColor" => 'lightgray',
+                        "borderColor" => 'lightgray',
+                        "textColor" => 'black',
+                        "url" => $this->generateUrl('show_chapter', [
+                            'chapter' => $chapter->getId(),
+                            'num' => 0,]),];
+                }else {
+                    $events[] = [
+                        "title" => $chapter->getName(),
+                        "start" => $publishDate->format('Y-m-d'),
+                        "url" => $this->generateUrl('show_chapter', [
+                            'chapter' => $chapter->getId(),
+                            'num' => 0,
+                    ]),];
+                }
             }
         }
         return new JsonResponse($events);

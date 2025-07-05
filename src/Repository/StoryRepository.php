@@ -41,6 +41,8 @@ class StoryRepository extends ServiceEntityRepository
             ->getResult(); // et je la transforme en résultat
     }
 
+    
+
     // public function loadUserByIdentifier(string $identifier): ?User  {
     //     return $this->createQueryBuilder('u')
     //         ->andWhere('u.pseudo = :pseudo')
