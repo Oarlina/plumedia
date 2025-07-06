@@ -22,6 +22,23 @@ class ChapterRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->innerJoin('c.userHaveRead', 'u')
             ->where('u = :user')
+            ->andWhere('c.isPublic = true')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+     public function findChaptersNotReadByUser(User $user): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('DISTINCT c')
+            ->join('c.story', 's')
+            ->leftJoin('s.usersFollow', 'uf')
+            ->leftJoin('s.usersLike', 'ul')
+            ->leftJoin('c.userHaveRead', 'uhr')
+            ->where('uhr IS NULL')
+            ->andWhere('uf = :user or ul = :user')
+            ->andWhere('c.isPublic = true')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
