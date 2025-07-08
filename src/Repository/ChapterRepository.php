@@ -28,7 +28,7 @@ class ChapterRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-     public function findChaptersNotReadByUser(User $user): array
+    public function findChaptersNotReadByUser(User $user): array
     {
         return $this->createQueryBuilder('c')
             ->select('DISTINCT c')
