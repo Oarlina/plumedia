@@ -20,24 +20,27 @@ class StoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => 'Titre de l\'histoire'])
-            ->add('cover', FileType::class, ['label' => 'Couverture', 'required' => false, 'data_class' => null, 'constraints' => [
-                new FileConstraint(['maxSize' => '1024k',
-                            'mimeTypes' => [
-                                            'image/jpg',
-                                            'image/jpeg',
-                                            'image/svg',
-                                            'image/png',
-                                            'image/webp'],
-                            'mimeTypesMessage' => 'Le document doit être en JPG, PNG, JPEG, SVG, WEBP',])]])
-            ->add('summary', TextareaType::class, ['label' => 'Résumé'])
-            // ->add('categories', EntityType::class, [
-            //     'class' => Category::class,
-            //     'choice_label' => 'name',
-            //     'multiple' => true,
-            //     'label' => 'Catégorie(s)'
-            // ])
-            ->add('Submit', SubmitType::class, ['label' => 'Envoyer'])
+            ->add('name', 
+                TextType::class, 
+                ['label' => 'Titre de l\'histoire'])
+            ->add('cover', 
+                FileType::class, 
+                ['label' => 'Couverture', 
+                    'required' => false, 
+                    'data_class' => null, 
+                    'constraints' => [new FileConstraint(['maxSize' => '1024k',
+                        'mimeTypes' => ['image/jpg',
+                                        'image/jpeg',
+                                        'image/svg',
+                                        'image/png',
+                                        'image/webp'],
+                        'mimeTypesMessage' => 'Le document doit être en JPG, PNG, JPEG, SVG, WEBP',])]])
+            ->add('summary', 
+                TextareaType::class, 
+                ['label' => 'Résumé'])
+            ->add('Submit', 
+                SubmitType::class, 
+                ['label' => 'Envoyer'])
         ;
     }
 

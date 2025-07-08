@@ -48,7 +48,6 @@ final class StoryController extends AbstractController
         }
         $form = $this->createForm(StoryType::class, $story);
         $form->handleRequest($request);
-    
         // si le formulaire est envoyé et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //je récupère les informations
@@ -56,20 +55,20 @@ final class StoryController extends AbstractController
             $story->setCreateStory(new Datetime());
             $story->setPerson($user);
             $story->setIsFinish(0);
-            
-            // je recupere l'image du formulaire
-            $picture = $form->get('cover')->getData();
+            $picture = $form->get('cover')->getData(); // je recupere l'image du formulaire
             if($picture){
-                // j'appelle le service picture afin qu'il télécharge l'image
-                $newFile = $uploadService->save($picture, 'story');
+                $newFile = $uploadService->save($picture, 'story'); // j'appelle le service picture afin qu'il télécharge l'image
                 $story->setCover($newFile);
             }else {
                 $story->setCover($cover);
             }
-            
             $this->entityManager->persist($story);
             $this->entityManager->flush();
-            // $this->addFlash('sucess', 'L\'histoire à été publié');
+            if ($id === null){
+                $this->addFlash('sucess', 'L\'histoire à été publié');
+            }else {
+                $this->addFlash('sucess', 'L\'histoire à été mis à jour');
+            }
             return $this->redirectToRoute('new_category', ['idStory' => $story->getId()]);
         }
         return $this->render('story/new.html.twig', ['form' => $form, 'edit' => $id]);

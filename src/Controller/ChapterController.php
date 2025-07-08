@@ -72,10 +72,12 @@ final class ChapterController extends AbstractController
                 $chapter->setIsFree(1);
             }
             
-            // je fais la gestion de téléchargmeent du fichier
+            // je fais la gestion de téléchargement du fichier
             $file = $form->get('file')->getData();
             if($file){
-                // ensuite je lui donne un nom unique, l'ajoute dans le dossier uploads/user puis met le nom du document dans avatar de l'histoire
+                // ensuite je lui donne un nom unique, 
+                // l'ajoute dans le dossier uploads/user 
+                // puis met le nom du document dans avatar de l'histoire
                 $newFile = 'chapter-'.uniqid().'.'.$file->guessExtension();
                 $file->move('uploads/chapters/', $newFile);
                 $chapter->setFile($newFile);

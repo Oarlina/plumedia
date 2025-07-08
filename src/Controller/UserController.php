@@ -27,17 +27,15 @@ final class UserController extends AbstractController
     // c'est la page d'information du profil
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(): Response{
-        if ( ! $this->getUser()){
+        // si l'utilisateur n'est pas connecter il retourne sur la page de connexion
+        if (! $this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+        // sinon je récupère ces réseaux sociaux 
         $user = $this->getUser();
-        $socialMedia = [];
-        foreach ($user->getSocialMedia() as $sm){
-            $socialMedia [$sm[0]] = $sm[1];
-        }
-        // $socialMedia = $user->getSocialMedia();
-        dd($user->getSocialMedia(), $socialMedia);
-    return $this->render('user/profil.html.twig', ['user' => $user, 'socialMedia' => $socialMedia]);
+        $socialMedia = $user->getSocialMedia();
+
+        return $this->render('user/profil.html.twig', ['user' => $user, 'socialMedia' => $socialMedia]);
     }
     // c'est la page d'information du profil d'un autre utlisateur
     #[Route(path:'/compte/{user}', name:'other_profil')]
@@ -60,6 +58,7 @@ final class UserController extends AbstractController
     // c'est la page des histoires du profil
     #[Route(path:'/mes_histoires', name:'app_storyProfil')]
     public function storyProfil(): Response{
+        // verifie qu'un utilisateur est connecté
         if ($this->getUser()){
             $user = $this->getUser();
             $stories = $this->storyRepository->findBy(['person' => $user->getId()]);

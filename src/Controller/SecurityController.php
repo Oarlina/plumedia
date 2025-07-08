@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Security;
+namespace App\Controller;
 
 
 use DateTime;
@@ -48,33 +48,32 @@ class SecurityController extends AbstractController
     // pour la suppression d'un compte
     #[Route(path:'/delete_account/{user}/{bool}', name:"delete_account")]
     public function delete(User $user, $bool = null, EntityManagerInterface $entityManager): Response {
-        // si bool n'est pas égale à 1 alors l'utilisateur confirme la suppression du comte sinon je le renvoie sur la page de suppression du compte
-        if ($bool == 1 ){
-            // je met la date du jour, si l'utilisateur veut supprimer son compte
-            $resetPassword = $this->resetPasswordRequest->findBy(['user' => $user->getId()]) ;
-
-            // je supprime l'avatar du dossier uploads/users
-            if ($user->getAvatar()){
-                $this->filesystem->remove('uploads/user/'.$user->getAvatar());
-            }
-            // je verifie que l'utilisateur na pas de demande de modification de mot de passe sinon je les supprimes
-            if($resetPassword){
-                for($i=0; $i< count($resetPassword); $i++){
-                    $entityManager->remove($resetPassword[$i]);
-                    $entityManager->flush();
-                }
-            }
-            $user->setPseudo('delete_user'.uniqid()); // je pseudomise le pseudo pour éviter de mette l'id du user en nullable sur les commentaires
-            $user->setEmail('anonymous_'.uniqid().'@gmail.com');
-            $user->setAvatar(null);
-            $user->setPassword('password_'.uniqid());
-            // je met à jour la BDD
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // je déconnecte l'utilisateur
-            return $this->redirectToRoute('app_logout');
+        // si bool vaut 0 alors redirige page pour confirmer suppressions
+        if ($bool == 0 ){
+            return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
         }
-        return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
+        // je met la date du jour
+        $resetPassword = $this->resetPasswordRequest->findBy(['user' => $user->getId()]) ;
+        // je supprime l'avatar du dossier uploads/users
+        if ($user->getAvatar()){
+            $this->filesystem->remove('uploads/user/'.$user->getAvatar());
+            $user->setAvatar(null);
+        }
+        // je verifie que l'utilisateur na pas de demande de modification de mot de passe sinon je les supprimes
+        if($resetPassword){
+            for($i=0; $i< count($resetPassword); $i++){
+                $entityManager->remove($resetPassword[$i]);
+                $entityManager->flush();
+            }
+        }
+        // je pseudomise le pseudo pour éviter de mette l'id du user en nullable sur les commentaires
+        $user->setPseudo('delete_user'.uniqid()); 
+        $user->setEmail('anonymous_'.uniqid().'@gmail.com');
+        $user->setPassword('password_'.uniqid());
+        $entityManager->persist($user);
+        $entityManager->flush();
+        // je déconnecte l'utilisateur
+        return $this->redirectToRoute('app_logout');
     }
 
     // pour que l'utilisateur puisse changer ces informations
@@ -108,7 +107,9 @@ class SecurityController extends AbstractController
         // on verifie que le fichier est envoyé 
         if ($file){
             // si l'extension est jpg, jpeg, svg, png ou webp alors je l'enregistre sinon erreur
-            if (($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" || $file->guessExtension() == "svg" || $file->guessExtension() == "png" || $file->guessExtension() == "webp") && $file->getimagesize() < '1024k'){
+            if (($file->guessExtension() == "jpg" || $file->guessExtension() == "jpeg" 
+            || $file->guessExtension() == "svg" || $file->guessExtension() == "png" 
+            || $file->guessExtension() == "webp") && $file->getimagesize() < '1024k'){
                 // je le renomme et recupere l'extension
                 $newFile = $uploadService->save($file, 'user');
 
