@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Routing\RouterInterface;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
@@ -22,6 +23,10 @@ use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class RegistrationFormType extends AbstractType
 {
+    public function __construct(
+        private readonly RouterInterface $router
+    ){}
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -79,13 +84,15 @@ class RegistrationFormType extends AbstractType
                             'message' => 'Le mot de passe doit au moins faire 12 caractèrs, avoir une majuscule, une minuscule, un chiffre et un caractère spécial.'
                             ))],])
             ->add('agreeTerms', CheckboxType::class, [
-                            'mapped' => false,
-                            'constraints' => [
-                                new IsTrue([
-                                    'message' => 'You should agree to our terms.',
-                                ]),
-                            ],
-                        ])
+                'mapped' => false,
+                'label' => 'J\'accepte les <a href="'. $this->router->generate('legal_privacy_policy').'" class="boutonWhite">conditions générales</a>',
+                'label_html' => true,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+            ])
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'Inscription',

@@ -27,7 +27,7 @@ security:
             lazy: true
             provider: app_user_provider
             # si on vide la cache le throttling est annulé
-            login_throttling: #je peux faire trois tentatives puis je dois attendre une heure
+            login_throttling: #je peux faire trois tentatives puis je dois attendre 30 minutes
                 max_attempts : 3
                 interval: '30 minutes'
             logout:

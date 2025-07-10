@@ -37,8 +37,6 @@ class LegalController extends AbstractController
         return $this->render('legal/terms_conditions_sale.html.twig');
     }
 
-
-
     #[Route('/contact', name: 'contact_form', methods: ['GET'])]
     public function contactForm(): Response
     {
