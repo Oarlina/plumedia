@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Story;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Story>
@@ -41,6 +42,30 @@ class StoryRepository extends ServiceEntityRepository
             ->getResult(); // et je la transforme en résultat
     }
 
+    public function findAuthorMostPopular(User $user): ? array{
+        return $this->createQueryBuilder('s')
+            ->join('s.person', 'u')
+            ->where('s.person = :user')
+            ->leftJoin('s.usersFollow', 'uf') // je récupère les userFollow
+            ->leftJoin('s.usersLike', 'ul') // je récupère les userLike
+            ->groupBy('s.id')
+            ->orderBy('COUNT(uf)', 'DESC') // je trie d'abord par rapport au follow
+            ->orderBy('COUNT(ul)', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('user', $user)
+            ->getQuery() // je récupère la requete
+            ->getResult(); // et je la transforme en résultat;
+    }
+
+    public function findStoriesExcludingIds(array $idsToExclude): ?array{
+
+        return $this->createQueryBuilder('s')
+            ->where('s.id NOT IN (:ids)')
+            ->setParameter('ids', $idsToExclude)
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult();
+    }
     
 
     // public function loadUserByIdentifier(string $identifier): ?User  {

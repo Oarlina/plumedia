@@ -68,6 +68,7 @@ class SecurityController extends AbstractController
             $user->setEmail('anonymous_'.uniqid().'@gmail.com');
             $user->setAvatar(null);
             $user->setPassword('password_'.uniqid());
+            $user->setRoles(['ROLE_DELETE']);
             // je met à jour la BDD
             $entityManager->persist($user);
             $entityManager->flush();
