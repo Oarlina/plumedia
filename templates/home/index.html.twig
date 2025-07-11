@@ -34,8 +34,7 @@
         <div class="parent">
             {% set i = 0 %}
             {% for counter in [ 0,3] %}
-                <div class="bentoStory div{{counter + 1}}">
-                    {# <h1> {{ counter +  1}}</h1> #}
+                <div class="bentoStory div div{{counter + 1}}">
                     {% if stories[i].cover %}
                         <img src="{{asset('uploads/story/' ~stories[i].cover)}}" alt="couverture de {{stories[i].name}}">
                     {% else %}
@@ -43,17 +42,15 @@
                     {% endif %}
                     <p>{{stories[i].name }}</p>
                 </div>
-                <div class="bentoStory div{{counter + 2}}">
-                    {# <h1> {{ counter + 2}}</h1> #}
+                <div class="bentoStory div div{{counter + 2}}">
                     {% if authors[i].avatar %}
-                        <img src="{{asset('uploads/user/' ~authors[i].avatar)}}" alt="couverture de {{authors[i].pseudo}}">
+                        <img src="{{asset('uploads/user/' ~authors[i].avatar)}}" alt="couverture de {{authors[i].pseudo}}" >
                     {% else %}
-                        <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur">
+                        <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur" >
                     {% endif %}
                     {{authors[i].pseudo }}
                 </div>
-                <div class="bentoStory div{{counter + 3 }}">
-                    {# <h1> {{ counter + 3}}</h1> #}
+                <div class="bentoStory div div{{counter + 3 }}">
                     {% if storiesPop[i].cover %}
                         <img src="{{asset('uploads/story/' ~storiesPop[i].cover)}}" alt="couverture de {{storiesPop[i].name}}">
                     {% else %}
@@ -63,7 +60,7 @@
                 </div>
                 {% set i = i + 1 %}
             {% endfor %}
-            <div class="bentoStory div7">
+            <div class="bentoStory div div7">
                 {% if authors[2].avatar %}
                     <img src="{{asset('uploads/user/' ~authors[2].avatar)}}" alt="couverture de {{authors[2].pseudo}}">
                 {% else %}

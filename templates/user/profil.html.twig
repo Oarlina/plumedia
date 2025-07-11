@@ -68,7 +68,7 @@
                                     <h3>Réseaux sociaux : </h3>
                                     <p>Vous pouvez ajouter vos liens de réseaux sociaux qui seront accessible pour tous:</p>
                                     
-                                    {% for sm, link in user.socialMedia %}
+                                    {% for sm, link in socialMedia %}
                                         <label for="{{ sm }}">{{ sm|capitalize }} :</label>
                                         <input type="text" name="{{ sm }}" id="{{ sm }}" value="{{ link }}"> <br>
                                     {% endfor %}

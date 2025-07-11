@@ -24,9 +24,8 @@ class SecurityController extends AbstractController
 {
     public function __construct(
         private Filesystem $filesystem,
-        private ResetPasswordRequestRepository $resetPasswordRequest,
-    ) {
-    }
+        private ResetPasswordRequestRepository $resetPasswordRequest
+    ) {}
 
 
     #[Route(path: '/login', name: 'app_login')]
@@ -45,12 +44,16 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
     // pour la suppression d'un compte
     #[Route(path:'/delete_account/{user}/{bool}', name:"delete_account")]
     public function delete(User $user, $bool = null, EntityManagerInterface $entityManager): Response {
-<<<<<<< HEAD:src/Controller/Security/SecurityController.php
+        // si bool vaut 0 alors redirige page pour confirmer suppressions
+        if ($bool == 0 ){
+            return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
+        }
         // si bool n'est pas égale à 1 alors l'utilisateur confirme la suppression du comte sinon je le renvoie sur la page de suppression du compte
-        if ($bool == 1 ){
+        if ($bool == 1 && $this->getUser()->getId() == $user->getId() ){
             // je met la date du jour, si l'utilisateur veut supprimer son compte
             $resetPassword = $this->resetPasswordRequest->findBy(['user' => $user->getId()]) ;
 
@@ -75,38 +78,11 @@ class SecurityController extends AbstractController
             $entityManager->flush();
             // je déconnecte l'utilisateur
             return $this->redirectToRoute('app_logout');
-=======
-        // si bool vaut 0 alors redirige page pour confirmer suppressions
-        if ($bool == 0 ){
-            return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
->>>>>>> 993797f9d56ef57479a102bb2d38a6a4699c2523:src/Controller/SecurityController.php
         }
-        // je met la date du jour
-        $resetPassword = $this->resetPasswordRequest->findBy(['user' => $user->getId()]) ;
-        // je supprime l'avatar du dossier uploads/users
-        if ($user->getAvatar()){
-            $this->filesystem->remove('uploads/user/'.$user->getAvatar());
-            $user->setAvatar(null);
-        }
-        // je verifie que l'utilisateur na pas de demande de modification de mot de passe sinon je les supprimes
-        if($resetPassword){
-            for($i=0; $i< count($resetPassword); $i++){
-                $entityManager->remove($resetPassword[$i]);
-                $entityManager->flush();
-            }
-        }
-        // je pseudomise le pseudo pour éviter de mette l'id du user en nullable sur les commentaires
-        $user->setPseudo('delete_user'.uniqid()); 
-        $user->setEmail('anonymous_'.uniqid().'@gmail.com');
-        $user->setPassword('password_'.uniqid());
-        $entityManager->persist($user);
-        $entityManager->flush();
-        // je déconnecte l'utilisateur
-        return $this->redirectToRoute('app_logout');
     }
 
     // pour que l'utilisateur puisse changer ces informations
-    #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'])]
+    #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'] ) ]
     public function changeMailAvatar (Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, PictureService $uploadService): Response{
         // je recupere l'email, le pseudo et l'avatar du formulaire
         // je n'est pas a verifier les types car ils sont forcer dans l'entité User
@@ -124,7 +100,6 @@ class SecurityController extends AbstractController
         }else{
             $user = $user->setEmail($email);
         }
-
 
         // on verifie que le pseudo est changé puis si le pseudo ne contient pas 'delete_user' et que le pseudo n'est pas déjà utilisé
         if (($user->getPseudo() != $pseudo && ($userRepository->findBy(['pseudo'=> $pseudo]) != null)) or str_contains($pseudo,'delete_user')) {
@@ -246,7 +221,5 @@ class SecurityController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('app_users');
     }
-
-    
 
 }
