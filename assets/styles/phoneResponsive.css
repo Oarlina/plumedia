@@ -1,0 +1,5 @@
+@media screen and (max-width: 768px) {
+    #burger-menu{display: block; }
+
+    body { background-color: rgb(224, 140, 154);}
+}

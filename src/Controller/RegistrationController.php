@@ -47,7 +47,6 @@ class RegistrationController extends AbstractController
             // je donne directement le role user a l'utilisateur
             $user->setRoles(['ROLE_USER']);
             $user->setCreateAccount(new DatetimeImmutable());
-
             // je récupère les mots de passes 
             $plainPassword = $form->get('plainPassword')->getData();
             $confirmPassword = $form->get('confirmPassword')->getData();
@@ -56,28 +55,19 @@ class RegistrationController extends AbstractController
                 $this->addFlash('error', 'Les mots de passes ne sont pas identiques.');
                 return $this->redirectToRoute('app_register');
             }
-            
-            // je faais la gestion des roles
-            $user->setSocialMedia(['Instagram'=> null, 'Snapchat' =>null, 'Facebook' => null, 'Youtube' => null]);
-
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
             // je recupere l'image du formulaire
             $picture = $form->get('avatar')->getData();
             // ensuite je lui donne un nom unique, l'ajoute dans le dossier uploads/user puis met le nom du document dans avatar de l'utilisateur
-
             if ($picture){
                 $newFile = $pictureService->save($picture, 'user');
                 $user->setAvatar($newFile);
             }
-
             // je met les réseaux sociaux à null pour éviter que le JSON soit null
             $user->setSocialMedia(['twitch' => null, 'discord' => null, 'twitter' => null, 'youtube' => null, 'facebook' => null, 'instagram' => null]);
-
             // j'enregistre l'utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();
-
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('mailer@example.com', 'AcmeMailBot'))
