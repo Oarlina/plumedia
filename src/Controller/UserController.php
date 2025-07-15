@@ -22,8 +22,7 @@ final class UserController extends AbstractController
         private UserRepository $userRepository,
         private StoryRepository $storyRepository,
         private EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
     // c'est la page d'information du profil
     #[Route(path:'/mon_compte', name:'app_profil')]
     public function profil(): Response{

@@ -34,43 +34,48 @@
         <div class="parent">
             {% set i = 0 %}
             {% for counter in [ 0,3] %}
-                <div class="bentoStory div div{{counter + 1}}">
-                    {% if stories[i].cover %}
-                        <img src="{{asset('uploads/story/' ~stories[i].cover)}}" alt="couverture de {{stories[i].name}}">
-                    {% else %}
-                        <img src="{{asset('img/forNoCover.png')}}" alt="couverture de base d'une histoire">
-                    {% endif %}
-                    <p>{{stories[i].name }}</p>
+                <div class="div div{{counter + 1}}">
+                    <a href="{{path('detail_story', {'id' : stories[i].id})}}">
+                        {{stories[i].name }}
+                        {% if stories[i].cover %}
+                            <img src="{{asset('uploads/story/' ~stories[i].cover)}}" alt="couverture de {{stories[i].name}}">
+                        {% else %}
+                            <img src="{{asset('img/forNoCover.png')}}" alt="couverture de base d'une histoire">
+                        {% endif %} <br>
+                    </a>
                 </div>
-                <div class="bentoStory div div{{counter + 2}}">
-                    {% if authors[i].avatar %}
-                        <img src="{{asset('uploads/user/' ~authors[i].avatar)}}" alt="couverture de {{authors[i].pseudo}}" >
-                    {% else %}
-                        <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur" >
-                    {% endif %}
-                    {{authors[i].pseudo }}
+                <div class="div div{{counter + 2}}">
+                    <a href="">
+                        {{authors[i].pseudo }}
+                        {% if authors[i].avatar %}
+                            <img src="{{asset('uploads/user/' ~authors[i].avatar)}}" alt="couverture de {{authors[i].pseudo}}" >
+                        {% else %}
+                            <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur" >
+                        {% endif %} <br>
+                    </a>
                 </div>
-                <div class="bentoStory div div{{counter + 3 }}">
-                    {% if storiesPop[i].cover %}
-                        <img src="{{asset('uploads/story/' ~storiesPop[i].cover)}}" alt="couverture de {{storiesPop[i].name}}">
-                    {% else %}
-                        <img src="{{asset('img/forNoCover.png')}}" alt="couverture de base d'une histoire">
-                    {% endif %}
-                    {{storiesPop[i].name }}
+                <div class="div div{{counter + 3 }}">
+                    <a href="{{path('detail_story', {'id' : storiesPop[i].id})}}">
+                        {{storiesPop[i].name }} 
+                        {% if storiesPop[i].cover %}
+                            <img src="{{asset('uploads/story/' ~storiesPop[i].cover)}}" alt="couverture de {{storiesPop[i].name}}">
+                        {% else %}
+                            <img src="{{asset('img/forNoCover.png')}}" alt="couverture de base d'une histoire">
+                        {% endif %} <br>
+                    </a>
                 </div>
                 {% set i = i + 1 %}
             {% endfor %}
-            <div class="bentoStory div div7">
-                {% if authors[2].avatar %}
-                    <img src="{{asset('uploads/user/' ~authors[2].avatar)}}" alt="couverture de {{authors[2].pseudo}}">
-                {% else %}
-                    <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur">
-                {% endif %}
-                {{authors[2].pseudo }}
-            </div>
-
-
-            
+            <div class="div div7">
+                <a href="">
+                    {{authors[2].pseudo }}
+                    {% if authors[2].avatar %}
+                        <img src="{{asset('uploads/user/' ~authors[2].avatar)}}" alt="couverture de {{authors[2].pseudo}}">
+                    {% else %}
+                        <img src="{{asset('img/avatr_base.png')}}" alt="avatar de base d'un utilisateur">
+                    {% endif %} <br>
+                </a> 
+            </div> 
         </div>
     </section>
     <section id="parallax">

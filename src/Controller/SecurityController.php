@@ -80,6 +80,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_logout');
         }
     }
+    
 
     // pour que l'utilisateur puisse changer ces informations
     #[Route(path: '/changeMailAvatar', name: 'changeMailAvatar', methods: ['POST'] ) ]
@@ -177,7 +178,6 @@ class SecurityController extends AbstractController
         }
         // sinon on hash le mot de passe et le met dans la BDD
         $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
-        // dd($user);
         // je met a jour la BDD et retourne sur la page d'utilisateur
         $entityManager->persist($user);
         $entityManager->flush();

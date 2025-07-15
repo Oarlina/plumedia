@@ -14,13 +14,18 @@
         {% endif %}
     {% endblock %}
     {% block og_url %}<meta property="og:url" content="{{ app.request.uri }}">{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 <h1><a href="{{ path('app_chapter', {'idStory' : story.id})}}" class="textCenter width100 boutonWhite">{{story.name}}</a></h1>
-<h2 class="textCenter">{{chapter.name}}</h2>
+
 {% if num != 0 %}
-    <h3 class="textCenter">Chapitre {{num}}</h3>
+    <h3 class="textCenter">Chapitre {{num}} {{chapter.name}}</h3>
+{% else %}
+    <h3 class="textCenter">{{chapter.name}}</h3>
 {% endif %}
 
     {# le bouton qui permet de partager sur Facebook #}
@@ -60,10 +65,10 @@
     {% endif %}
 </div>
 {# ce sont les commentaires  #}
-<dic class="comments">
+<div class="comments">
     <h2>Commentaires: ({{chapter.comments | length}})</h2>
-    <div>
-        <p>Il y aura un formulaire pour écrire un commentaire.</p>
+    <div id="editor" class="backgroundGrey">
+        {# <p>Il y aura un formulaire pour écrire un commentaire.</p> #}
     </div>
 
     <nav class="flex justifyContent">
@@ -87,5 +92,20 @@
     {% else %}
         <p>Il n'y a aucun commentaire.</p>
     {% endif %}
-</dic>
+</div>
+<script>
+  const quill = new Quill('#editor', {
+    modules: {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block'],
+    ],
+    emoji : true
+  },
+  placeholder: 'Ecrire un commentaire...',
+    theme: 'snow',
+    
+  });
+</script>
 {% endblock %}
