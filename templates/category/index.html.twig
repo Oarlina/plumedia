@@ -22,9 +22,9 @@
                         {% else %}
                             <img src="{{ asset('img/forNoCover.png') }}" alt="couverture de {{story.name}}" class="coverBook width100">  
                         {% endif %}
-                        <h3>{{story.name}}  </h3>
-                        <p class="summary backgroundWhite width100">{{story.summary}}</p>
-                        <p class="boutonWhite bouton">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
+                        <span class="title3">{{story.name}}</span>
+                        <span class="summary backgroundWhite width100">{{story.summary}}</span> <br>
+                        <span class="boutonWhite bouton">Voir plus <i class="fa-solid fa-arrow-right"></i></span>
                     </a>
                 </div>
             {% endfor %}

@@ -29,19 +29,14 @@ class StoryType extends AbstractType
                     'required' => false, 
                     'data_class' => null, 
                     'constraints' => [new FileConstraint(['maxSize' => '1024k',
-                        'mimeTypes' => ['image/jpg',
-                                        'image/jpeg',
-                                        'image/svg',
-                                        'image/png',
-                                        'image/webp'],
+                        'mimeTypes' => ['image/jpg','image/jpeg','image/svg','image/png','image/webp'],
                         'mimeTypesMessage' => 'Le document doit être en JPG, PNG, JPEG, SVG, WEBP',])]])
             ->add('summary', 
                 TextareaType::class, 
                 ['label' => 'Résumé'])
             ->add('Submit', 
                 SubmitType::class, 
-                ['label' => 'Envoyer'])
-        ;
+                ['label' => 'Envoyer']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -34,20 +34,18 @@
                             {# je parcours toutes les categories de l'histoire #}
                             {% for st in category.stories %}
                                 {# je vérifie que je n'affiche pas l'histoire sur laquelle on fait les recommendations #}
-                                {% if story.id != st.id %}
-                                    <div class="story textCenter">
-                                        <a href="{{path('detail_story', {'id' : st.id})}}">
-                                            {# je faisd la gestion de la couverture de l'histoire #}
-                                            {% if story.cover %}
-                                                <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
-                                            {% else %}
-                                                <img src="{{ asset('img\forNoCover.png') }}" alt="couverture de {{st.name}}" class="coverBook">
-                                            {% endif %}
-                                            <p class="">{{st.name}}</p>
-                                            <p class="bouton boutonWhite">Voir plus <i class="fa-solid fa-arrow-right"></i></p>
-                                            <p class="summary backgroundWhite">{{st.summary}}</p>
-                                        </a>
-                                    </div>
+                                {% if story.id != st.id and counter <=4  %}
+                                    <a href="{{path('detail_story', {'id' : st.id})}}" class="story textCenter">
+                                        {# je fais la gestion de la couverture de l'histoire #}
+                                        {% if story.cover %}
+                                            <img src="{{ asset('uploads/story/' ~ st.cover) }}" alt="couverture de {{st.name}}" class="coverBook">
+                                        {% else %}
+                                            <img src="{{ asset('img\forNoCover.png') }}" alt="couverture de {{st.name}}" class="coverBook">
+                                        {% endif %}
+                                        <span class="">{{st.name}}</span><br>
+                                        <span class="bouton boutonWhite">Voir plus <i class="fa-solid fa-arrow-right"></i></span><br>
+                                        <span class="summary backgroundWhite">{{st.summary}}</span>
+                                    </a>
                                 {% endif %}
                                 {% set counter = counter + 1 %}
                             {% endfor %}
