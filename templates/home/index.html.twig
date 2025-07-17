@@ -13,7 +13,6 @@
     {% endblock %}
 {% endblock %}
 {% block body %}
-    <div class="g-recaptcha alert" data-sitekey="site_key"></div>
 
     <section id="home" class="textCenter">
         <video autoplay muted loop playsinline id="bg-video">
@@ -95,7 +94,7 @@
             <button class="newsletter-btn bouton boutonWhite">S'inscrire</button>
         </div>
     </div>
-  
+    <div class="g-recaptcha alert" data-sitekey="site_key"></div>
     <script>
         // je donne l'accces pour le recaptcha
         tarteaucitron.user.recaptchaapi = '{{recaptcha_key}}';

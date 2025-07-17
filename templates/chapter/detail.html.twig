@@ -15,8 +15,13 @@
     {% endblock %}
     {% block og_url %}<meta property="og:url" content="{{ app.request.uri }}">{% endblock %}
 
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/quill-emoji@0.1.7/dist/quill-emoji.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill-emoji@0.1.7/dist/quill-emoji.min.js"></script>
+
+
 {% endblock %}
 
 {% block body %}
@@ -29,7 +34,7 @@
 {% endif %}
 
     {# le bouton qui permet de partager sur Facebook #}
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}) ) }}" target="_blank" class="marginAutoWidth">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id, 'num' : num}) ) }}" target="_blank" class="width50 marginAutoWidth">
         <i class="fa-brands fa-facebook"></i>
     </a>
 
@@ -67,9 +72,12 @@
 {# ce sont les commentaires  #}
 <div class="comments">
     <h2>Commentaires: ({{chapter.comments | length}})</h2>
-    <div id="editor" class="backgroundGrey">
-        {# <p>Il y aura un formulaire pour écrire un commentaire.</p> #}
-    </div>
+    <form method="post" action="{{path('create_comment', {'idChapter': chapter.id, 'num' : num}) }}">
+        <div id="editor" type="textarea"> </div> <br>
+        <input type="checkbox" id="spoiler" name="spoiler" value="1">
+        <label for="spoiler"> Spoiler </label>
+        <button type="submit">Envoyer</button>
+    </form>
 
     <nav class="flex justifyContent">
         <a href="" class="">TOP</a>
@@ -86,7 +94,7 @@
             {% else %}
                 <h3>{{comment.user.pseudo}}</h3>
             {% endif %}
-            <p>{{comment.message}}</p>
+            {{comment.message | raw }}
             <p>{{comment.dateComment | date('m/d/Y') }}</p>
         {% endfor %}
     {% else %}
@@ -94,18 +102,24 @@
     {% endif %}
 </div>
 <script>
-  const quill = new Quill('#editor', {
-    modules: {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      ['image', 'code-block'],
-    ],
-    emoji : true
-  },
-  placeholder: 'Ecrire un commentaire...',
-    theme: 'snow',
-    
-  });
+    const quill = new Quill('#editor', {
+        modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline'],
+            ['emoji'] ],
+        'emoji-toolbar': true,
+        'emoji-textarea': true,
+        'emoji-shortname': true
+        },
+        placeholder: 'Ecrire un commentaire...',
+        theme: 'snow',
+    });
+    // avant d'envboyer le formulaire j'ajoute le texte du formulaire dedans 
+    const form = document.querySelector('form');
+    form.addEventListener('formdata', (event) => {
+    // Append Quill content before submitting
+        var html = quill.root.innerHTML.replace(/\uFEFF/g, '');
+        event.formData.append('comment', html);
+    });
 </script>
 {% endblock %}
