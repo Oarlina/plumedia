@@ -72,11 +72,11 @@
 {# ce sont les commentaires  #}
 <div class="comments">
     <h2>Commentaires: ({{chapter.comments | length}})</h2>
-    <form method="post" action="{{path('create_comment', {'idChapter': chapter.id, 'num' : num}) }}">
+    <form method="post" action="{{path('create_comment', {'idChapter': chapter.id, 'num' : num}) }}" class="backgroundBrown bouton">
         <div id="editor" type="textarea"> </div> <br>
         <input type="checkbox" id="spoiler" name="spoiler" value="1">
         <label for="spoiler"> Spoiler </label>
-        <button type="submit">Envoyer</button>
+        <button type="submit" class="noBorder bouton boutonWhite">Envoyer</button>
     </form>
 
     <nav class="flex justifyContent">
@@ -89,13 +89,20 @@
     {% if chapter.comments | length > 0 %}
         {% for comment in chapter.comments %}
             {# gestion du compte supprimé #}
-            {% if 'delete_user' in comment.user.pseudo %}
-                <h3>Compte supprimé</h3>
-            {% else %}
-                <h3>{{comment.user.pseudo}}</h3>
-            {% endif %}
+            <h3>
+                {% if 'delete_user' in comment.user.pseudo %}
+                    Compte supprimé
+                {% elseif chapter.user.id == app.user.id %}
+                    {{comment.user.pseudo}} - auteur
+                {% else %}
+                    {{comment.user.pseudo}}
+                {% endif %}
+                - {% if comment.user.id == app.user.id %} <a href=""><i class="fa-solid fa-pen"></i></a> - <a href=""><i class="fa-solid fa-trash"></i></a> {% endif %}
+            </h3>
+
+            <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
             {{comment.message | raw }}
-            <p>{{comment.dateComment | date('m/d/Y') }}</p>
+            <a href="">like</a>
         {% endfor %}
     {% else %}
         <p>Il n'y a aucun commentaire.</p>

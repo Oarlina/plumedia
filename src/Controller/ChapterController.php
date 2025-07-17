@@ -7,11 +7,12 @@ use App\Entity\Story;
 use App\Entity\Chapter;
 use App\Form\ChapterType;
 use Smalot\PdfParser\Parser;
+use App\Service\PictureService;
 use App\Repository\UserRepository;
 use App\Repository\StoryRepository;
 use App\Repository\ChapterRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +29,8 @@ final class ChapterController extends AbstractController
         private StoryRepository $storyRepository,
         private UserRepository $userRepository,
         private FileSystem $fileSystem,
-    ) {
-    }
+        private PictureService $uploadService
+    ) {}
     
     // c'est la page des chapitres d'une hsitoire
     #[Route('/chapitre/{idStory}', name: 'app_chapter')]
@@ -42,11 +43,10 @@ final class ChapterController extends AbstractController
         ]);
     }
     
-    // pour la creation d'une histoire et sa modification
+    // pour la creation d'un chapitre et sa modification
     #[Route('/edit/{idStory}/{chapter}', name: 'editChapter')]
-    #[Route('/new/{idStory}', name: 'newChapter')]
-    public function new(Story $idStory, Chapter $chapter = null, Request $request): Response
-    {
+    #[Route('/newChapter/{idStory}', name: 'newChapter')]
+    public function new(Story $idStory, Chapter $chapter = null, Request $request): Response {
         if (! $chapter){
             $chapter = new Chapter();
         }else {
@@ -61,22 +61,17 @@ final class ChapterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //je récupère les informations
             $chapter = $form->getData();
+            // dd($form);
             $chapter->setPublish(new Datetime() );
             $chapter->setUser($user);
             $chapter->setStory($idStory);
-            // si la case est cocher alors l'histoire est payante sinon elle est gratuite
-            if($form->get('isFree')->getData()){
-                $chapter->setIsFree(0);
-            }else {
-                $chapter->setIsFree(1);
-            }
             
             // je fais la gestion de téléchargement du fichier
             $file = $form->get('file')->getData();
             if($file){
-                $file->move('uploads/chapters/', $file);
-                $chapter->setFile($file);
-            }elseif ( ! $edit){
+                $newFile = $this->uploadService->save($file, 'chapters'); // j'appelle le service picture afin qu'il télécharge l'image
+                $chapter->setFile($newFile);
+            }elseif (! $edit){
                 return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);
             }else {
                 $this->addFlash('error', 'Le chapitre n\'a pas pu être mis à jour !');
@@ -92,7 +87,7 @@ final class ChapterController extends AbstractController
                 $this->addFlash('sucess', 'Le chapitre à été publié !');
             }
             
-            return $this->redirectToRoute('app_chapter', [ 'idStory' => $idStory->getId()]);
+            return $this->redirectToRoute('app_chapter', ['idStory' => $idStory->getId()]);
         }
         
         return $this->render('chapter/new.html.twig', [ 'form' => $form, 'edit' => $chapter]);

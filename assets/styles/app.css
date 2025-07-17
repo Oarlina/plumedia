@@ -64,6 +64,7 @@ body, p, li, a, pre {
 .firstTitle{margin: 5px 0 40px 0;}
 .secondTitle{font-size: 800;}
 .opacity50{opacity: 80%;}
+.smallSize{font-size: small;}
 .title3{
     font-size: 1.17em;
     margin-block-start: 1em;
