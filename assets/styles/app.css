@@ -65,6 +65,7 @@ body, p, li, a, pre {
 .secondTitle{font-size: 800;}
 .opacity50{opacity: 80%;}
 .smallSize{font-size: small;}
+.textarea{height: 150px;}
 .title3{
     font-size: 1.17em;
     margin-block-start: 1em;
@@ -160,7 +161,7 @@ header nav{
 .titleHome{text-shadow: 2px 2px 2px #8f703d;} /* pour que le nom du site soit plus lisible*/
 #bigAvatar, .story {position: relative;}
 #littleAvatar, .summary {position: absolute;}
-#infos, #lessFifteen, #modifierMdp, input, button, .details {margin: 15px;}
+#infos, #lessFifteen, #modifierMdp, input, button, .details, .marginFifteen{margin: 15px;}
 /* ceci est pour la page de profil d'un utilisateur */
 #profil{
     #bigAvatar{

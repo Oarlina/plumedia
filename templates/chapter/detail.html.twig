@@ -59,7 +59,6 @@
         </a>
     {% endif %}
     {# gestion d'abonnement à l'histoire #}
-
     {% if app.user  in story.usersFollow %}
         <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'num' : num, 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
     {% elseif app.user %}
@@ -86,23 +85,26 @@
         <a href="" class="">Sans spoiler</a>
     </nav>
     <hr>
-    {% if chapter.comments | length > 0 %}
-        {% for comment in chapter.comments %}
-            {# gestion du compte supprimé #}
-            <h3>
-                {% if 'delete_user' in comment.user.pseudo %}
-                    Compte supprimé
-                {% elseif chapter.user.id == app.user.id %}
-                    {{comment.user.pseudo}} - auteur
-                {% else %}
-                    {{comment.user.pseudo}}
-                {% endif %}
-                - {% if comment.user.id == app.user.id %} <a href=""><i class="fa-solid fa-pen"></i></a> - <a href=""><i class="fa-solid fa-trash"></i></a> {% endif %}
-            </h3>
-
-            <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
-            {{comment.message | raw }}
-            <a href="">like</a>
+    {# j'affiche les commentaires dans l'ordre décroissant #}
+    {% if comments | length > 0 %}
+        {% for comment in comments %}
+            <div class="comment backgroundWhite marginFifteen">
+                {# gestion du compte supprimé #}
+                <h3>
+                    {% if 'delete_user' in comment.user.pseudo %}
+                        Compte supprimé
+                    {% elseif comment.user.id == app.user.id %}
+                        {{comment.user.pseudo}} - auteur
+                    {% else %}
+                        {{comment.user.pseudo}}
+                    {% endif %}
+                    {% if comment.user.id == app.user.id or 'ROLE_MODERATOR' in app.user.roles %} 
+                        -<a href="{{path('delete_comment', {'idComment' : comment.id, 'num': num})}}"> <i class="fa-solid fa-trash"></i> </a> 
+                    {% endif %}
+                </h3>
+                <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
+                {{comment.message | raw }}
+            </div>
         {% endfor %}
     {% else %}
         <p>Il n'y a aucun commentaire.</p>

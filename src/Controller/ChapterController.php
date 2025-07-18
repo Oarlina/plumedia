@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use App\Repository\StoryRepository;
 use App\Repository\ChapterRepository;
 
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ final class ChapterController extends AbstractController
         private EntityManagerInterface $entityManager,
         private StoryRepository $storyRepository,
         private UserRepository $userRepository,
+        private CommentRepository $commentRepository,
         private FileSystem $fileSystem,
         private PictureService $uploadService
     ) {}
@@ -112,13 +114,13 @@ final class ChapterController extends AbstractController
         }
         // je fais la gestion de message si reussite
         if ($fonction == 'addUserHaveRead' ){
-            $this->addFlash('success', ' Le chapitre à été marqué lu/ouvert !');
+            $this->addFlash('sucess', ' Le chapitre à été marqué lu/ouvert !');
         }elseif ($fonction == 'removeUserHaveRead' ){
-            $this->addFlash('success', 'Le chapitre à été mis non lu/ouvert !');
+            $this->addFlash('sucess', 'Le chapitre à été mis non lu/ouvert !');
         }elseif($fonction == 'addUsersLike' ) {
-            $this->addFlash('success', 'Le chapitre à été aimé !');
+            $this->addFlash('sucess', 'Le chapitre à été aimé !');
         }else{
-            $this->addFlash('success', 'Le chapitre n\'est plus aimé !');
+            $this->addFlash('sucess', 'Le chapitre n\'est plus aimé !');
         }
         return $this->redirectToRoute('app_chapter', ['idStory' => $chapter->getStory()->getId()]);
     }
@@ -138,9 +140,10 @@ final class ChapterController extends AbstractController
         $parser = new Parser();
         $pdf = $parser->parseFile( $this->getParameter('kernel.project_dir'). '/public/uploads/chapters/'. $chapter->getFile() );
         $fileText = $pdf->getText();
+        $comments = $this->commentRepository->findBy(['chapter'=> $chapter->getId()], ['dateComment' => "DESC"]);
 
         $story = $this->storyRepository->findOneBy(['id' => $chapter->getStory()]);
-        return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story]);
+        return $this->render('chapter/detail.html.twig', ['chapter' => $chapter, 'num' => $num, 'file' => $fileText, 'story' => $story, 'comments' => $comments]);
     }
 
     // cette méthode me permet de récupérer les chapitres à afficher

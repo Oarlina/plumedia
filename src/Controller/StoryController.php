@@ -110,7 +110,7 @@ final class StoryController extends AbstractController
             $this->entityManager->persist($id);
             $this->entityManager->flush();
             // je retourne sur la page detail de l'histoire
-            $this->addFlash('success', 'Modification réussie');
+            $this->addFlash('sucess', 'Modification réussie');
             return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
         }
         $this->addFlash('error', 'Erreur, veuillez recommencer');

@@ -56,7 +56,7 @@ class LegalController extends AbstractController
         $mailer->send($email);
 
         // J'ai un message et retourne sur la page contact
-        $this->addFlash('success', 'Merci pour votre message. Nous vous répondrons rapidement.');
+        $this->addFlash('sucess', 'Merci pour votre message. Nous vous répondrons rapidement.');
         return $this->redirectToRoute('contact_form');
     }
 }
