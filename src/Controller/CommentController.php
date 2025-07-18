@@ -28,8 +28,8 @@ final class CommentController extends AbstractController
     }
 
     // lorqu'un utilisateur envoie un commentaire sur un chapitre
-    #[Route('/new/comments/{idChapter}/{num}', name:'create_comment')]
-    public function new (Chapter $idChapter  = null, Comment $idComment = null, int $num, Request $request): Response{
+    #[Route('/new/comments/{idChapter}', name:'create_comment')]
+    public function new (Chapter $idChapter  = null, Comment $idComment = null, Request $request): Response{
         $user = $this->getUser();
         // si il n'y a pas un utilisateur connecté alors je retourne a la page de connexion
         if (! $user){
@@ -47,11 +47,11 @@ final class CommentController extends AbstractController
             $this->entityManager->flush();
             $this->addFlash('sucess', 'Votre commentaire à été ajouté');
             
-            return $this->redirectToRoute('show_chapter', ['chapter' => $idChapter->getId(), 'num' => $num]);
+            return $this->redirectToRoute('show_chapter', ['chapter' => $idChapter->getId()]);
     }
     // si l'utilisateur veut modofier son commentaire
-    #[Route('/deleteComment/{idComment}/{num}', name:'delete_comment')]
-    public function delete (Comment $idComment, int $num, Request $request) :Response {
+    #[Route('/deleteComment/{idComment}', name:'delete_comment')]
+    public function delete (Comment $idComment, Request $request) :Response {
         $user = $this->getUser();
         // si il n'y a pas un utilisateur connecté alors je retourne a la page de connexion
         if (! $user){
@@ -79,6 +79,6 @@ final class CommentController extends AbstractController
             $this->entityManager->remove($idComment);
             $this->entityManager->flush();
         }
-        return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId(), 'num' => $num]);
+        return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId()]);
     }
 }

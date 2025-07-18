@@ -96,33 +96,18 @@ final class UserController extends AbstractController
     }
     
     #[Route(path:'/devenir_autheur/{user}', name:'form_become_author')]
-    public function becomeAuthor(User $user, Request $request, MailerInterface $mailer): Response {
-        if($this->getUser()){
-            // je l'envoie sur un formulaire
-            $form = $this->createForm(UserBecomeAuthorType::class, $user);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                // je prepare le mail et l'envoie
-                $email = (new Email())
-                    ->from($form->get('email')->getData())
-                    ->to('mailer@plumedia.com')
-                    ->subject('Je voudrais devenir auteur')
-                    ->text($form->get('text')->getData());
-                $mailer->send($email);
-                // je met à jour le rôle pour que l'admin ne soit pas obligé de le faire 
-                $roles = $user->getRoles();
-                $roles [] = 'ROLE_AUTHOR';
-                // je met rajoutes le roles à user et je met à jour la BDD
-                $user->setRoles($roles);
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
-
-                return $this->redirectToRoute('app_storyProfil');
-            }
-            return $this->render('security/newAuthor.html.twig', ['form' => $form]);
+    public function becomeAuthor(User $user): Response {
+        if(! $this->getUser()){
+            return $this->redirectToRoute('app_login');
         }
-        return $this->redirectToRoute('app_login');
+        $roles = $user->getRoles();
+        $roles [] = 'ROLE_AUTHOR';
+        // je met rajoutes le roles à user et je met à jour la BDD
+        $user->setRoles($roles);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_storyProfil');
     }
 
     

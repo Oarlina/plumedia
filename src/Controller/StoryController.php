@@ -81,8 +81,8 @@ final class StoryController extends AbstractController
     
     // Si l'utilisateur veut aimer/ liker une histoire
     #[Route(path:'/add/{id}/{id2}/{name}', name:'add')]
-    #[Route(path:'/add/{id}/{id2}/{name}/{num}/{chapter}', name:'addIn')]
-    public function add(Story $id, User $id2, string $name, int $num = null, Chapter $chapter = null): Response{
+    #[Route(path:'/add/{id}/{id2}/{name}/{chapter}', name:'addIn')]
+    public function add(Story $id, User $id2, string $name, Chapter $chapter = null): Response{
         // j'utilise la fonction pour ajouter soit le like soit le follow 
         $allowed = ['addUsersFollow', 'addUsersLike', 'removeUsersFollow', 'removeUsersLike'];
         if (in_array($name, $allowed)) {
@@ -94,8 +94,8 @@ final class StoryController extends AbstractController
         }else {
             $this->addFlash('error', 'Un problème est survenu. Veuillez recommencer.');
         }
-        if ($num and $chapter){
-            return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId(), 'num' => $num]);
+        if ( $chapter){
+            return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId()]);
         }
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }

@@ -34,24 +34,25 @@
                             {# je fais la gestion d'affichage de fond d'un chapitre #}
                             {% if  app.user and app.user in chapter.userHaveRead %}
                                 {% set backgroundColor = 'backgroundWhite' %}
+                            {% elseif chapter.isPublic == 0 %}
+                                {% set backgroundColor = 'backgroundGrey' %}
                             {% else %}
                                 {% set backgroundColor = 'backgroundBrown' %}
                             {% endif %}
                             {# ceci est un chapitre si le chapitre est gratuit je laisse l'accès au chapitre #}
-                            {% if chapter.isFree %}
-                                {% if chapter.isPublic %}
+                            {% if chapter.isPublic and chapter.isFree ==1 %}
                                 <div class="chapter {{backgroundColor}} flex">
-                                    <a href="{{path('show_chapter', {'chapter': chapter.id, 'num' : counter})}}" class="width100 leftChapter">
+                                    <a href="{{path('show_chapter', {'chapter': chapter.id})}}" class="width100 leftChapter"  data-turbo="false">
                                         <span class="title2"><u>Chapitre {{counter}} :</u> {{chapter.name}}</span> <br>
                                         Date de publication : {{chapter.publish | date("d/m/Y")}}<br>
-                                        Saison :{{chapter.inSeason}}
+                                        Saison : {{chapter.inSeason}}
                                         {% set counter = counter + 1 %}
                                     </a>
                                     {# la partie droite du chapitre #}
                                     <div class="rightChapter flex flexDirectionCollumn textCenter">
                                         {# pour que l'auteur puisse modifier le chapitre #}
                                         {% if app.user and app.user.id == chapter.story.person.id %}
-                                            <a href=""><i class="fa-solid fa-trash"></i></a>
+                                            {# <a href=""><i class="fa-solid fa-trash"></i></a> #}
                                             <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="linkBtn"><i class="fa-solid fa-pen"></i></a>
                                         {% endif %}
                                         {# la gestion de like #}
@@ -74,16 +75,21 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                {% else %}
-                                    <div class="chapter backgroundGrey flex opacity50">
-                                        <div class="leftChapter">
-                                            <p class="title2"><u>Chapitre {{counter}} :</u> {{chapter.name}}</p>
-                                            <p>Date de publication :  aucune</p>
-                                            <p>Saison :{{chapter.inSeason}}</p> {% set counter = counter + 1 %}
-                                        </div>
-                                        <div class="rightChapter flex flexDirectionCollumn textCenter"><i class="fa-solid fa-lock"></i></div>
+                            {% else  %}
+                                <div class="chapter backgroundGrey flex opacity50">
+                                    <div class="leftChapter">
+                                        <p class="title2"><u>Chapitre {{counter}} :</u> {{chapter.name}}</p>
+                                        <p>Date de publication :  aucune</p>
+                                        <p>Saison : {{chapter.inSeason}}</p> {% set counter = counter + 1 %}
                                     </div>
-                                {% endif %}
+                                    <div class="rightChapter flex flexDirectionCollumn textCenter">
+                                        {# pour que l'auteur puisse modifier le chapitre #}
+                                        {% if app.user and app.user.id == chapter.story.person.id %}
+                                            {# <a href=""><i class="fa-solid fa-trash"></i></a> #}
+                                            <a href="{{path('editChapter', {'idStory': story.id, 'chapter': chapter.id})}}" class="linkBtn"><i class="fa-solid fa-pen"></i></a>
+                                        {% endif %}
+                                        <i class="fa-solid fa-lock"></i></div>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>
