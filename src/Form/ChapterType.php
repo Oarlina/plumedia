@@ -34,7 +34,7 @@ class ChapterType extends AbstractType
                         'mimeTypesMessage' => 'Merci d\'uploader un fichier valide (PDF).',
                     ])]])
             ->add('is_public', CheckboxType::class, ['label' => 'Voulez vous mettre le chapitre en public? Si oui cocher la case', 'required'=> false])
-            ->add('isFree', CheckboxType::class, ['label' => 'Voulez vous mettre le chapitre payant? Si oui cocher la case', 'required'=> false])
+            ->add('isFree', CheckboxType::class, ['label' => 'Voulez vous mettre le chapitre gratuit? Si oui cocher la case', 'required'=> false])
             ->add('inSeason', IntegerType::class, ['attr' => ['min' => 1]])
             ->add('Submit', SubmitType::class);
     }

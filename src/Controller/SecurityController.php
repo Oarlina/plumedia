@@ -181,7 +181,7 @@ class SecurityController extends AbstractController
         // je met a jour la BDD et retourne sur la page d'utilisateur
         $entityManager->persist($user);
         $entityManager->flush();
-        $this->addFlash('success', 'Mot de passe modifié');
+        $this->addFlash('sucess', 'Mot de passe modifié');
         return $this->redirectToRoute('app_profil');
     }
 
