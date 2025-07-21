@@ -1,24 +1,21 @@
 <?php
-
 namespace App\Repository;
-
+ 
 use App\Entity\User;
 use App\Entity\Chapter;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
+ 
 /**
  * @extends ServiceEntityRepository<Chapter>
  */
 class ChapterRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(ManagerRegistry $registry){
         parent::__construct($registry, Chapter::class);
     }
 
-    public function findChaptersReadByUser(User $user): array
-    {
+    public function findChaptersReadByUser(User $user): array{
         return $this->createQueryBuilder('c')
             ->innerJoin('c.userHaveRead', 'u')
             ->where('u = :user')
@@ -28,8 +25,7 @@ class ChapterRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findChaptersNotReadByUser(User $user): array
-    {
+    public function findChaptersNotReadByUser(User $user): array{
         return $this->createQueryBuilder('c')
             ->select('DISTINCT c')
             ->join('c.story', 's')
@@ -46,8 +42,7 @@ class ChapterRepository extends ServiceEntityRepository
     //    /**
     //     * @return Chapter[] Returns an array of Chapter objects
     //     */
-    //    public function findByExampleField($value): array
-    //    {
+    //    public function findByExampleField($value): array{
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')
     //            ->setParameter('val', $value)
@@ -57,9 +52,7 @@ class ChapterRepository extends ServiceEntityRepository
     //            ->getResult()
     //        ;
     //    }
-
-    //    public function findOneBySomeField($value): ?Chapter
-    //    {
+    //    public function findOneBySomeField($value): ?Chapter{
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')
     //            ->setParameter('val', $value)

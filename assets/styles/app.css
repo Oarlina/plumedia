@@ -137,14 +137,8 @@ a{
 header nav{
     height: 50px;
     justify-content: space-around;
-    .logoSite {height: 90%;}
+    .logoSite {height: 50px;}
 }
-/* ceci est pour les boutons */
-/* .bouton{
-    padding: 5px 10px;
-    border-radius: 10px;
-    box-shadow: 0 8px 8px var(--myGold);
-} */
 /* ceci est pour les liens qui ne seront pas des boutons */
 .linkBtn {font-size: large;}
 
@@ -301,8 +295,6 @@ header nav{
     margin: 0 auto;
 }
 
-
-
 /* bouton de scroll */
 
 #scrollToTopBtn {
@@ -412,11 +404,8 @@ display: flex;
 }
 .footer-menu a { text-transform: capitalize; /* pour mettre une majuscule a chaque mot */}
 .footer-copyright {padding: 30px 15px;}
-/* @media (max-width: 768px) {
-  .footer-row {
-    flex-direction: column;
-  }
-} */
+
+
 
 #bento {
     max-width: 900px;
@@ -433,22 +422,19 @@ display: flex;
             div[class*="div"]:not(:hover) {opacity: 0.8;}
         }
         /* ligne-début / colonne-début / ligne-fin / colonne-fin */
-        .div1 {grid-area: 1 / 1 / 3 / 1;}
+        .div1 {grid-area: 1 / 1 / 3 / 2;}
         .div2 {grid-area: 2 / 2 / 4 / 4;}
         .div3 {grid-area: 1 / 4 / 3 / 5;}
         .div4 {grid-area: 3 / 4 / 5 / 5;}
         .div5 {grid-area: 1 / 2 / 2 / 4;}
-        .div6 {grid-area: 3 / 1 / 5 / 1;}
+        .div6 {grid-area: 3 / 1 / 5 / 2;}
         .div7 {grid-area: 4 / 2 / 5 / 4;}
         div[class*="div"] {
             min-height: 190px;
             max-height: 310px;
             min-width: 170px;
-            /* max-width: 380px; */
             overflow: hidden;
             border-radius: 10px;
-            /* border: 2px solid rgba(0, 0, 0, 0.1); */
-            /* background: rgba(219, 44, 44, 0.2); */
             transition: ease-in-out 0.2s;
             text-align: center;
             align-content: center;

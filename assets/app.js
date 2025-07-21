@@ -99,3 +99,16 @@ window.onscroll = function (){
 scrollToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+
+const burgerMenu = document.getElementById('burger-menu');
+const navRight = document.querySelector('.rightnav');
+
+console.log(navRight);
+burgerMenu.addEventListener('click', () => {
+    if(navRight.style.display == "" || navRight.style.display == "none"){
+        navRight.style.display = 'block';
+    }else {
+        navRight.style.display = 'none';
+    }
+})

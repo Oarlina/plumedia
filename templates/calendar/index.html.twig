@@ -3,50 +3,49 @@
 {% block title %}Calendrier{% endblock %}
 
 {% block body %}
-<h1 class="textCenter firstTitle">Calendrier : </h1>
-{% if app.user %}
-    <h3>Ici vous pourrez voir les sorties des chapitres des histoires que vous suivez et aimez. </h3>
-    <p>🔵 Les chapitres en bleu sont ceux que vous n’avez pas encore lus.</p>
-    <p>⚪ Les chapitres en gris indiquent ceux que vous avez déjà lus.</p>
-{% else %}
-    <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
-{% endif %}
-<hr>
-<main>
-    <div id="calendar-holder"></div>
-</main>
+    <h1 class="textCenter firstTitle">Calendrier : </h1>
+    {% if app.user %}
+        <h3>Ici vous pourrez voir les sorties des chapitres des histoires que vous suivez et aimez. </h3>
+        <p>🔵 Les chapitres en bleu sont ceux que vous n’avez pas encore lus.</p>
+        <p>⚪ Les chapitres en gris indiquent ceux que vous avez déjà lus.</p>
+    {% else %}
+        <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
+    {% endif %}
+    <hr>
+    <main>
+        <div id="calendar-holder"></div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarEl = document.getElementById('calendar-holder');
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const calendarEl = document.getElementById('calendar-holder');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                fixedWeekCount: false,
+                locale: 'fr',
+                buttonText: {
+                    today: 'Aujourd\'hui',
+                    week: 'Semaine',
+                    month: 'Mois',
+                    year: 'Année',
+                },
+                eventSources: [{
+                    url: '/fcloadevents',
+                    method: 'POST',
+                    extraParams: {},
+                    failure: function () {
+                        alert('Erreur lors du chargement des événements.');
+                    }
+                }],
+                headerToolbar: {
+                    start: 'prev,next',
+                    center: 'title',
+                    end: 'today,dayGridWeek,dayGridMonth,multiMonthYear'
+                },
+                timeZone: 'Europe/Paris',
+            });
 
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            fixedWeekCount: false,
-            locale: 'fr',
-            buttonText: {
-                today: 'Aujourd\'hui',
-                week: 'Semaine',
-                month: 'Mois',
-                year: 'Année',
-            },
-            eventSources: [{
-                url: '/fcloadevents',
-                method: 'POST',
-                extraParams: {},
-                failure: function () {
-                    alert('Erreur lors du chargement des événements.');
-                }
-            }],
-            headerToolbar: {
-                start: 'prev,next',
-                center: 'title',
-                end: 'today,dayGridWeek,dayGridMonth,multiMonthYear'
-            },
-            timeZone: 'Europe/Paris',
+            calendar.render();
         });
-
-        calendar.render();
-    });
-</script>
+    </script>
 {% endblock %}

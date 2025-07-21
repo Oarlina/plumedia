@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
@@ -24,49 +23,37 @@ class Category
     #[ORM\ManyToMany(targetEntity: Story::class, mappedBy: 'categories', orphanRemoval: true)]
     private Collection $Stories;
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->Stories = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int{
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string{
         return $this->name;
     }
-
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
      * @return Collection<int, Story>
      */
-    public function getStories(): Collection
-    {
+    public function getStories(): Collection{
         return $this->Stories;
     }
-
-    public function addStory(Story $story): static
-    {
+    public function addStory(Story $story): static{
         if (!$this->Stories->contains($story)) {
             $this->Stories->add($story);
         }
-
         return $this;
     }
-
-    public function removeStory(Story $story): static
-    {
+    public function removeStory(Story $story): static{
         $this->Stories->removeElement($story);
-
         return $this;
     }
 }

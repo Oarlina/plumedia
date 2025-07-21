@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use App\Entity\User;
@@ -24,11 +23,9 @@ use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 class RegistrationFormType extends AbstractType
 {
     public function __construct(
-        private readonly RouterInterface $router
-    ){}
+        private readonly RouterInterface $router){}
     
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options): void{
         $builder
             ->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
@@ -50,9 +47,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez donnez un mot de passe',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez donnez un mot de passe']),
                     new Regex(array(
                             // la regex : 
                                 // '^' correspond au debut d'une chaine, '*' anonnonce une ou plusieurs occurences, '?' pour aucune ou une occurence
@@ -60,8 +55,7 @@ class RegistrationFormType extends AbstractType
                                 //  {12,4096} doit avoir entre 12 et 4096 caractères; $[a-z] doit avoir une minuscule; *[A-Z] doit avoir majuscule
                                 // *\d pour avoir des nombres; $\W pour avoir des caractères spéciaux. 
                         'pattern' => '/^(?=.{12,4096})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).*$/',
-                        'message' => 'Le mot de passe doit au moins faire 12 caractères, avoir une majuscule, une minuscule, un chiffre et un caractère spécial.'
-                        ))],])
+                        'message' => 'Le mot de passe doit au moins faire 12 caractères, avoir une majuscule, une minuscule, un chiffre et un caractère spécial.'))],])
             ->add('confirmPassword', PasswordType::class,[
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -71,9 +65,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez donnez un mot de passe',
-                    ]),
+                    new NotBlank(['message' => 'Veuillez donnez un mot de passe',]),
                     new Regex(array(
                             // la regex : 
                                 // '^' correspond au debut d'une chaine, '*' anonnonce une ou plusieurs occurences, '?' pour aucune ou une occurence
@@ -87,12 +79,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'label' => 'J\'accepte les <a href="'. $this->router->generate('legal_privacy_policy').'" class="boutonWhite">conditions générales</a>',
                 'label_html' => true,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+                'constraints' => [ new IsTrue(['message' => 'You should agree to our terms.']) ]])
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'Inscription',
@@ -101,8 +88,7 @@ class RegistrationFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
+    public function configureOptions(OptionsResolver $resolver): void{
         $resolver->setDefaults([
             'data_class' => User::class,
         ]);

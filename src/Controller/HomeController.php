@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Controller;
-
+ 
 use App\Repository\UserRepository;
 use App\Repository\StoryRepository;
 use App\Repository\CategoryRepository;
@@ -14,15 +13,12 @@ final class HomeController extends AbstractController
     public function __construct(
         private CategoryRepository $categoryRepository,
         private UserRepository $userRepository,
-        private StoryRepository $storyRepository,
-    ){}
+        private StoryRepository $storyRepository){}
+
     #[Route('', name: 'app_home')]
-    public function index(): Response
-    {
+    public function index(): Response{
         $storiesPop = $this->storyRepository->nPopularStory(2);
         $stories = $this->storyRepository->findStoriesExcludingIds([$storiesPop[0]->getId(), $storiesPop[1]->getId()]);
-        // dd($stories);
-
         // je fais la recherche de 3 autheurs 
         $allAuthors = $this->userRepository->findAll();
         $authors = [] ;
@@ -44,9 +40,9 @@ final class HomeController extends AbstractController
     }
 
     #[Route('home', name: 'show_home')]
-    public function home(): Response
-    {
-        $categories = $this->categoryRepository->findBy([], [], 5); // je limite à 5 catégories
+    public function home(): Response{
+        // je limite à 5 catégories
+        $categories = $this->categoryRepository->findBy([], [], 5); 
         $stories = $this->storyRepository->nPopularStory(9);
         return $this->render('home/home.html.twig', [
             'categories' => $categories,
