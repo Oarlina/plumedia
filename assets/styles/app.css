@@ -47,8 +47,8 @@ body, p, li, a, pre {
 .justifyContentBetween {justify-content: space-between;}
 
 /* boutons */
-.boutonWhite:hover{color: var(--myGold);}
-.boutonGold:hover{color: var(--myWhite);}
+.boutonWhite:hover{color: var(--myGold); background-color: #3b2f2f;}
+.boutonGold:hover{color: var(--myWhite); background-color: #3b2f2f;}
 
 /* petit css */
 .textCenter{text-align: center;}

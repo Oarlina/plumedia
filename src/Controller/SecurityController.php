@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
 
     // pour la suppression d'un compte
     #[Route(path:'/delete_account/{user}/{bool}', name:"delete_account")]
-    public function delete(User $user, $bool = null, EntityManagerInterface $entityManager): Response {
+    public function deleteAccount(User $user, EntityManagerInterface $entityManager, $bool = null,): Response {
         // si bool vaut 0 alors redirige page pour confirmer suppressions
         if ($bool == 0 ){
             return $this->render('user/deleteProfil.html.twig', ['user' => $user]);
