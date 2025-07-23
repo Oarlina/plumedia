@@ -12,13 +12,10 @@
         <h3>Ici vous pourrez voir les sorties des chapitres de toutes les histoires. </h3>
     {% endif %}
     <hr>
-    <main>
-        <div id="calendar-holder"></div>
-    </main>
+    <main><div id="calendar-holder"></div></main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const calendarEl = document.getElementById('calendar-holder');
-
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 fixedWeekCount: false,
@@ -44,7 +41,6 @@
                 },
                 timeZone: 'Europe/Paris',
             });
-
             calendar.render();
         });
     </script>

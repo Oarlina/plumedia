@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ChapterRepository;
@@ -76,7 +75,6 @@ class Chapter
     {
         return $this->name;
     }
-
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -88,7 +86,6 @@ class Chapter
     {
         return $this->publish;
     }
-
     public function setPublish(\DateTimeInterface $publish): static
     {
         $this->publish = $publish;
@@ -100,7 +97,6 @@ class Chapter
     {
         return $this->file;
     }
-
     public function setFile(string $file): static
     {
         $this->file = $file;
@@ -108,11 +104,10 @@ class Chapter
         return $this;
     }
 
-    public function isFree(): ?bool
+    public function getIsFree(): ?bool
     {
         return $this->isFree;
     }
-
     public function setIsFree(bool $isFree): static
     {
         $this->isFree = $isFree;
@@ -124,7 +119,6 @@ class Chapter
     {
         return $this->InSeason;
     }
-
     public function setInSeason(int $InSeason): static
     {
         $this->InSeason = $InSeason;
@@ -136,7 +130,6 @@ class Chapter
     {
         return $this->user;
     }
-
     public function setUser(?User $user): static
     {
         $this->user = $user;
@@ -148,7 +141,6 @@ class Chapter
     {
         return $this->story;
     }
-
     public function setStory(?Story $story): static
     {
         $this->story = $story;
@@ -163,7 +155,6 @@ class Chapter
     {
         return $this->comments;
     }
-
     public function addComment(Comment $comment): static
     {
         if (!$this->comments->contains($comment)) {
@@ -173,7 +164,6 @@ class Chapter
 
         return $this;
     }
-
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
@@ -193,7 +183,6 @@ class Chapter
     {
         return $this->usersLike;
     }
-
     public function addUsersLike(User $usersLike): static
     {
         if (!$this->usersLike->contains($usersLike)) {
@@ -203,7 +192,6 @@ class Chapter
 
         return $this;
     }
-
     public function removeUsersLike(User $usersLike): static
     {
         if ($this->usersLike->removeElement($usersLike)) {
@@ -220,7 +208,6 @@ class Chapter
     {
         return $this->userHaveRead;
     }
-
     public function addUserHaveRead(User $userHaveRead): static
     {
         if (!$this->userHaveRead->contains($userHaveRead)) {
@@ -230,7 +217,6 @@ class Chapter
 
         return $this;
     }
-
     public function removeUserHaveRead(User $userHaveRead): static
     {
         if ($this->userHaveRead->removeElement($userHaveRead)) {
@@ -244,7 +230,6 @@ class Chapter
     {
         return $this->isPublic;
     }
-
     public function setIsPublic(bool $isPublic): static
     {
         $this->isPublic = $isPublic;

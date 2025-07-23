@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Home{% endblock %}</title>
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/phoneResponsive.css') }}">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display&display=swap" rel="stylesheet">
@@ -21,7 +23,8 @@
             {% block icon %} <link rel="icon" href="{{asset('img/avatar_base.png')}}" type="image/x-icon"> {% endblock %}
         {% endblock %}
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') | raw }}{% endblock %}
+            {# {% block importmap %}{{ importmap('app') | raw }}{% endblock %} #}
+            <script src="{{asset('js/app.js')}}"></script>
             <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
             <script>
@@ -101,7 +104,7 @@
                 </div>
                 <div class="rightnav backgroundBrown flex alignCenter width80 justifyContent">
                     <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
-                    <a href="{{path('calendar_year')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
+                    <a href="{{path('calendar')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
                     <a href="{{path('populars')}}" class="bouton boutonWhite">Populaires</a>
                     {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                         {% if app.user %}
@@ -139,7 +142,7 @@
                     <h3>Liens utiles</h3>
                     <a href="/.." class="bouton boutonWhite">Home</a>
                     <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
-                    <a href="{{path('calendar_year')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
+                    <a href="{{path('calendar')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
                     <a href="{{path('populars')}}" class="bouton boutonWhite">Populaires</a>
                     <a href="{{path('contact_form')}}" class="bouton boutonWhite">Contact</a>
                 </div>

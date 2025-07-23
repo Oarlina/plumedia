@@ -123,7 +123,7 @@ final class ChapterController extends AbstractController
     }
 
     // pour la page de calendrier
-    #[Route(path:'/calendrier', name:'calendar_year')]
+    #[Route(path:'/calendrier', name:'calendar')]
     public function calendar() : Response {
         // je récupère les chapitres que je veux afficher sur le calendrier
         $chapters = $this->loadEvents();
@@ -188,7 +188,6 @@ final class ChapterController extends AbstractController
             $chapters = $this->chapterRepository->findBy(['isPublic' => true]);
         }
 
-        // dd($read);
         // je parcours les chapitres pour les mettre en JSON et leur assigner leur URL
         foreach ($chapters as $chapter) {
             $publishDate = $chapter->getPublish();

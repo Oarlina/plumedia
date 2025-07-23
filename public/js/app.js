@@ -9,7 +9,7 @@
 // import './styles/phoneResponsive.css';
 
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+console.log('Thggffgfg! 🎉');
 
 // ceci est un timer
 setTimeout(() => {

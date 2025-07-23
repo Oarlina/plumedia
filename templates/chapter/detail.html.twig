@@ -25,119 +25,102 @@
 {% endblock %}
 
 {% block body %}
-<h1><a href="{{ path('app_chapter', {'idStory' : story.id})}}" class="textCenter width100 boutonWhite">{{story.name}}</a></h1>
+    <h1><a href="{{ path('app_chapter', {'idStory' : story.id})}}" class="textCenter width100 boutonWhite">{{story.name}}</a></h1>
 
-<h3 class="textCenter">{{chapter.name}}</h3>
+    <h3 class="textCenter">{{chapter.name}}</h3>
 
-    {# le bouton qui permet de partager sur Facebook #}
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id}) ) }}" target="_blank" class="width50 marginAutoWidth">
-        <i class="fa-brands fa-facebook"></i>
-    </a>
-
-<pre class="chapterText"> {{file}} </pre> 
-{# ce sont les boutons en dessous du chapitre #}
-<div class="width100 flex justifyContent">
-    {% if before %}
-        <a href="{{path('before_after_chatper', {'idChapter': before.id, 'name' : 'before'})}}" class="backgroundPurple bouton " data-turbo="false">Episode précédent</a>
-    {% endif %}
-    {# la gestion de like #}
-    {% if app.user and app.user in chapter.usersLike %}
-        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike'})}}" class="boutonWhite">{{chapter.usersLike | length}}
-            <i class="fa-solid fa-heart textRed"></i>
+        {# le bouton qui permet de partager sur Facebook #}
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url (path ('show_chapter', {'chapter' : chapter.id}) ) }}" target="_blank" class="width50 marginAutoWidth">
+            <i class="fa-brands fa-facebook"></i>
         </a>
-    {% elseif app.user %}
-        <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike'})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
-            <i class="fa-regular fa-heart"></i>
-        </a>
-    {% endif %}
-    {# gestion d'abonnement à l'histoire #}
-    {% if app.user  in story.usersFollow %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
-    {% elseif app.user %}
-        <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'chapter' : chapter.id})}}" class="bouton textGreen"> S'abonner</a>
-    {% endif %}
-    {% if after %}
-    <a href="{{path('before_after_chatper', {'idChapter': after.id, 'name' : 'after'})}}" class="backgroundPurple bouton "  data-turbo="false">Episode suivant</a>
-    {% endif %}
-</div>
-{# ce sont les commentaires  #}
-<div class="comments">
-    <h2>Commentaires: ({{chapter.comments | length}})</h2>
-    <form method="post" action="{{path('create_comment', {'idChapter': chapter.id}) }}" class="backgroundBrown bouton">
-        <div id="editor" type="textarea"> </div> <br>
-        <input type="checkbox" id="spoiler" name="spoiler" value="1">
-        <label for="spoiler"> Spoiler </label>
-        <button type="submit" class="noBorder bouton boutonWhite">Envoyer</button>
-    </form>
 
-    <nav class="flex justifyContent">
-        <a href="" class="">TOP</a>
-        <a href="" class="">Le plus récent</a>
-        <a href="" class="">Spoiler</a>
-        <a href="" class="">Sans spoiler</a>
-    </nav>
-    <hr>
-    {% if chapter.comments | length > 0 %}
-        {% for comment in chapter.comments %}
-            {# gestion du compte supprimé #}
-            <h3>
-                {% if 'delete_user' in comment.user.pseudo %}
-                    Compte supprimé
-                {% elseif app.user and chapter.user.id == app.user.id %}
-                    {{comment.user.pseudo}} - auteur
-                {% else %}
-                    {{comment.user.pseudo}}
-                {% endif %}
-                - {% if app.user and comment.user.id == app.user.id %} <a href=""><i class="fa-solid fa-pen"></i></a> - <a href=""><i class="fa-solid fa-trash"></i></a> {% endif %}
-            </h3>
+    <pre class="chapterText"> {{file}} </pre> 
+    {# ce sont les boutons en dessous du chapitre #}
+    <div class="width100 flex justifyContent">
+        {% if before %}
+            <a href="{{path('before_after_chatper', {'idChapter': before.id, 'name' : 'before'})}}" class="backgroundPurple bouton " data-turbo="false">Episode précédent</a>
+        {% endif %}
+        {# la gestion de like #}
+        {% if app.user and app.user in chapter.usersLike %}
+            <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'removeUsersLike'})}}" class="boutonWhite">{{chapter.usersLike | length}}
+                <i class="fa-solid fa-heart textRed"></i>
+            </a>
+        {% elseif app.user %}
+            <a href="{{path('changeChapterIn', {'chapter' : chapter.id, 'fonction' : 'addUsersLike'})}}" class="backgroundPink bouton">{{chapter.usersLike | length}}
+                <i class="fa-regular fa-heart"></i>
+            </a>
+        {% endif %}
+        {# gestion d'abonnement à l'histoire #}
+        {% if app.user  in story.usersFollow %}
+            <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
+        {% elseif app.user %}
+            <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'chapter' : chapter.id})}}" class="bouton textGreen"> S'abonner</a>
+        {% endif %}
+        {% if after %}
+        <a href="{{path('before_after_chatper', {'idChapter': after.id, 'name' : 'after'})}}" class="backgroundPurple bouton "  data-turbo="false">Episode suivant</a>
+        {% endif %}
+    </div>
+    {# ce sont les commentaires  #}
+    <div class="comments">
+        <h2>Commentaires: ({{chapter.comments | length}})</h2>
+        <form method="post" action="{{path('create_comment', {'idChapter': chapter.id}) }}" class="backgroundBrown bouton">
+            <div id="editor" type="textarea"> </div> <br>
+            <input type="checkbox" id="spoiler" name="spoiler" value="1">
+            <label for="spoiler"> Spoiler </label>
+            <button type="submit" class="noBorder bouton boutonWhite">Envoyer</button>
+        </form>
 
-            <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
-            {{comment.message | raw }}
-            <a href="">like</a>
-    {# j'affiche les commentaires dans l'ordre décroissant #}
-    {% if comments | length > 0 %}
-        {% for comment in comments %}
-            <div class="comment backgroundWhite marginFifteen">
-                {# gestion du compte supprimé #}
-                <h3>
-                    {% if 'delete_user' in comment.user.pseudo %}
-                        Compte supprimé
-                    {% elseif comment.user.id == app.user.id %}
-                        {{comment.user.pseudo}} - auteur
-                    {% else %}
-                        {{comment.user.pseudo}}
-                    {% endif %}
-                    {% if comment.user.id == app.user.id or 'ROLE_MODERATOR' in app.user.roles %} 
-                        -<a href="{{path('delete_comment', {'idComment' : comment.id})}}"> <i class="fa-solid fa-trash"></i> </a> 
-                    {% endif %}
-                </h3>
-                <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
-                {{comment.message | raw }}
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>Il n'y a aucun commentaire.</p>
-    {% endif %}
-</div>
-<script>
-    const quill = new Quill('#editor', {
-        modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline'],
-            ['emoji'] ],
-        'emoji-toolbar': true,
-        'emoji-textarea': true,
-        'emoji-shortname': true
-        },
-        placeholder: 'Ecrire un commentaire...',
-        theme: 'snow',
-    });
-    // avant d'envboyer le formulaire j'ajoute le texte du formulaire dedans 
-    const form = document.querySelector('form');
-    form.addEventListener('formdata', (event) => {
-    // Append Quill content before submitting
-        var html = quill.root.innerHTML.replace(/\uFEFF/g, '');
-        event.formData.append('comment', html);
-    });
-</script>
+        <nav class="flex justifyContent">
+            <a href="" class="">TOP</a>
+            <a href="" class="">Le plus récent</a>
+            <a href="" class="">Spoiler</a>
+            <a href="" class="">Sans spoiler</a>
+        </nav>
+        <hr>
+        {# j'affiche les commentaires dans l'ordre décroissant #}
+        {% if comments | length > 0 %}
+            {% for comment in comments %}
+                <div class="comment backgroundWhite marginFifteen">
+                    {# gestion du compte supprimé #}
+                    <h3>
+                        {% if 'delete_user' in comment.user.pseudo %}
+                            Compte supprimé
+                        {% elseif comment.user.id == app.user.id %}
+                            {{comment.user.pseudo}} - auteur
+                        {% else %}
+                            {{comment.user.pseudo}}
+                        {% endif %}
+                        {% if comment.user.id == app.user.id or 'ROLE_MODERATOR' in app.user.roles %} 
+                            -<a href="{{path('delete_comment', {'idComment' : comment.id})}}"> <i class="fa-solid fa-trash"></i> </a> 
+                        {% endif %}
+                    </h3>
+                    <p class="smallSize">{{comment.dateComment | date('m/d/Y') }}</p>
+                    {{comment.message | raw }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Il n'y a aucun commentaire.</p>
+        {% endif %}
+    </div>
+    <script>
+        const quill = new Quill('#editor', {
+            modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                ['emoji'] ],
+            'emoji-toolbar': true,
+            'emoji-textarea': true,
+            'emoji-shortname': true
+            },
+            placeholder: 'Ecrire un commentaire...',
+            theme: 'snow',
+        });
+        // avant d'envboyer le formulaire j'ajoute le texte du formulaire dedans 
+        const form = document.querySelector('form');
+        form.addEventListener('formdata', (event) => {
+        // Append Quill content before submitting
+            var html = quill.root.innerHTML.replace(/\uFEFF/g, '');
+            event.formData.append('comment', html);
+        });
+    </script>
 {% endblock %}
