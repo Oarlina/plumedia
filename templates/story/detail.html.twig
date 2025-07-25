@@ -55,15 +55,15 @@
                 {% elseif app.user %}
                     {# je fais la gestion de like d'une histoire #}
                     {% if app.user and app.user  in story.usersLike %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}">{{story.usersLike | length}} <i class="fa-solid fa-heart textRed"></i></a>
+                        <a href="{{path('followLike', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersLike'})}}">{{story.usersLike | length}} <i class="fa-solid fa-heart textRed"></i></a>
                     {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" >{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
+                        <a href="{{path('followLike', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersLike'})}}" >{{story.usersLike | length}} <i class="fa-regular fa-heart"></i></a>
                     {% endif %}
                     {# je fais la gestion de follow d'une histoire #}
-                    {% if app.user  in story.usersFollow %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton textRed ">Se désabonner ({{story.usersFollow | length}})</a>
+                    {% if app.user and app.user  in story.usersFollow %}
+                        <a href="{{path('followLike', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow'})}}" class="bouton textRed ">Se désabonner ({{story.usersFollow | length}})</a>
                     {% else %}
-                        <a href="{{path('add', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton textGreen ">S'abonner ({{story.usersFollow | length}})</a>
+                        <a href="{{path('followLike', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow'})}}" class="bouton textGreen ">S'abonner ({{story.usersFollow | length}})</a>
                     {% endif %}
                 {% endif %}
             </div>

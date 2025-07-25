@@ -80,15 +80,16 @@ final class StoryController extends AbstractController
     }
     
     // Si l'utilisateur veut aimer/ liker une histoire
-    #[Route(path:'/add/{id}/{id2}/{name}', name:'add')]
-    #[Route(path:'/add/{id}/{id2}/{name}/{chapter}', name:'addIn')]
-    public function add(Story $id, User $id2, string $name, Chapter $chapter = null): Response{
+    #[Route(path:'/followLike/{id}/{id2}/{name}', name:'followLike')]
+    #[Route(path:'/followLike/{id}/{id2}/{name}/{chapter}', name:'addIn')]
+    public function followLike(Story $id, User $id2, string $name, Chapter $chapter = null): Response{
         // j'utilise la fonction pour ajouter soit le like soit le follow 
         $allowed = ['addUsersFollow', 'addUsersLike', 'removeUsersFollow', 'removeUsersLike'];
-        if (in_array($name, $allowed)) {
-            $id->$name($id2);
+        $user = $this->getUser(); 
+        if (in_array($name, $allowed) and $user) {
+            $id->$name($user);
             // je met a jour la BDD
-            $this->entityManager->persist($id2);
+            $this->entityManager->persist($user);
             $this->entityManager->flush();
             // je retourne sur la page detail de l'histoire
         }else {
@@ -97,6 +98,7 @@ final class StoryController extends AbstractController
         if ( $chapter){
             return $this->redirectToRoute('show_chapter', ['chapter' => $chapter->getId()]);
         }
+        // dd($id->getId());
         return $this->redirectToRoute('detail_story', ['id'=> $id->getId()]);
     }
 
