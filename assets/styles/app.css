@@ -88,7 +88,7 @@ body, p, li, a, pre {
 .backgroundGrey{background-color: var(--myGrey);}
 .backgroundWhite{background-color: var(--myWhite);}
 .backgroundPurple{background-color: var(--myGold);}
-.bouton{
+a{
     padding: 5px 10px;
     border-radius: 10px;
 }

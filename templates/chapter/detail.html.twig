@@ -52,9 +52,9 @@
         {% endif %}
         {# gestion d'abonnement à l'histoire #}
         {% if app.user  in story.usersFollow %}
-            <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'removeUsersFollow', 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
+            <a href="{{path('addIn', {'id': story.id, 'name': 'removeUsersFollow', 'chapter' : chapter.id})}}" class="bouton textRed"> Se désabonner</a>
         {% elseif app.user %}
-            <a href="{{path('addIn', {'id': story.id, 'id2': app.user.id, 'name': 'addUsersFollow', 'chapter' : chapter.id})}}" class="bouton textGreen"> S'abonner</a>
+            <a href="{{path('addIn', {'id': story.id, 'name': 'addUsersFollow', 'chapter' : chapter.id})}}" class="bouton textGreen"> S'abonner</a>
         {% endif %}
         {% if after %}
         <a href="{{path('before_after_chatper', {'idChapter': after.id, 'name' : 'after'})}}" class="backgroundPurple bouton "  data-turbo="false">Episode suivant</a>

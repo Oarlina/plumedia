@@ -47,13 +47,13 @@ class Chapter
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedChapters', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likedChapters')]
     private Collection $usersLike;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters', orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'readChapters')]
     private Collection $userHaveRead;
 
     #[ORM\Column]
