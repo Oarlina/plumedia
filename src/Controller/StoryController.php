@@ -123,18 +123,24 @@ final class StoryController extends AbstractController
 
         return $this->render('story/suggestions.html.twig', ['story' => $idStory]);
     }
-    #[Route(path:'/populaires', name:'populars')]
-    public function populars () : Response  {
+    #[Route(path:'/populaires', name:'popular')]
+    public function popular () : Response  {
         // je recupere les 5 catégories les plus follow
         $stories = $this->storyRepository->nPopularStory(5);
         $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
         return $this->render('story/populars.html.twig', ['categories' => $categories, 'stories' => $stories]);
     }
 
-    #[Route(path:'/populaires/{idCategory}', name:'show_populars')]
-    public function detail_category (Category $idCategory) : Response  {
+    #[Route(path:'/populaires/{idCategory}', name:'populars')]
+    public function populars (Category $idCategory) : Response  {
         // je recupere les 5 catégories les plus follow
-        // dd($idCategory->getStories());
+        if ($idCategory == 0){
+            $stories = $this->storyRepository->nPopularStory(5);
+            $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
+            return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => 0]);
+        }
+
+        
         if (COUNT($idCategory->getStories()) > 5){
             $stories = $idCategory->getStories();
         }else{

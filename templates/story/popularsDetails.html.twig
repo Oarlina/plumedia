@@ -15,7 +15,11 @@
             <i class="fa-solid fa-arrow-left" id="backBtn"></i>
             <div class="gallery flex" >
                 <div>
-                    <a href="{{path('populars')}}" class="boutonWhite">Tous</a> -
+                    {% if category == 0 %}
+                        <a href="{{path('populars')}}" class=" larger bouton boutonGold backgroundGold"><b>Tous</b></a> -
+                        {% else %}
+                        <a href="{{path('populars')}}" class="boutonWhite">Tous</a> -
+                    {% endif %}
                     {% set counter = 2 %}
 
                     {% for cat in categories %}
