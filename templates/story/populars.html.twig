@@ -11,10 +11,10 @@
         j'affiche 5 catégories à la fois et permet de voir les autres via des flèches #}
     {% set counter = 1 %}
     {# c'est la liste des catégories #}
-    <nav id="gallery-wrap" class="flex flexDirectionRow">
+    <nav id="gallery-wrap" class="flex flexDirectionRow width50 marginAutoWidth">
             <i class="fa-solid fa-arrow-left" id="backBtn"></i>
-            <div class="gallery flex" >
-                <div>
+            <div class="gallery flex width10 justifyContent" >
+                <div class="galleryContent">
                     {% if all == true %}
                         <a href="{{path('allPopulars', {'all': true})}}" class="larger bouton boutonGold backgroundGold"><b>Tous</b></a> -
                     {% else %}
@@ -32,7 +32,7 @@
                             {% endif %}
                         {% else %}
                 </div>
-                <div>
+                <div class="galleryContent">
                             {% set counter = 1 %}               
                         {% endif %}
                     {% endfor %}
@@ -61,6 +61,7 @@
                     {# c'est la partie de droite #}
                     <div class="right backgroundWhite">
                         <h3 class="secondTitle">{{story.name}}</h3> <br>
+                            <p><u>Auteur :</u> {{story.person.pseudo}}</p>
                         {# ceci est la gestion des genres #}
                             <p><u>Genres :</u>
                             {% if story.categories | length > 0 %}

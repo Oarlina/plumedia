@@ -132,7 +132,7 @@ final class StoryController extends AbstractController
         // je vérifie si je veux récupréer les populaires selon toutes les catégories
         if ($all != null){
             $stories = $this->storyRepository->nPopularStory(5);
-            return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => 0, 'all' => true]);
+            return $this->render('story/populars.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => 0, 'all' => true]);
         }
         // sinon je récupère les populaire de la catégorie choisie
         if (COUNT($idCategory->getStories()) > 5){
@@ -140,7 +140,7 @@ final class StoryController extends AbstractController
         }else{
             $stories = $this->storyRepository->nPopularStoryCategories(5, $idCategory->getId());
         }
-        return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory, 'all' => false]);
+        return $this->render('story/populars.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory, 'all' => false]);
     }
 
     // suppression d'une histoire

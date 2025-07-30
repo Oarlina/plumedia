@@ -101,6 +101,13 @@ a, .bouton{
     object-fit: cover;
     border-radius: 5%;
 }
+.boutonRegisteer::before{
+    background-color: var(--myGold);
+    height: 20px;
+    width: 40px;
+}
+
+
 .story:hover{scale: 1.1; transition: ease-in-out 0.2s;}
 .story:hover .summary:hover{opacity: 0.8; }
 .summary{font-size: small; padding: 10% 5%; text-overflow: ellipsis; }
@@ -246,18 +253,15 @@ header nav{
     width: 80%;
     height: fit-content;}
 
-#gallery-wrap{width: 100%;}
 .gallery{
-    width:1500px;
     overflow-x: scroll;
 }
 .gallery div{
     width: 100%;
     grid-template-columns: auto auto auto;
-    padding: 10px;
+    /* padding: 10px; */
     flex: none;
 }
-.gallery div i {width: 100%;}
 .gallery::-webkit-scrollbar {display: none;}
 
 .gallery-wrap{

@@ -46,15 +46,15 @@ window.scrollContainer = function () {
     scrollContainer.style.scrollBehavior = 'auto';
 };
 // c'est l'évènement quand on veut aller à droite
-window.nextBtn = function (){
+nextBtn.addEventListener("click", function() {
     scrollContainer.style.scrollBehavior = 'smooth';
-    scrollContainer.scrollLeft += 1500;
-};
-// c'est l'évènement lorsque l'on veut aller à gauche
-window.backBtn = function (){
+    scrollContainer.scrollLeft += window.innerWidth /2.1;
+});
+// c'est l'évènement pour aller à gauche
+backBtn.addEventListener("click", function() {
     scrollContainer.style.scrollBehavior = 'smooth';
-    scrollContainer.scrollLeft -= 1500;
-};
+    scrollContainer.scrollLeft -= window.innerWidth /2.1;
+});
 function changeNbSlide(n, change){
     if (change == 1) {
         if (n == 3) {
