@@ -105,7 +105,7 @@
                 <div class="rightnav backgroundBrown flex alignCenter width80 justifyContent">
                     <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
                     <a href="{{path('calendar')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
-                    <a href="{{path('populars', {'idCategory': 0})}}" class="bouton boutonWhite">Populaires</a>
+                    <a href="{{path('allPopulars', {'all': true})}}" class="bouton boutonWhite">Populaires</a>
                     {# si l'utilisateur est connecter alors je permet directement la déconnexion et l'accès à son compte  #}
                         {% if app.user %}
                             <a href=""><i class="fa-solid fa-bell"></i><mark>5</mark></a>
@@ -143,7 +143,7 @@
                     <a href="/.." class="bouton boutonWhite">Home</a>
                     <a href="{{path('app_category')}}" class="bouton boutonWhite">Catégories</a>
                     <a href="{{path('calendar')}}" class="bouton boutonWhite" data-turbo="false">Calendrier</a>
-                    <a href="{{path('populars', {'idCategory': 0})}}" class="bouton boutonWhite">Populaires</a>
+                    <a href="{{path('allPopulars', {'all': true})}}" class="bouton boutonWhite">Populaires</a>
                     <a href="{{path('contact_form')}}" class="bouton boutonWhite">Contact</a>
                 </div>
                 <div class="footer-column textCenter">

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="textCenter">Histoires les plus populaires dans {{category.name}} : </h1>
+    <h1 class="textCenter">Histoires les plus populaires dans {% if all == false %} {{category.name}} {% endif %} : </h1>
 
     {# ceci est pour ma navbar
         j'affiche 5 catégories à la fois et permet de voir les autres via des flèches #}
@@ -15,20 +15,20 @@
             <i class="fa-solid fa-arrow-left" id="backBtn"></i>
             <div class="gallery flex" >
                 <div>
-                    {% if category == 0 %}
-                        <a href="{{path('populars')}}" class=" larger bouton boutonGold backgroundGold"><b>Tous</b></a> -
-                        {% else %}
-                        <a href="{{path('populars')}}" class="boutonWhite">Tous</a> -
+                    {% if all == true %}
+                        <a href="{{path('allPopulars', {'all': true})}}" class="larger bouton boutonGold backgroundGold"><b>Tous</b></a> -
+                    {% else %}
+                        <a href="{{path('allPopulars', {'all': true})}}" class="boutonWhite">Tous</a> -
                     {% endif %}
                     {% set counter = 2 %}
 
                     {% for cat in categories %}
                         {% if counter <=5 %}
                             {% set counter = counter + 1 %}
-                            {% if cat == category %}
-                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class=" larger bouton boutonGold backgroundGold"><b>{{cat.name}} </b></a>  -
+                            {% if all == false and cat == category %}
+                                <a href="{{path('populars', {'idCategory': cat.id})}}" class="larger bouton boutonGold backgroundGold"><b>{{cat.name}} </b></a>  -
                             {% else %}
-                                <a href="{{path('show_populars', {'idCategory': cat.id})}}" class="boutonWhite">{{cat.name}} </a> -
+                                <a href="{{path('populars', {'idCategory': cat.id})}}" class="boutonWhite">{{cat.name}} </a> -
                             {% endif %}
                         {% else %}
                 </div>
@@ -66,7 +66,7 @@
                             {% if story.categories | length > 0 %}
                                 {% set c = 1 %}
                                 {% for category in story.categories %}
-                                    {{category.name }}
+                                    <a href="{{ path('show_category', {'idCategory' : category.id}) }}" class="boutonWhite">{{category.name}}</a>
                                     {% if c < (story.categories | length) %},{% endif %}
                                     {% set c = c + 1 %}
                                 {% endfor %}
@@ -76,7 +76,7 @@
                         </p>
                         <p><u>Nombre de chapitres :</u> {{story.chapters | length }}</p>
                         <p> <u>Résumé:</u> {{story.summary}}</p>
-                        <p  class="boutonWhite">En savoir plus <i class="fa-solid fa-arrow-right"></i></p>
+                        <p  class="bouton boutonWhite">En savoir plus <i class="fa-solid fa-arrow-right"></i></p>
                     </div>
                 </div>
             </a>

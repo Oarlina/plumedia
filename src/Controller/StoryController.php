@@ -123,31 +123,24 @@ final class StoryController extends AbstractController
 
         return $this->render('story/suggestions.html.twig', ['story' => $idStory]);
     }
-    #[Route(path:'/populaires', name:'popular')]
-    public function popular () : Response  {
-        // je recupere les 5 catégories les plus follow
-        $stories = $this->storyRepository->nPopularStory(5);
-        $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
-        return $this->render('story/populars.html.twig', ['categories' => $categories, 'stories' => $stories]);
-    }
 
+    // j'affiche la page des populaires
     #[Route(path:'/populaires/{idCategory}', name:'populars')]
-    public function populars (Category $idCategory) : Response  {
-        // je recupere les 5 catégories les plus follow
-        if ($idCategory == 0){
+    #[Route(path:'/allPopulaires/{all}', name:'allPopulars')]
+    public function populars (Category $idCategory = null, bool $all = null) : Response  {
+        $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
+        // je vérifie si je veux récupréer les populaires selon toutes les catégories
+        if ($all != null){
             $stories = $this->storyRepository->nPopularStory(5);
-            $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
-            return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => 0]);
+            return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => 0, 'all' => true]);
         }
-
-        
+        // sinon je récupère les populaire de la catégorie choisie
         if (COUNT($idCategory->getStories()) > 5){
             $stories = $idCategory->getStories();
         }else{
             $stories = $this->storyRepository->nPopularStoryCategories(5, $idCategory->getId());
         }
-        $categories = $this->categoryRepository->findBy([], ['name'=>'ASC']);
-        return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory]);
+        return $this->render('story/popularsDetails.html.twig', ['categories' => $categories, 'stories' => $stories, 'category' => $idCategory, 'all' => false]);
     }
 
     // suppression d'une histoire

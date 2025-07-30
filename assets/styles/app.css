@@ -88,7 +88,10 @@ body, p, li, a, pre {
 .backgroundGrey{background-color: var(--myGrey);}
 .backgroundWhite{background-color: var(--myWhite);}
 .backgroundPurple{background-color: var(--myGold);}
-a{
+a, .bouton{
+    display: inline-block; 
+    text-decoration: none;
+    height: fit-content;
     padding: 5px 10px;
     border-radius: 10px;
 }
@@ -130,11 +133,7 @@ label.required:after {
     content: " * ";
     color: red;
 }
-a{
-    display: inline-block; 
-    text-decoration: none;
-    height: fit-content;
-}
+
 header nav{
     height: 50px;
     justify-content: space-around;
